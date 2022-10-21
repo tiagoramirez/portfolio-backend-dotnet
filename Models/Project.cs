@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace portfolio.Models;
 
 public class Project
@@ -6,4 +8,9 @@ public class Project
     public Guid UserId { get; set; }
     public string Name { get; set; }
     public string Url { get; set; }
+
+    // Navigations Properties
+    [JsonIgnore]
+    public User User { get; set; }
+    public ICollection<Description> Descriptions { get; set; }
 }

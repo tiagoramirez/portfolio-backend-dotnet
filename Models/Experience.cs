@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace portfolio.Models;
 
 public class Experience
@@ -10,6 +12,11 @@ public class Experience
     public bool IsActual { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
+
+    // Navigations Properties
+    [JsonIgnore]
+    public User User { get; set; }
+    public ICollection<Description> Descriptions { get; set; }
 }
 
 public enum ExperienceType

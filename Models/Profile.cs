@@ -16,4 +16,5 @@ public class Profile
     [JsonIgnore]
     public User User { get; set; }
     public ProfileConfig Configuration { get; set; }
+    public ICollection<Description> Descriptions { get; set; }
 }

@@ -14,4 +14,7 @@ public class User
     public virtual ICollection<User_Role> User_Roles { get; set; }
     public virtual ICollection<User_SocialMedia> User_SocialMedias { get; set; }
     public virtual ICollection<User_Skill> User_Skills { get; set; }
+    public virtual ICollection<Experience> Experiences { get; set; }
+    public virtual ICollection<Education> Educations { get; set; }
+    public virtual ICollection<Project> Projects { get; set; }
 }
