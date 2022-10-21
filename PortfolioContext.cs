@@ -73,7 +73,8 @@ public class PortfolioContext : DbContext
             prof.Property(table => table.Id).ValueGeneratedOnAdd();
             prof.Property(table => table.Description).IsRequired().HasMaxLength(255);
             prof.Property(table => table.Phone).HasMaxLength(16).IsRequired(false);
-            prof.Property(table => table.Location).IsRequired(false);
+            prof.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
+            prof.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
             prof.Property(table => table.AboutMe).IsRequired();
         });
 

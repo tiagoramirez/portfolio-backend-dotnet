@@ -9,7 +9,8 @@ public class Profile
     public Guid ProfileConfigId { get; set; }
     public string Description { get; set; }
     public string Phone { get; set; }
-    public Location Location { get; set; }
+    public string LocationState { get; set; }
+    public string LocationCountry { get; set; }
     public string AboutMe { get; set; }
 
     // Navigations Properties
@@ -21,6 +22,4 @@ public class Profile
 
 public class Location
 {
-    public string State { get; set; }
-    public string Country { get; set; }
 }
