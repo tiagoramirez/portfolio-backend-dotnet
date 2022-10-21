@@ -1,11 +1,16 @@
+using System.Text.Json.Serialization;
+
 namespace portfolio.Models;
 
 public class ProfileConfig
 {
-    Guid id;
-    bool showPhoto;
-    bool showBanner;
-    bool showLocation;
-    bool showPhone;
-    Profile profile;
+    public Guid Id { get; set; }
+    public bool ShowPhoto { get; set; }
+    public bool ShowBanner { get; set; }
+    public bool ShowLocation { get; set; }
+    public bool ShowPhone { get; set; }
+
+    // Navigations Properties
+    [JsonIgnore]
+    public Profile Profile { get; set; }
 }

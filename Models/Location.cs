@@ -2,6 +2,6 @@ namespace portfolio.Models;
 
 public class Location
 {
-    string state;
-    string country;
+    public string State { get; set; }
+    public string Country { get; set; }
 }
