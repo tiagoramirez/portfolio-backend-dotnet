@@ -30,7 +30,7 @@ public class PortfolioContext : DbContext
             desc.ToTable("Education_Description");
             desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId);
+            desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
@@ -54,7 +54,7 @@ public class PortfolioContext : DbContext
             desc.ToTable("Experience_Description");
             desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId);
+            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
@@ -108,7 +108,7 @@ public class PortfolioContext : DbContext
             desc.ToTable("Project_Description");
             desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId);
+            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
