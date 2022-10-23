@@ -7,7 +7,7 @@ public class User
     public string Email { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
-    public string Status { get; set; }
+    public bool Status { get; set; }
     public DateTime Created { get; set; }
     // Navigations Properties
     public virtual ICollection<Profile> Profiles { get; set; }

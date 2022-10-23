@@ -5,11 +5,13 @@ namespace portfolio;
 
 public class PortfolioContext : DbContext
 {
-    public DbSet<Description> Descriptions { get; set; }
+    public DbSet<Education_Description> EducationDescriptions { get; set; }
     public DbSet<Education> Educations { get; set; }
+    public DbSet<Experience_Description> ExperienceDescriptions { get; set; }
     public DbSet<Experience> Experiences { get; set; }
     public DbSet<Profile> Profiles { get; set; }
     public DbSet<ProfileConfig> ProfileConfigs { get; set; }
+    public DbSet<Project_Description> ProjectDescriptions { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Skill> Skills { get; set; }
@@ -23,16 +25,14 @@ public class PortfolioContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Description>(desc =>
+        modelBuilder.Entity<Education_Description>(desc =>
         {
-            desc.ToTable("Description");
+            desc.ToTable("Education_Description");
             desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.Descriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId);
-            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
-            desc.Property(table => table.Desc).IsRequired().HasMaxLength(255);
+            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
 
         modelBuilder.Entity<Education>(educ =>
@@ -47,6 +47,16 @@ public class PortfolioContext : DbContext
             educ.Property(table => table.Type).IsRequired();
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();
+        });
+
+        modelBuilder.Entity<Experience_Description>(desc =>
+        {
+            desc.ToTable("Experience_Description");
+            desc.HasKey(table => table.Id);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
+            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
+            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
 
         modelBuilder.Entity<Experience>(exp =>
@@ -67,9 +77,12 @@ public class PortfolioContext : DbContext
         {
             prof.ToTable("Profile");
             prof.HasKey(table => table.Id);
-            prof.HasMany(table => table.Descriptions).WithOne(description => description.Profile).HasForeignKey(description => description.ProfileId);
+            // prof.HasMany(table => table.Descriptions).WithOne(description => description.Profile).HasForeignKey(description => description.ProfileId);
             prof.HasOne(table => table.User).WithMany(user => user.Profiles).HasForeignKey(profile => profile.UserId);
             prof.HasOne(table => table.ProfileConfig).WithOne(profileConfig => profileConfig.Profile).HasForeignKey<ProfileConfig>(profileConfig => profileConfig.ProfileId);
+            prof.HasMany(table => table.ExperienceDescriptions).WithOne(experienceDescription => experienceDescription.Profile).HasForeignKey(experienceDescription => experienceDescription.ProfileId);
+            prof.HasMany(table => table.EducationDescriptions).WithOne(educationDescription => educationDescription.Profile).HasForeignKey(educationDescription => educationDescription.ProfileId);
+            prof.HasMany(table => table.ProjectDescriptions).WithOne(projectDescription => projectDescription.Profile).HasForeignKey(projectDescription => projectDescription.ProfileId);
             prof.Property(table => table.Id).ValueGeneratedOnAdd();
             prof.Property(table => table.Description).IsRequired().HasMaxLength(255);
             prof.Property(table => table.Phone).HasMaxLength(16).IsRequired(false);
@@ -88,6 +101,16 @@ public class PortfolioContext : DbContext
             config.Property(table => table.ShowLocation).IsRequired();
             config.Property(table => table.ShowPhone).IsRequired();
             config.Property(table => table.ShowPhoto).IsRequired();
+        });
+
+        modelBuilder.Entity<Project_Description>(desc =>
+        {
+            desc.ToTable("Project_Description");
+            desc.HasKey(table => table.Id);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
+            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
+            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
 
         modelBuilder.Entity<Project>(proj =>
@@ -146,7 +169,7 @@ public class PortfolioContext : DbContext
             userSkill.HasOne(table => table.User).WithMany(user => user.User_Skills).HasForeignKey(user_skill => user_skill.UserId);
             userSkill.HasOne(table => table.Skill).WithMany(skill => skill.User_Skills).HasForeignKey(user_skill => user_skill.SkillId);
             userSkill.Property(table => table.Id).ValueGeneratedOnAdd();
-            userSkill.Property(table => table.percentage).IsRequired();
+            userSkill.Property(table => table.Percentage).IsRequired();
         });
 
         modelBuilder.Entity<User_SocialMedia>(userSocialMedia =>
@@ -173,6 +196,7 @@ public class PortfolioContext : DbContext
             user.Property(table => table.Password).IsRequired().HasMaxLength(255);
             user.Property(table => table.Name).IsRequired().HasMaxLength(50);
             user.Property(table => table.Email).IsRequired().HasMaxLength(100);
+            user.Property(table => table.Status).IsRequired();
         });
     }
 }

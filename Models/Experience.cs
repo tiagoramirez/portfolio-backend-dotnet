@@ -16,7 +16,7 @@ public class Experience
     // Navigations Properties
     [JsonIgnore]
     public User User { get; set; }
-    public ICollection<Description> Descriptions { get; set; }
+    public ICollection<Experience_Description> Descriptions { get; set; }
 }
 
 public enum ExperienceType

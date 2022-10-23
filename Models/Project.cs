@@ -12,5 +12,5 @@ public class Project
     // Navigations Properties
     [JsonIgnore]
     public User User { get; set; }
-    public ICollection<Description> Descriptions { get; set; }
+    public ICollection<Project_Description> Descriptions { get; set; }
 }

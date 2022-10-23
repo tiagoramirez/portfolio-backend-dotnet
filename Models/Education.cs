@@ -16,7 +16,7 @@ public class Education
     // Navigations Properties
     [JsonIgnore]
     public User User { get; set; }
-    public ICollection<Description> Descriptions { get; set; }
+    public ICollection<Education_Description> Descriptions { get; set; }
 }
 
 public enum EducationType
