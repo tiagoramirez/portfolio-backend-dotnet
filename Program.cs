@@ -1,4 +1,5 @@
 using portfolio;
+using portfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<PortfolioContext>(builder.Configuration.GetConnectionString("cnPortfolio"));
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
