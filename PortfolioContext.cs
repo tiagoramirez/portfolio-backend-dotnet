@@ -29,7 +29,7 @@ public class PortfolioContext : DbContext
         {
             desc.ToTable("Education_Description");
             desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId).OnDelete(DeleteBehavior.NoAction);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
@@ -47,13 +47,14 @@ public class PortfolioContext : DbContext
             educ.Property(table => table.Type).IsRequired();
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();
+            educ.Property(table => table.End).IsRequired(false);
         });
 
         modelBuilder.Entity<Experience_Description>(desc =>
         {
             desc.ToTable("Experience_Description");
             desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId).OnDelete(DeleteBehavior.NoAction);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
@@ -71,6 +72,7 @@ public class PortfolioContext : DbContext
             exp.Property(table => table.Type).IsRequired();
             exp.Property(table => table.IsActual).IsRequired();
             exp.Property(table => table.Start).IsRequired();
+            exp.Property(table => table.End).IsRequired(false);
         });
 
         modelBuilder.Entity<Profile>(prof =>
@@ -107,7 +109,7 @@ public class PortfolioContext : DbContext
         {
             desc.ToTable("Project_Description");
             desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId).OnDelete(DeleteBehavior.NoAction);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
@@ -121,7 +123,7 @@ public class PortfolioContext : DbContext
             proj.HasOne(table => table.User).WithMany(user => user.Projects).HasForeignKey(project => project.UserId);
             proj.Property(table => table.Id).ValueGeneratedOnAdd();
             proj.Property(table => table.Name).IsRequired().HasMaxLength(50);
-            proj.Property(table => table.Url).IsRequired().HasMaxLength(255);
+            proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Role>(role =>

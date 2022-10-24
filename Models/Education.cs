@@ -11,7 +11,7 @@ public class Education
     public string TitleName { get; set; }
     public bool IsActual { get; set; }
     public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public DateTime? End { get; set; }
 
     // Navigations Properties
     [JsonIgnore]
