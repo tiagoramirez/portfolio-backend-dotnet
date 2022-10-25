@@ -81,7 +81,7 @@ public class PortfolioContext : DbContext
             prof.HasKey(table => table.Id);
             // prof.HasMany(table => table.Descriptions).WithOne(description => description.Profile).HasForeignKey(description => description.ProfileId);
             prof.HasOne(table => table.User).WithMany(user => user.Profiles).HasForeignKey(profile => profile.UserId);
-            prof.HasOne(table => table.ProfileConfig).WithOne(profileConfig => profileConfig.Profile).HasForeignKey<ProfileConfig>(profileConfig => profileConfig.ProfileId);
+            prof.HasOne(table => table.Config).WithOne(profileConfig => profileConfig.Profile).HasForeignKey<ProfileConfig>(profileConfig => profileConfig.ProfileId);
             prof.HasMany(table => table.ExperienceDescriptions).WithOne(experienceDescription => experienceDescription.Profile).HasForeignKey(experienceDescription => experienceDescription.ProfileId);
             prof.HasMany(table => table.EducationDescriptions).WithOne(educationDescription => educationDescription.Profile).HasForeignKey(educationDescription => educationDescription.ProfileId);
             prof.HasMany(table => table.ProjectDescriptions).WithOne(projectDescription => projectDescription.Profile).HasForeignKey(projectDescription => projectDescription.ProfileId);
@@ -97,7 +97,7 @@ public class PortfolioContext : DbContext
         {
             config.ToTable("ProfileConfig");
             config.HasKey(table => table.Id);
-            config.HasOne(table => table.Profile).WithOne(profile => profile.ProfileConfig).HasForeignKey<Profile>(profile => profile.ProfileConfigId);
+            config.HasOne(table => table.Profile).WithOne(profile => profile.Config).HasForeignKey<Profile>(profile => profile.ProfileConfigId);
             config.Property(table => table.Id).ValueGeneratedOnAdd();
             config.Property(table => table.ShowBanner).IsRequired();
             config.Property(table => table.ShowLocation).IsRequired();

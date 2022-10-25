@@ -5,7 +5,9 @@ namespace portfolio.Models;
 public class Profile
 {
     public Guid Id { get; set; }
+    [JsonIgnore]
     public Guid UserId { get; set; }
+    [JsonIgnore]
     public Guid ProfileConfigId { get; set; }
     public string Description { get; set; }
     public string Phone { get; set; }
@@ -16,7 +18,7 @@ public class Profile
     // Navigations Properties
     [JsonIgnore]
     public User User { get; set; }
-    public ProfileConfig ProfileConfig { get; set; }
+    public ProfileConfig Config { get; set; }
     public ICollection<Experience_Description> ExperienceDescriptions { get; set; }
     public ICollection<Education_Description> EducationDescriptions { get; set; }
     public ICollection<Project_Description> ProjectDescriptions { get; set; }

@@ -101,7 +101,7 @@ public class UserService : IUserService
         user.Password = null;
         foreach (var profile in user.Profiles)
         {
-            profile.ProfileConfig = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
+            profile.Config = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
         }
         return user;
     }

@@ -5,6 +5,7 @@ namespace portfolio.Models;
 public class ProfileConfig
 {
     public Guid Id { get; set; }
+    [JsonIgnore]
     public Guid ProfileId { get; set; }
     public bool ShowPhoto { get; set; }
     public bool ShowBanner { get; set; }

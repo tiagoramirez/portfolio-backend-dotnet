@@ -5,7 +5,7 @@ namespace portfolio.Services;
 public interface IProfileConfigService
 {
     Task<ProfileConfig> Create();
-    Task Edit(ProfileConfig config, Guid id);
+    Task<bool> Edit(ProfileConfig config, Guid id);
 }
 
 public class ProfileConfigService : IProfileConfigService
@@ -34,9 +34,19 @@ public class ProfileConfigService : IProfileConfigService
         return newConfig;
     }
 
-    public Task Edit(ProfileConfig config, Guid id)
+    public async Task<bool> Edit(ProfileConfig config, Guid id)
     {
-        _context.ProfileConfigs.Update(config);
-        return _context.SaveChangesAsync();
+        ProfileConfig configToEdit = await _context.ProfileConfigs.FindAsync(id);
+        System.Console.WriteLine("entra aca");
+        if (configToEdit != null)
+        {
+            configToEdit.ShowBanner = config.ShowBanner;
+            configToEdit.ShowLocation = config.ShowLocation;
+            configToEdit.ShowPhone = config.ShowPhone;
+            configToEdit.ShowPhoto = config.ShowPhoto;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        return false;
     }
 }
