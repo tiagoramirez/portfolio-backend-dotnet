@@ -15,6 +15,17 @@ public class UserController : ControllerBase
         _userService = service;
     }
 
+    [HttpGet("{username}")]
+    public async Task<IActionResult> GetUser(string username)
+    {
+        var user = await _userService.GetUser(username);
+        if (user == null)
+        {
+            return NotFound(new { msg = "User not found" });
+        }
+        return Ok(user);
+    }
+
     [HttpGet("Login/{username}/{password}")]
     public IActionResult Get([FromRoute] string username, [FromRoute] string password)
     {

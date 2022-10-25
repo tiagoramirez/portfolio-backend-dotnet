@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 
@@ -5,6 +6,7 @@ namespace portfolio.Services;
 
 public interface IUserService
 {
+    Task<User> GetUser(string username);
     string Login(string username, string password);
     Task Register(User user);
     Task<bool> EditName(string name, Guid id);
@@ -91,6 +93,17 @@ public class UserService : IUserService
     public bool EmailAvailable(string email)
     {
         return !_context.Users.Any(u => u.Email == email);
+    }
+
+    public async Task<User> GetUser(string username)
+    {
+        User user = _context.Users.Include(p => p.Profiles).Include(p => p.Profiles).FirstOrDefault(u => u.Username == username && u.Status);
+        user.Password = null;
+        foreach (var profile in user.Profiles)
+        {
+            profile.ProfileConfig = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
+        }
+        return user;
     }
 
     public string Login(string username, string password)
