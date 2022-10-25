@@ -5,7 +5,7 @@ using portfolio.Services;
 namespace portfolio.Controllers;
 
 [ApiController]
-[Route("API/[controller]")]
+[Route("API/Config")]
 public class ProfileConfigController : ControllerBase
 {
     IProfileConfigService _profileConfigService;
@@ -15,10 +15,10 @@ public class ProfileConfigController : ControllerBase
         _profileConfigService = profileConfigService;
     }
 
-    [HttpPut("Edit/{id}")]
-    public async Task<IActionResult> Edit([FromBody] ProfileConfig config, [FromRoute] Guid id)
+    [HttpPut("Update/{id}")]
+    public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid id)
     {
-        if (await _profileConfigService.Edit(config, id))
+        if (await _profileConfigService.Update(config, id))
         {
             return Ok(new { msg = "Config updated" });
         }

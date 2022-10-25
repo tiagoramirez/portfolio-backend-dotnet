@@ -5,7 +5,8 @@ namespace portfolio.Services;
 public interface IProfileConfigService
 {
     Task<ProfileConfig> Create();
-    Task<bool> Edit(ProfileConfig config, Guid id);
+    Task<bool> Update(ProfileConfig config, Guid id);
+    Task Delete(Guid id);
 }
 
 public class ProfileConfigService : IProfileConfigService
@@ -34,16 +35,26 @@ public class ProfileConfigService : IProfileConfigService
         return newConfig;
     }
 
-    public async Task<bool> Edit(ProfileConfig config, Guid id)
+    public async Task Delete(Guid id)
     {
-        ProfileConfig configToEdit = await _context.ProfileConfigs.FindAsync(id);
-        System.Console.WriteLine("entra aca");
-        if (configToEdit != null)
+        ProfileConfig config = await _context.ProfileConfigs.FindAsync(id);
+        if (config != null)
         {
-            configToEdit.ShowBanner = config.ShowBanner;
-            configToEdit.ShowLocation = config.ShowLocation;
-            configToEdit.ShowPhone = config.ShowPhone;
-            configToEdit.ShowPhoto = config.ShowPhoto;
+            _context.ProfileConfigs.Remove(config);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<bool> Update(ProfileConfig config, Guid id)
+    {
+        ProfileConfig configToUpdate = await _context.ProfileConfigs.FindAsync(id);
+        System.Console.WriteLine("entra aca");
+        if (configToUpdate != null)
+        {
+            configToUpdate.ShowBanner = config.ShowBanner;
+            configToUpdate.ShowLocation = config.ShowLocation;
+            configToUpdate.ShowPhone = config.ShowPhone;
+            configToUpdate.ShowPhoto = config.ShowPhoto;
             await _context.SaveChangesAsync();
             return true;
         }

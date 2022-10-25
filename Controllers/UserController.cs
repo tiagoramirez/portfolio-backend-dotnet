@@ -50,42 +50,42 @@ public class UserController : ControllerBase
         return BadRequest(new { msg = "Username or email already in use" });
     }
 
-    [HttpPut("Edit/Name/{id}/{name}")]
+    [HttpPut("Update/Name/{id}/{name}")]
     public async Task<IActionResult> PutName([FromRoute] Guid id, [FromRoute] string name)
     {
-        if (await _userService.EditName(name, id))
+        if (await _userService.UpdateName(name, id))
         {
-            return Ok(new { msg = "Name edited" });
+            return Ok(new { msg = "Name Updateed" });
         }
         return BadRequest(new { msg = "User not found" });
     }
 
-    [HttpPut("Edit/Username/{id}/{username}")]
+    [HttpPut("Update/Username/{id}/{username}")]
     public async Task<IActionResult> PutUsername([FromRoute] Guid id, [FromRoute] string username)
     {
-        if (await _userService.EditUsername(username, id))
+        if (await _userService.UpdateUsername(username, id))
         {
-            return Ok(new { msg = "Username edited" });
+            return Ok(new { msg = "Username Updateed" });
         }
         return BadRequest(new { msg = "User not found" });
     }
 
-    [HttpPut("Edit/Password/{id}/{password}")]
+    [HttpPut("Update/Password/{id}/{password}")]
     public async Task<IActionResult> PutPassword([FromRoute] Guid id, [FromRoute] string password)
     {
-        if (await _userService.EditPassword(password, id))
+        if (await _userService.UpdatePassword(password, id))
         {
-            return Ok(new { msg = "Password edited" });
+            return Ok(new { msg = "Password Updateed" });
         }
         return BadRequest(new { msg = "User not found" });
     }
 
-    [HttpPut("Edit/Email/{id}/{email}")]
+    [HttpPut("Update/Email/{id}/{email}")]
     public async Task<IActionResult> PutEmail([FromRoute] Guid id, [FromRoute] string email)
     {
-        if (await _userService.EditEmail(email, id))
+        if (await _userService.UpdateEmail(email, id))
         {
-            return Ok(new { msg = "Email edited" });
+            return Ok(new { msg = "Email Updateed" });
         }
         return BadRequest(new { msg = "User not found" });
     }

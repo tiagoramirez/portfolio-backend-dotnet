@@ -9,10 +9,10 @@ public interface IUserService
     Task<User> GetUser(string username);
     string Login(string username, string password);
     Task Register(User user);
-    Task<bool> EditName(string name, Guid id);
-    Task<bool> EditUsername(string username, Guid id);
-    Task<bool> EditPassword(string password, Guid id);
-    Task<bool> EditEmail(string email, Guid id);
+    Task<bool> UpdateName(string name, Guid id);
+    Task<bool> UpdateUsername(string username, Guid id);
+    Task<bool> UpdatePassword(string password, Guid id);
+    Task<bool> UpdateEmail(string email, Guid id);
     Task<bool> Delete(Guid id);
     bool UsernameAvailable(string username);
     bool EmailAvailable(string email);
@@ -42,7 +42,7 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<bool> EditEmail(string email, Guid id)
+    public async Task<bool> UpdateEmail(string email, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -54,7 +54,7 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<bool> EditName(string name, Guid id)
+    public async Task<bool> UpdateName(string name, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -66,7 +66,7 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<bool> EditPassword(string password, Guid id)
+    public async Task<bool> UpdatePassword(string password, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -78,7 +78,7 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<bool> EditUsername(string username, Guid id)
+    public async Task<bool> UpdateUsername(string username, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
