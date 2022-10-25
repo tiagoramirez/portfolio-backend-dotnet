@@ -11,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<PortfolioContext>(builder.Configuration.GetConnectionString("cnPortfolio"));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IProfileConfigService, ProfileConfigService>();
 
 var app = builder.Build();
 

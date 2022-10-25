@@ -20,9 +20,12 @@ public class UserService : IUserService
 {
     PortfolioContext _context;
 
-    public UserService(PortfolioContext context)
+    IProfileService _profileService;
+
+    public UserService(PortfolioContext context, IProfileService profileService)
     {
         _context = context;
+        _profileService = profileService;
     }
 
     public async Task<bool> Delete(Guid id)
@@ -102,11 +105,13 @@ public class UserService : IUserService
 
     public async Task Register(User user)
     {
+        user.Id = Guid.NewGuid();
         user.Password = Encrypt.GetSHA512(user.Password);
         user.Status = true;
         user.Created = DateTime.Now;
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
+        await _profileService.Create(user.Id);
     }
 
     public bool UsernameAvailable(string username)
