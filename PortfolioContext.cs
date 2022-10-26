@@ -126,6 +126,10 @@ public class PortfolioContext : DbContext
             proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
         });
 
+        List<Role> roles = new List<Role>();
+        roles.Add(new Role { Id = Guid.NewGuid(), RoleName = "Admin" });
+        roles.Add(new Role { Id = Guid.NewGuid(), RoleName = "User" });
+
         modelBuilder.Entity<Role>(role =>
         {
             role.ToTable("Role");
@@ -133,7 +137,35 @@ public class PortfolioContext : DbContext
             role.HasMany(table => table.User_Roles).WithOne(user_role => user_role.Role).HasForeignKey(user_role => user_role.RoleId);
             role.Property(table => table.Id).ValueGeneratedOnAdd();
             role.Property(table => table.RoleName).IsRequired().HasMaxLength(50);
+            role.HasData(roles);
         });
+
+        List<Skill> skills = new List<Skill>();
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "C#", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET WPF", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Entity Framework", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Python", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java Spring", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "SQL", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MS SQL Server", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MySql", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "HTML", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "CSS", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Bootstrap", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Angular", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Git", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Scrum", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "ERD / DER", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "UML", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JWT", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Linux", Type = SkillType.DeveloperTool });
 
         modelBuilder.Entity<Skill>(skill =>
         {
@@ -143,7 +175,18 @@ public class PortfolioContext : DbContext
             skill.Property(table => table.Id).ValueGeneratedOnAdd();
             skill.Property(table => table.Name).IsRequired().HasMaxLength(50);
             skill.Property(table => table.Type).IsRequired();
+            skill.HasData(skills);
         });
+
+        List<SocialMedia> socialMedias = new List<SocialMedia>();
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Facebook", IconClassName = "bi bi-facebook" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Whatsapp", IconClassName = "bi bi-whatsapp" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Github", IconClassName = "bi bi-github" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Instagram", IconClassName = "bi bi-instagram" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "LinkedIn", IconClassName = "bi bi-linkedin" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Twitter", IconClassName = "bi bi-twitter" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Youtube", IconClassName = "bi bi-youtube" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Web Personal", IconClassName = "bi bi-person-circle" });
 
         modelBuilder.Entity<SocialMedia>(sm =>
         {
@@ -153,6 +196,7 @@ public class PortfolioContext : DbContext
             sm.Property(table => table.Id).ValueGeneratedOnAdd();
             sm.Property(table => table.Name).IsRequired().HasMaxLength(20);
             sm.Property(table => table.IconClassName).IsRequired().HasMaxLength(100);
+            sm.HasData(socialMedias);
         });
 
         modelBuilder.Entity<User_Role>(userRole =>
