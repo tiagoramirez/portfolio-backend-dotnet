@@ -6,7 +6,7 @@ public interface IProfileConfigService
 {
     Task<ProfileConfig> Create();
     Task<bool> Update(ProfileConfig config, Guid id);
-    Task Delete(Guid id);
+    Task<bool> Delete(Guid id);
 }
 
 public class ProfileConfigService : IProfileConfigService
@@ -35,14 +35,16 @@ public class ProfileConfigService : IProfileConfigService
         return newConfig;
     }
 
-    public async Task Delete(Guid id)
+    public async Task<bool> Delete(Guid id)
     {
         ProfileConfig config = await _context.ProfileConfigs.FindAsync(id);
         if (config != null)
         {
             _context.ProfileConfigs.Remove(config);
             await _context.SaveChangesAsync();
+            return true;
         }
+        return false;
     }
 
     public async Task<bool> Update(ProfileConfig config, Guid id)

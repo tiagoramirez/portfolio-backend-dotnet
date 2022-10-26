@@ -5,7 +5,7 @@ using portfolio.Services;
 namespace portfolio.Controllers;
 
 [ApiController]
-[Route("Api/[controller]")]
+[Route("API/[controller]")]
 public class ProfileController : ControllerBase
 {
     IProfileService _profileService;
@@ -18,8 +18,11 @@ public class ProfileController : ControllerBase
     [HttpPost("Create/{userId}")]
     public async Task<IActionResult> Create([FromRoute] Guid userId)
     {
-        await _profileService.Create(userId);
-        return Ok(new { msg = "Profile created" });
+        if (await _profileService.Create(userId))
+        {
+            return Ok(new { msg = "Profile created" });
+        }
+        return BadRequest(new { msg = "Server error. Profile not created. Try again later..." });
     }
 
     [HttpPut("Update/{id}")]

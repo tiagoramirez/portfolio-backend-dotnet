@@ -4,7 +4,7 @@ namespace portfolio.Services;
 
 public interface IProfileService
 {
-    Task Create(Guid userId);
+    Task<bool> Create(Guid userId);
     Task<bool> Update(Profile profile, Guid id);
     Task<bool> Delete(Guid id);
 }
@@ -21,7 +21,7 @@ public class ProfileService : IProfileService
         _profileConfigService = profileConfigService;
     }
 
-    public async Task Create(Guid userId)
+    public async Task<bool> Create(Guid userId)
     {
         ProfileConfig config = await _profileConfigService.Create();
 
@@ -37,7 +37,7 @@ public class ProfileService : IProfileService
         await _context.SaveChangesAsync();
 
         config.ProfileId = profile.Id;
-        await _profileConfigService.Update(config, config.Id);
+        return await _profileConfigService.Update(config, config.Id);
     }
 
     public async Task<bool> Delete(Guid id)

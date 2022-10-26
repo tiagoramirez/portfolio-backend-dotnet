@@ -16,9 +16,9 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{username}")]
-    public async Task<IActionResult> GetUser(string username)
+    public async Task<IActionResult> GetUserInfo(string username)
     {
-        var user = await _userService.GetUser(username);
+        var user = await _userService.GetUserInfo(username);
         if (user == null)
         {
             return NotFound(new { msg = "User not found" });
@@ -26,32 +26,8 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("Login/{username}/{password}")]
-    public IActionResult Get([FromRoute] string username, [FromRoute] string password)
-    {
-        string token = _userService.Login(username, password);
-        if (token != "")
-        {
-            return Ok(new { tokenLogin = token });
-        }
-        return BadRequest(new { msg = "Invalid username or password" });
-    }
-
-    [HttpPost("Register")]
-    public async Task<IActionResult> Post([FromBody] User user)
-    {
-        System.Console.WriteLine($"Usuario disponible: {_userService.UsernameAvailable(user.Username)}");
-        System.Console.WriteLine($"Mail disponible: {_userService.EmailAvailable(user.Email)}");
-        if (_userService.UsernameAvailable(user.Username) && _userService.EmailAvailable(user.Email))
-        {
-            await _userService.Register(user);
-            return Ok(new { msg = "User registered" });
-        }
-        return BadRequest(new { msg = "Username or email already in use" });
-    }
-
     [HttpPut("Update/Name/{id}/{name}")]
-    public async Task<IActionResult> PutName([FromRoute] Guid id, [FromRoute] string name)
+    public async Task<IActionResult> UpdateName([FromRoute] Guid id, [FromRoute] string name)
     {
         if (await _userService.UpdateName(name, id))
         {
@@ -61,7 +37,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("Update/Username/{id}/{username}")]
-    public async Task<IActionResult> PutUsername([FromRoute] Guid id, [FromRoute] string username)
+    public async Task<IActionResult> UpdateUsername([FromRoute] Guid id, [FromRoute] string username)
     {
         if (await _userService.UpdateUsername(username, id))
         {
@@ -71,7 +47,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("Update/Password/{id}/{password}")]
-    public async Task<IActionResult> PutPassword([FromRoute] Guid id, [FromRoute] string password)
+    public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromRoute] string password)
     {
         if (await _userService.UpdatePassword(password, id))
         {
@@ -81,7 +57,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("Update/Email/{id}/{email}")]
-    public async Task<IActionResult> PutEmail([FromRoute] Guid id, [FromRoute] string email)
+    public async Task<IActionResult> UpdateEmail([FromRoute] Guid id, [FromRoute] string email)
     {
         if (await _userService.UpdateEmail(email, id))
         {
@@ -93,7 +69,6 @@ public class UserController : ControllerBase
     [HttpDelete("Delete/{id}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-
         if (await _userService.Delete(id))
         {
             return Ok(new { msg = "User deleted" });
