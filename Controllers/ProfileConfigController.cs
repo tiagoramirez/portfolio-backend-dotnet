@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Services;
 
@@ -18,10 +19,12 @@ public class ProfileConfigController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid id)
     {
-        if (await _profileConfigService.UpdateAsync(config, id))
+        ServiceStateType state = await _profileConfigService.UpdateAsync(config, id);
+
+        if (state == ServiceStateType.Ok)
         {
-            return Ok(new { msg = "Config updated" });
+            return Ok(new { msg = "Configuration Updated" });
         }
-        return BadRequest(new { msg = "Error. Config not updated" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

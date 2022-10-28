@@ -7,7 +7,7 @@ namespace portfolio.Auth.Services;
 public interface IAuthService
 {
     string Login(string username, string password);
-    Task<bool> RegisterAsync(User user);
+    Task<ServiceStateType> RegisterAsync(User user);
 }
 
 public class AuthService : IAuthService
@@ -33,9 +33,10 @@ public class AuthService : IAuthService
         return null;
     }
 
-    public async Task<bool> RegisterAsync(User user)
+    public async Task<ServiceStateType> RegisterAsync(User user)
     {
-        if (!_userService.UsernameAvailable(user.Username) || !_userService.EmailAvailable(user.Email)) return false;
+        if (!_userService.UsernameAvailable(user.Username)) return ServiceStateType.UsernameNotAvailable;
+        if (!_userService.EmailAvailable(user.Email)) return ServiceStateType.EmailNotAvailable;
 
         user.Id = Guid.NewGuid();
         user.Password = Encrypt.GetSHA512(user.Password);
@@ -54,7 +55,7 @@ public class AuthService : IAuthService
         }
         catch (System.Exception)
         {
-            return false;
+            return ServiceStateType.InternalError;
         }
     }
 }

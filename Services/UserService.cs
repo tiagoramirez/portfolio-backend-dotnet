@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
@@ -7,12 +8,12 @@ namespace portfolio.Services;
 
 public interface IUserService
 {
-    Task<User> GetUserInfoAsync(string username);
-    Task<ServiceState> UpdateNameAsync(string name, Guid id);
-    Task<ServiceState> UpdateUsernameAsync(string username, Guid id);
-    Task<ServiceState> UpdatePasswordAsync(string password, Guid id);
-    Task<ServiceState> UpdateEmailAsync(string email, Guid id);
-    Task<ServiceState> DeleteAsync(Guid id);
+    Task<User> GetByUsernameAsync(string username);
+    Task<ServiceStateType> UpdateNameAsync(Guid id, string name);
+    Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username);
+    Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password);
+    Task<ServiceStateType> UpdateEmailAsync(Guid id, string email);
+    Task<ServiceStateType> DeleteAsync(Guid id);
     bool UsernameAvailable(string username);
     bool EmailAvailable(string email);
 }
@@ -26,7 +27,7 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<ServiceState> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -35,19 +36,22 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceState.Ok;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return ServiceState.InternalError;
+                return ServiceStateType.InternalError;
             }
         }
-        return ServiceState.UserNotFound;
+        return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceState> UpdateEmailAsync(string email, Guid id)
+    public async Task<ServiceStateType> UpdateEmailAsync(Guid id, string email)
     {
-        if (!EmailAvailable(email)) return ServiceState.EmailNotAvailable;
+        Regex emailRegex = new Regex(@"/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/");
+        if (!emailRegex.Match(email).Success) return ServiceStateType.InvalidEmail;
+
+        if (!EmailAvailable(email)) return ServiceStateType.EmailNotAvailable;
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
@@ -55,17 +59,17 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceState.Ok;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return ServiceState.UserNotFound;
+                return ServiceStateType.UserNotFound;
             }
         }
-        return ServiceState.UserNotFound;
+        return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceState> UpdateNameAsync(string name, Guid id)
+    public async Task<ServiceStateType> UpdateNameAsync(Guid id, string name)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -74,20 +78,20 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceState.Ok;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return ServiceState.InternalError;
+                return ServiceStateType.InternalError;
             }
         }
-        return ServiceState.UserNotFound;
+        return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceState> UpdatePasswordAsync(string password, Guid id)
+    public async Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password)
     {
         Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
-        if (!passwordRegex.Match(password).Success) return ServiceState.InvalidPassword;
+        if (!passwordRegex.Match(password).Success) return ServiceStateType.InvalidPassword;
 
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -96,21 +100,21 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceState.Ok;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return ServiceState.InternalError;
+                return ServiceStateType.InternalError;
             }
         }
-        return ServiceState.UserNotFound;
+        return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceState> UpdateUsernameAsync(string username, Guid id)
+    public async Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username)
     {
         Regex usernameRegex = new Regex(@"^[a-zA-Z0-9_]+[a-zA-Z0-9._]{4,15}$");
-        if (!usernameRegex.Match(username).Success) return ServiceState.InvalidUsername;
-        if (!UsernameAvailable(username)) return ServiceState.EmailNotAvailable;
+        if (!usernameRegex.Match(username).Success) return ServiceStateType.InvalidUsername;
+        if (!UsernameAvailable(username)) return ServiceStateType.EmailNotAvailable;
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
@@ -118,17 +122,17 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceState.Ok;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return ServiceState.InternalError;
+                return ServiceStateType.InternalError;
             }
         }
-        return ServiceState.UserNotFound;
+        return ServiceStateType.UserNotFound;
     }
 
-    public async Task<User> GetUserInfoAsync(string username)
+    public async Task<User> GetByUsernameAsync(string username)
     {
         User user = _context.Users.Include(p => p.Profiles).FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;

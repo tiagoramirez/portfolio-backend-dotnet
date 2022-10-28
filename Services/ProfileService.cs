@@ -1,12 +1,13 @@
+using portfolio.Helpers;
 using portfolio.Models;
 
 namespace portfolio.Services;
 
 public interface IProfileService
 {
-    Task<bool> CreateAsync(Guid userId);
-    Task<bool> UpdateAsync(Profile profile, Guid id);
-    Task<bool> DeleteAsync(Guid id);
+    Task<ServiceStateType> CreateAsync(Guid userId);
+    Task<ServiceStateType> UpdateAsync(Profile profile, Guid id);
+    Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
 public class ProfileService : IProfileService
@@ -21,10 +22,10 @@ public class ProfileService : IProfileService
         _profileConfigService = profileConfigService;
     }
 
-    public async Task<bool> CreateAsync(Guid userId)
+    public async Task<ServiceStateType> CreateAsync(Guid userId)
     {
         ProfileConfig config = await _profileConfigService.CreateAsync();
-        if (config == null) return false;
+        if (config == null) return ServiceStateType.ProfileConfigNotFound;
 
         Profile profile = new Profile
         {
@@ -41,17 +42,21 @@ public class ProfileService : IProfileService
         }
         catch (System.Exception)
         {
-            return false;
+            return ServiceStateType.InternalError;
         }
 
         config.ProfileId = profile.Id;
-        return await _profileConfigService.UpdateAsync(config, config.Id);
+        if (await _profileConfigService.UpdateAsync(config, config.Id) == ServiceStateType.Ok)
+        {
+            return ServiceStateType.Ok;
+        }
+        return ServiceStateType.InternalError;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
         Profile profile = await _context.Profiles.FindAsync(id);
-        if (profile == null) return false;
+        if (profile == null) return ServiceStateType.ProfileNotFound;
         IEnumerable<Profile> userProfiles = _context.Profiles.Where(p => p.UserId == profile.UserId);
         if (userProfiles.Count() > 1)
         {
@@ -61,17 +66,17 @@ public class ProfileService : IProfileService
                 // _context.Profiles.Remove(profile);
                 // await _context.SaveChangesAsync();
                 await _profileConfigService.DeleteAsync(profile.ProfileConfigId);
-                return true;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return false;
+                return ServiceStateType.InternalError;
             }
         }
-        return false;
+        return ServiceStateType.OneProfileRequired;
     }
 
-    public async Task<bool> UpdateAsync(Profile profile, Guid id)
+    public async Task<ServiceStateType> UpdateAsync(Profile profile, Guid id)
     {
         Profile profileToUpdate = await _context.Profiles.FindAsync(id);
         if (profileToUpdate != null)
@@ -84,13 +89,13 @@ public class ProfileService : IProfileService
             try
             {
                 await _context.SaveChangesAsync();
-                return true;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return false;
+                return ServiceStateType.InternalError;
             }
         }
-        return false;
+        return ServiceStateType.ProfileNotFound;
     }
 }

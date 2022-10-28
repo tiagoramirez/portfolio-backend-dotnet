@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Auth.Services;
+using portfolio.Helpers;
 using portfolio.Models;
 
 namespace portfolio.Auth.Controllers;
@@ -23,16 +24,18 @@ public class AuthController : ControllerBase
         {
             return Ok(new { tokenLogin = token });
         }
-        return BadRequest(new { msg = "Invalid username or password" });
+        return BadRequest(new { msg = "Invalid Credentials" });
     }
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] User user)
     {
-        if (await _authService.RegisterAsync(user))
+        ServiceStateType state = await _authService.RegisterAsync(user);
+
+        if (state == ServiceStateType.Ok)
         {
-            return Ok(new { msg = "User registered" });
+            return Ok(new { msg = "User Registered" });
         }
-        return BadRequest(new { msg = "Username or email already in use" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

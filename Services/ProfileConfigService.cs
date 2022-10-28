@@ -1,3 +1,4 @@
+using portfolio.Helpers;
 using portfolio.Models;
 
 namespace portfolio.Services;
@@ -5,8 +6,8 @@ namespace portfolio.Services;
 public interface IProfileConfigService
 {
     Task<ProfileConfig> CreateAsync();
-    Task<bool> UpdateAsync(ProfileConfig config, Guid id);
-    Task<bool> DeleteAsync(Guid id);
+    Task<ServiceStateType> UpdateAsync(ProfileConfig config, Guid id);
+    Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
 public class ProfileConfigService : IProfileConfigService
@@ -42,7 +43,7 @@ public class ProfileConfigService : IProfileConfigService
         }
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
         ProfileConfig config = await _context.ProfileConfigs.FindAsync(id);
         if (config != null)
@@ -51,17 +52,17 @@ public class ProfileConfigService : IProfileConfigService
             {
                 _context.ProfileConfigs.Remove(config);
                 await _context.SaveChangesAsync();
-                return true;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return false;
+                return ServiceStateType.InternalError;
             }
         }
-        return false;
+        return ServiceStateType.ProfileConfigNotFound;
     }
 
-    public async Task<bool> UpdateAsync(ProfileConfig config, Guid id)
+    public async Task<ServiceStateType> UpdateAsync(ProfileConfig config, Guid id)
     {
         ProfileConfig configToUpdate = await _context.ProfileConfigs.FindAsync(id);
         if (configToUpdate != null)
@@ -73,13 +74,13 @@ public class ProfileConfigService : IProfileConfigService
             try
             {
                 await _context.SaveChangesAsync();
-                return true;
+                return ServiceStateType.Ok;
             }
             catch (System.Exception)
             {
-                return false;
+                return ServiceStateType.InternalError;
             }
         }
-        return false;
+        return ServiceStateType.ProfileConfigNotFound;
     }
 }

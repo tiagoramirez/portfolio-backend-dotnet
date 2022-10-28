@@ -1,12 +1,13 @@
+using portfolio.Helpers;
 using portfolio.Models;
 
 namespace portfolio.Services;
 
 public interface ISocialMediaService
 {
-    IEnumerable<SocialMedia> GetAllSocialMedia();
-    Task<bool> CreateNewSocialMediaAsync(User_SocialMedia socialMedia);
-    Task<bool> DeleteSocialMediaAsync(Guid id);
+    IEnumerable<SocialMedia> GetAll();
+    Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia);
+    Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
 public class SocialMediaService : ISocialMediaService
@@ -18,37 +19,37 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<bool> CreateNewSocialMediaAsync(User_SocialMedia socialMedia)
+    public async Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia)
     {
         try
         {
             await _context.User_SocialMedias.AddAsync(socialMedia);
             await _context.SaveChangesAsync();
-            return true;
+            return ServiceStateType.Ok;
         }
         catch (System.Exception)
         {
-            return false;
+            return ServiceStateType.InternalError;
         }
     }
 
-    public async Task<bool> DeleteSocialMediaAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
         User_SocialMedia socialMedia = await _context.User_SocialMedias.FindAsync(id);
-        if (socialMedia == null) return false;
+        if (socialMedia == null) return ServiceStateType.SocialMediaNotFound;
         try
         {
             _context.User_SocialMedias.Remove(socialMedia);
             await _context.SaveChangesAsync();
-            return true;
+            return ServiceStateType.Ok;
         }
         catch (System.Exception)
         {
-            return false;
+            return ServiceStateType.InternalError;
         }
     }
 
-    public IEnumerable<SocialMedia> GetAllSocialMedia()
+    public IEnumerable<SocialMedia> GetAll()
     {
         return _context.SocialMedias;
     }

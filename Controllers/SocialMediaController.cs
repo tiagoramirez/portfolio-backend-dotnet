@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Services;
 
@@ -18,27 +19,29 @@ public class SocialMediaController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        return Ok(_socialMediaService.GetAllSocialMedia());
+        return Ok(_socialMediaService.GetAll());
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] User_SocialMedia socialMedia)
     {
-        if (await _socialMediaService.CreateNewSocialMediaAsync(socialMedia))
+        ServiceStateType state = await _socialMediaService.CreateAsync(socialMedia);
+        if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Social Media Created" });
         }
-        return BadRequest(new { msg = "Social Media Not Created" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        if (await _socialMediaService.DeleteSocialMediaAsync(id))
+        ServiceStateType state = await _socialMediaService.DeleteAsync(id);
+        if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Social Media Deleted" });
         }
-        return BadRequest(new { msg = "Social Media Not Deleted" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
 }
