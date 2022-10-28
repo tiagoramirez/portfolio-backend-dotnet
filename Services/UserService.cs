@@ -6,12 +6,12 @@ namespace portfolio.Services;
 
 public interface IUserService
 {
-    Task<User> GetUserInfo(string username);
-    Task<bool> UpdateName(string name, Guid id);
-    Task<bool> UpdateUsername(string username, Guid id);
-    Task<bool> UpdatePassword(string password, Guid id);
-    Task<bool> UpdateEmail(string email, Guid id);
-    Task<bool> Delete(Guid id);
+    Task<User> GetUserInfoAsync(string username);
+    Task<bool> UpdateNameAsync(string name, Guid id);
+    Task<bool> UpdateUsernameAsync(string username, Guid id);
+    Task<bool> UpdatePasswordAsync(string password, Guid id);
+    Task<bool> UpdateEmailAsync(string email, Guid id);
+    Task<bool> DeleteAsync(Guid id);
 }
 
 public class UserService : IUserService
@@ -23,67 +23,102 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<bool> Delete(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
             user.Status = false;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> UpdateEmail(string email, Guid id)
+    public async Task<bool> UpdateEmailAsync(string email, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
             user.Email = email;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> UpdateName(string name, Guid id)
+    public async Task<bool> UpdateNameAsync(string name, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
             user.Name = name;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> UpdatePassword(string password, Guid id)
+    public async Task<bool> UpdatePasswordAsync(string password, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
             user.Password = Encrypt.GetSHA512(password);
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> UpdateUsername(string username, Guid id)
+    public async Task<bool> UpdateUsernameAsync(string username, Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
             user.Username = username;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<User> GetUserInfo(string username)
+    public async Task<User> GetUserInfoAsync(string username)
     {
         User user = _context.Users.Include(p => p.Profiles).Include(p => p.Profiles).FirstOrDefault(u => u.Username == username && u.Status);
         user.Password = null;

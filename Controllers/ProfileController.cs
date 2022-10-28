@@ -18,7 +18,7 @@ public class ProfileController : ControllerBase
     [HttpPost("Create/{userId}")]
     public async Task<IActionResult> Create([FromRoute] Guid userId)
     {
-        if (await _profileService.Create(userId))
+        if (await _profileService.CreateAsync(userId))
         {
             return Ok(new { msg = "Profile created" });
         }
@@ -28,7 +28,7 @@ public class ProfileController : ControllerBase
     [HttpPut("Update/{id}")]
     public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid id)
     {
-        if (await _profileService.Update(profile, id))
+        if (await _profileService.UpdateAsync(profile, id))
         {
             return Ok(new { msg = "Profile updated" });
         }
@@ -38,7 +38,7 @@ public class ProfileController : ControllerBase
     [HttpDelete("Delete/{id}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        if (await _profileService.Delete(id))
+        if (await _profileService.DeleteAsync(id))
         {
             return Ok(new { msg = "Profile deleted" });
         }

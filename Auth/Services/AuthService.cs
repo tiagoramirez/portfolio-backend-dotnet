@@ -51,7 +51,7 @@ public class AuthService : IAuthService
         _context.Users.Add(user);
         _context.User_Roles.Add(user_Role);
         await _context.SaveChangesAsync();
-        return await _profileService.Create(user.Id);
+        return await _profileService.CreateAsync(user.Id);
     }
 
     public bool UsernameAvailable(string username)

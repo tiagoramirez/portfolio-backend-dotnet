@@ -4,9 +4,9 @@ namespace portfolio.Services;
 
 public interface IProfileConfigService
 {
-    Task<ProfileConfig> Create();
-    Task<bool> Update(ProfileConfig config, Guid id);
-    Task<bool> Delete(Guid id);
+    Task<ProfileConfig> CreateAsync();
+    Task<bool> UpdateAsync(ProfileConfig config, Guid id);
+    Task<bool> DeleteAsync(Guid id);
 }
 
 public class ProfileConfigService : IProfileConfigService
@@ -19,7 +19,7 @@ public class ProfileConfigService : IProfileConfigService
         _context = context;
     }
 
-    public async Task<ProfileConfig> Create()
+    public async Task<ProfileConfig> CreateAsync()
     {
         ProfileConfig newConfig = new ProfileConfig
         {
@@ -30,35 +30,55 @@ public class ProfileConfigService : IProfileConfigService
             ShowLocation = false,
             ShowPhone = false
         };
-        _context.ProfileConfigs.Add(newConfig);
-        await _context.SaveChangesAsync();
-        return newConfig;
+        try
+        {
+            await _context.ProfileConfigs.AddAsync(newConfig);
+            await _context.SaveChangesAsync();
+            return newConfig;
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
     }
 
-    public async Task<bool> Delete(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         ProfileConfig config = await _context.ProfileConfigs.FindAsync(id);
         if (config != null)
         {
-            _context.ProfileConfigs.Remove(config);
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                _context.ProfileConfigs.Remove(config);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> Update(ProfileConfig config, Guid id)
+    public async Task<bool> UpdateAsync(ProfileConfig config, Guid id)
     {
         ProfileConfig configToUpdate = await _context.ProfileConfigs.FindAsync(id);
-        System.Console.WriteLine("entra aca");
         if (configToUpdate != null)
         {
             configToUpdate.ShowBanner = config.ShowBanner;
             configToUpdate.ShowLocation = config.ShowLocation;
             configToUpdate.ShowPhone = config.ShowPhone;
             configToUpdate.ShowPhoto = config.ShowPhoto;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }

@@ -18,7 +18,7 @@ public class UserController : ControllerBase
     [HttpGet("{username}")]
     public async Task<IActionResult> GetUserInfo(string username)
     {
-        var user = await _userService.GetUserInfo(username);
+        var user = await _userService.GetUserInfoAsync(username);
         if (user == null)
         {
             return NotFound(new { msg = "User not found" });
@@ -29,7 +29,7 @@ public class UserController : ControllerBase
     [HttpPut("Update/Name/{id}/{name}")]
     public async Task<IActionResult> UpdateName([FromRoute] Guid id, [FromRoute] string name)
     {
-        if (await _userService.UpdateName(name, id))
+        if (await _userService.UpdateNameAsync(name, id))
         {
             return Ok(new { msg = "Name Updateed" });
         }
@@ -39,7 +39,7 @@ public class UserController : ControllerBase
     [HttpPut("Update/Username/{id}/{username}")]
     public async Task<IActionResult> UpdateUsername([FromRoute] Guid id, [FromRoute] string username)
     {
-        if (await _userService.UpdateUsername(username, id))
+        if (await _userService.UpdateUsernameAsync(username, id))
         {
             return Ok(new { msg = "Username Updateed" });
         }
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
     [HttpPut("Update/Password/{id}/{password}")]
     public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromRoute] string password)
     {
-        if (await _userService.UpdatePassword(password, id))
+        if (await _userService.UpdatePasswordAsync(password, id))
         {
             return Ok(new { msg = "Password Updateed" });
         }
@@ -59,7 +59,7 @@ public class UserController : ControllerBase
     [HttpPut("Update/Email/{id}/{email}")]
     public async Task<IActionResult> UpdateEmail([FromRoute] Guid id, [FromRoute] string email)
     {
-        if (await _userService.UpdateEmail(email, id))
+        if (await _userService.UpdateEmailAsync(email, id))
         {
             return Ok(new { msg = "Email Updateed" });
         }
@@ -69,7 +69,7 @@ public class UserController : ControllerBase
     [HttpDelete("Delete/{id}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        if (await _userService.Delete(id))
+        if (await _userService.DeleteAsync(id))
         {
             return Ok(new { msg = "User deleted" });
         }

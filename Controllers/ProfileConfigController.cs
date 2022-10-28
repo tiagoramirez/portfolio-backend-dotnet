@@ -18,7 +18,7 @@ public class ProfileConfigController : ControllerBase
     [HttpPut("Update/{id}")]
     public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid id)
     {
-        if (await _profileConfigService.Update(config, id))
+        if (await _profileConfigService.UpdateAsync(config, id))
         {
             return Ok(new { msg = "Config updated" });
         }

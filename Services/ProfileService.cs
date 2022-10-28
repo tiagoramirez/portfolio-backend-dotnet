@@ -4,9 +4,9 @@ namespace portfolio.Services;
 
 public interface IProfileService
 {
-    Task<bool> Create(Guid userId);
-    Task<bool> Update(Profile profile, Guid id);
-    Task<bool> Delete(Guid id);
+    Task<bool> CreateAsync(Guid userId);
+    Task<bool> UpdateAsync(Profile profile, Guid id);
+    Task<bool> DeleteAsync(Guid id);
 }
 
 public class ProfileService : IProfileService
@@ -21,9 +21,10 @@ public class ProfileService : IProfileService
         _profileConfigService = profileConfigService;
     }
 
-    public async Task<bool> Create(Guid userId)
+    public async Task<bool> CreateAsync(Guid userId)
     {
-        ProfileConfig config = await _profileConfigService.Create();
+        ProfileConfig config = await _profileConfigService.CreateAsync();
+        if (config == null) return false;
 
         Profile profile = new Profile
         {
@@ -33,29 +34,43 @@ public class ProfileService : IProfileService
             Description = "",
             AboutMe = "",
         };
-        _context.Profiles.Add(profile);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.Profiles.AddAsync(profile);
+            await _context.SaveChangesAsync();
+        }
+        catch (System.Exception)
+        {
+            return false;
+        }
 
         config.ProfileId = profile.Id;
-        return await _profileConfigService.Update(config, config.Id);
+        return await _profileConfigService.UpdateAsync(config, config.Id);
     }
 
-    public async Task<bool> Delete(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         Profile profile = await _context.Profiles.FindAsync(id);
         IEnumerable<Profile> userProfiles = _context.Profiles.Where(p => p.UserId == profile.UserId);
         if (userProfiles.Count() > 1)
         {
-            await _profileConfigService.Delete(profile.ProfileConfigId);
-            // NOT NECESSARY BECAUSE CASCADE DELETE
-            // _context.Profiles.Remove(profile);
-            // await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                // NOT NECESSARY BECAUSE CASCADE DELETE
+                // _context.Profiles.Remove(profile);
+                // await _context.SaveChangesAsync();
+                await _profileConfigService.DeleteAsync(profile.ProfileConfigId);
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
 
-    public async Task<bool> Update(Profile profile, Guid id)
+    public async Task<bool> UpdateAsync(Profile profile, Guid id)
     {
         Profile profileToUpdate = await _context.Profiles.FindAsync(id);
         if (profileToUpdate != null)
@@ -65,8 +80,15 @@ public class ProfileService : IProfileService
             profileToUpdate.LocationState = profile.LocationState;
             profileToUpdate.LocationCountry = profile.LocationCountry;
             profileToUpdate.AboutMe = profile.AboutMe;
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
         }
         return false;
     }
