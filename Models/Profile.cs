@@ -19,7 +19,10 @@ public class Profile
     [JsonIgnore]
     public User User { get; set; }
     public ProfileConfig Config { get; set; }
+    [JsonIgnore]
     public ICollection<Experience_Description> ExperienceDescriptions { get; set; }
+    [JsonIgnore]
     public ICollection<Education_Description> EducationDescriptions { get; set; }
+    [JsonIgnore]
     public ICollection<Project_Description> ProjectDescriptions { get; set; }
 }

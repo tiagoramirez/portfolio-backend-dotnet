@@ -44,9 +44,13 @@ public class AuthService : IAuthService
         user.Password = Encrypt.GetSHA512(user.Password);
         user.Status = true;
         user.Created = DateTime.Now;
+        Guid roleId = _context.Roles.FirstOrDefault(r => r.RoleName == "User").Id;
+        User_Role user_Role = new User_Role();
+        user_Role.RoleId = roleId;
+        user_Role.UserId = user.Id;
         _context.Users.Add(user);
+        _context.User_Roles.Add(user_Role);
         await _context.SaveChangesAsync();
-
         return await _profileService.Create(user.Id);
     }
 

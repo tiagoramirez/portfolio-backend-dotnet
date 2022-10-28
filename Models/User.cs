@@ -22,9 +22,10 @@ public class User
 
     // Navigations Properties
     public virtual ICollection<Profile> Profiles { get; set; }
-    public virtual ICollection<User_Role> User_Roles { get; set; }
-    public virtual ICollection<User_SocialMedia> User_SocialMedias { get; set; }
-    public virtual ICollection<User_Skill> User_Skills { get; set; }
+    [JsonIgnore]
+    public virtual ICollection<User_Role> Roles { get; set; }
+    public virtual ICollection<User_SocialMedia> SocialMedias { get; set; }
+    public virtual ICollection<User_Skill> Skills { get; set; }
     public virtual ICollection<Experience> Experiences { get; set; }
     public virtual ICollection<Education> Educations { get; set; }
     public virtual ICollection<Project> Projects { get; set; }

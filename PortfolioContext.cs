@@ -203,7 +203,7 @@ public class PortfolioContext : DbContext
         {
             userRole.ToTable("User_Role");
             userRole.HasKey(table => table.Id);
-            userRole.HasOne(table => table.User).WithMany(user => user.User_Roles).HasForeignKey(user_role => user_role.UserId);
+            userRole.HasOne(table => table.User).WithMany(user => user.Roles).HasForeignKey(user_role => user_role.UserId);
             userRole.HasOne(table => table.Role).WithMany(role => role.User_Roles).HasForeignKey(user_role => user_role.RoleId);
             userRole.Property(table => table.Id).ValueGeneratedOnAdd();
         });
@@ -212,7 +212,7 @@ public class PortfolioContext : DbContext
         {
             userSkill.ToTable("User_Skill");
             userSkill.HasKey(table => table.Id);
-            userSkill.HasOne(table => table.User).WithMany(user => user.User_Skills).HasForeignKey(user_skill => user_skill.UserId);
+            userSkill.HasOne(table => table.User).WithMany(user => user.Skills).HasForeignKey(user_skill => user_skill.UserId);
             userSkill.HasOne(table => table.Skill).WithMany(skill => skill.User_Skills).HasForeignKey(user_skill => user_skill.SkillId);
             userSkill.Property(table => table.Id).ValueGeneratedOnAdd();
             userSkill.Property(table => table.Percentage).IsRequired();
@@ -222,7 +222,7 @@ public class PortfolioContext : DbContext
         {
             userSocialMedia.ToTable("User_SocialMedia");
             userSocialMedia.HasKey(table => table.Id);
-            userSocialMedia.HasOne(table => table.User).WithMany(user => user.User_SocialMedias).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
+            userSocialMedia.HasOne(table => table.User).WithMany(user => user.SocialMedias).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
             userSocialMedia.HasOne(table => table.SocialMedia).WithMany(socialMedia => socialMedia.User_SocialMedias).HasForeignKey(user_socialMedia => user_socialMedia.SocialMediaId);
             userSocialMedia.Property(table => table.Id).ValueGeneratedOnAdd();
             userSocialMedia.Property(table => table.Url).IsRequired().HasMaxLength(255);
@@ -232,9 +232,9 @@ public class PortfolioContext : DbContext
         {
             user.ToTable("User");
             user.HasKey(table => table.Id);
-            user.HasMany(table => table.User_Roles).WithOne(user_role => user_role.User).HasForeignKey(user_role => user_role.UserId);
-            user.HasMany(table => table.User_Skills).WithOne(user_skill => user_skill.User).HasForeignKey(user_skill => user_skill.UserId);
-            user.HasMany(table => table.User_SocialMedias).WithOne(user_socialMedia => user_socialMedia.User).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
+            user.HasMany(table => table.Roles).WithOne(user_role => user_role.User).HasForeignKey(user_role => user_role.UserId);
+            user.HasMany(table => table.Skills).WithOne(user_skill => user_skill.User).HasForeignKey(user_skill => user_skill.UserId);
+            user.HasMany(table => table.SocialMedias).WithOne(user_socialMedia => user_socialMedia.User).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
             user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
             user.HasMany(table => table.Profiles).WithOne(profile => profile.User).HasForeignKey(profile => profile.UserId);
             user.Property(table => table.Id).ValueGeneratedOnAdd();
