@@ -7,7 +7,7 @@ namespace portfolio.Auth.Services;
 public interface IAuthService
 {
     string Login(string username, string password);
-    Task<bool> Register(User user);
+    Task<bool> RegisterAsync(User user);
     bool UsernameAvailable(string username);
     bool EmailAvailable(string email);
 }
@@ -38,7 +38,7 @@ public class AuthService : IAuthService
         return null;
     }
 
-    public async Task<bool> Register(User user)
+    public async Task<bool> RegisterAsync(User user)
     {
         user.Id = Guid.NewGuid();
         user.Password = Encrypt.GetSHA512(user.Password);
@@ -48,10 +48,17 @@ public class AuthService : IAuthService
         User_Role user_Role = new User_Role();
         user_Role.RoleId = roleId;
         user_Role.UserId = user.Id;
-        _context.Users.Add(user);
-        _context.User_Roles.Add(user_Role);
-        await _context.SaveChangesAsync();
-        return await _profileService.CreateAsync(user.Id);
+        try
+        {
+            await _context.Users.AddAsync(user);
+            await _context.User_Roles.AddAsync(user_Role);
+            await _context.SaveChangesAsync();
+            return await _profileService.CreateAsync(user.Id);
+        }
+        catch (System.Exception)
+        {
+            return false;
+        }
     }
 
     public bool UsernameAvailable(string username)

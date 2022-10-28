@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
     {
         if (_authService.UsernameAvailable(user.Username) && _authService.EmailAvailable(user.Email))
         {
-            if (await _authService.Register(user))
+            if (await _authService.RegisterAsync(user))
             {
                 return Ok(new { msg = "User registered" });
             }
