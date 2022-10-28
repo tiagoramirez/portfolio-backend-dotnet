@@ -15,6 +15,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IProfileConfigService, ProfileConfigService>();
+builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
 
 var app = builder.Build();
 

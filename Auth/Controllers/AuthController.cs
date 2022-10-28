@@ -29,13 +29,9 @@ public class AuthController : ControllerBase
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] User user)
     {
-        if (_authService.UsernameAvailable(user.Username) && _authService.EmailAvailable(user.Email))
+        if (await _authService.RegisterAsync(user))
         {
-            if (await _authService.RegisterAsync(user))
-            {
-                return Ok(new { msg = "User registered" });
-            }
-            return BadRequest(new { msg = "Server error. Can't register new user. Try again later..." });
+            return Ok(new { msg = "User registered" });
         }
         return BadRequest(new { msg = "Username or email already in use" });
     }

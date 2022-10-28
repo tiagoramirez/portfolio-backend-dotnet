@@ -8,7 +8,7 @@ public class User
     [JsonIgnore]
     public Guid Id { get; set; }
     public string Name { get; set; }
-    [EmailAddress]
+    [EmailAddress(ErrorMessage = "Invalid Email")]
     public string Email { get; set; }
     [RegularExpression(@"^[a-zA-Z0-9_]+[a-zA-Z0-9._]{4,15}$", ErrorMessage = "Username must be between 4 and 15 characters, and can only contain letters, numbers, underscores and dots.")]
     public string Username { get; set; }

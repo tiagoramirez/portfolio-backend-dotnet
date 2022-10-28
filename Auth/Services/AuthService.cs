@@ -8,24 +8,19 @@ public interface IAuthService
 {
     string Login(string username, string password);
     Task<bool> RegisterAsync(User user);
-    bool UsernameAvailable(string username);
-    bool EmailAvailable(string email);
 }
 
 public class AuthService : IAuthService
 {
     PortfolioContext _context;
     IProfileService _profileService;
+    IUserService _userService;
 
-    public AuthService(PortfolioContext context, IProfileService profileService)
+    public AuthService(PortfolioContext context, IProfileService profileService, IUserService userService)
     {
         _context = context;
         _profileService = profileService;
-    }
-
-    public bool EmailAvailable(string email)
-    {
-        return !_context.Users.Any(u => u.Email == email);
+        _userService = userService;
     }
 
     public string Login(string username, string password)
@@ -40,6 +35,8 @@ public class AuthService : IAuthService
 
     public async Task<bool> RegisterAsync(User user)
     {
+        if (!_userService.UsernameAvailable(user.Username) || !_userService.EmailAvailable(user.Email)) return false;
+
         user.Id = Guid.NewGuid();
         user.Password = Encrypt.GetSHA512(user.Password);
         user.Status = true;
@@ -59,10 +56,5 @@ public class AuthService : IAuthService
         {
             return false;
         }
-    }
-
-    public bool UsernameAvailable(string username)
-    {
-        return !_context.Users.Any(u => u.Username == username);
     }
 }

@@ -51,6 +51,7 @@ public class ProfileService : IProfileService
     public async Task<bool> DeleteAsync(Guid id)
     {
         Profile profile = await _context.Profiles.FindAsync(id);
+        if (profile == null) return false;
         IEnumerable<Profile> userProfiles = _context.Profiles.Where(p => p.UserId == profile.UserId);
         if (userProfiles.Count() > 1)
         {

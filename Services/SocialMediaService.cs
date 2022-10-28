@@ -4,7 +4,7 @@ namespace portfolio.Services;
 
 public interface ISocialMediaService
 {
-    IEnumerable<SocialMedia> GetAllSocialMediaAsync();
+    IEnumerable<SocialMedia> GetAllSocialMedia();
     Task<bool> CreateNewSocialMediaAsync(User_SocialMedia socialMedia);
     Task<bool> DeleteSocialMediaAsync(Guid id);
 }
@@ -48,7 +48,7 @@ public class SocialMediaService : ISocialMediaService
         }
     }
 
-    public IEnumerable<SocialMedia> GetAllSocialMediaAsync()
+    public IEnumerable<SocialMedia> GetAllSocialMedia()
     {
         return _context.SocialMedias;
     }
