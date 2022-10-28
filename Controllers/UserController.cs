@@ -50,9 +50,6 @@ public class UserController : ControllerBase
     [HttpPut("UpdatePassword/{id}/{password}")]
     public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromRoute] string password)
     {
-        Regex rg = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
-        if (!rg.Match(password).Success) return BadRequest(new { msg = "Password must be between 8 and 20 characters, contain at least one uppercase letter, one lowercase letter, one number, and one special character" });
-
         if (await _userService.UpdatePasswordAsync(password, id))
         {
             return Ok(new { msg = "Password Updated" });
