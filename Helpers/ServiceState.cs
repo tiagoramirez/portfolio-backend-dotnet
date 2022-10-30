@@ -9,7 +9,7 @@ public class ServiceState
             case ServiceStateType.Ok:
                 return "Ok";
             case ServiceStateType.InternalError:
-                return "Internal error";
+                return "Internal error. Try again later.";
             case ServiceStateType.UsernameNotAvailable:
                 return "Username not available";
             case ServiceStateType.EmailNotAvailable:
@@ -25,13 +25,13 @@ public class ServiceState
             case ServiceStateType.SocialMediaNotFound:
                 return "Social media not found";
             case ServiceStateType.ProfileConfigNotFound:
-                return "Profile config not found";
+                return "Config not found";
             case ServiceStateType.ProfileNotFound:
                 return "Profile not found";
             case ServiceStateType.OneProfileRequired:
                 return "User can't have less than one profile";
             default:
-                return "Unknown error";
+                return "Unknown error. Try again later.";
         }
     }
 }
