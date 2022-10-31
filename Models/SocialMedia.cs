@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace portfolio.Models;
 
 public class SocialMedia
@@ -7,5 +9,6 @@ public class SocialMedia
     public string IconClassName { get; set; }
 
     // Navigations Properties
+    [JsonIgnore]
     public virtual ICollection<User_SocialMedia> User_SocialMedias { get; set; }
 }

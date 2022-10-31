@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
@@ -8,6 +7,7 @@ namespace portfolio.Services;
 
 public interface IUserService
 {
+    Task<IEnumerable<string>> GetAllAsync();
     Task<User> GetByUsernameAsync(string username);
     Task<ServiceStateType> UpdateNameAsync(Guid id, string name);
     Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username);
@@ -134,12 +134,16 @@ public class UserService : IUserService
 
     public async Task<User> GetByUsernameAsync(string username)
     {
-        User user = _context.Users.Include(p => p.Profiles).FirstOrDefault(u => u.Username == username && u.Status);
+        User user = _context.Users.Include(p => p.Profiles).Include(sm => sm.SocialMedias).FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
         user.Password = null;
         foreach (var profile in user.Profiles)
         {
             profile.Config = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
+        }
+        foreach (var socialMedia in user.SocialMedias)
+        {
+            socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
         }
         return user;
     }
@@ -152,5 +156,12 @@ public class UserService : IUserService
     public bool UsernameAvailable(string username)
     {
         return !_context.Users.Any(u => u.Username == username);
+    }
+
+    public async Task<IEnumerable<string>> GetAllAsync()
+    {
+        List<User> users = await _context.Users.Where(u => u.Status).ToListAsync();
+        List<string> usernames = users.Select(u => u.Username).ToList();
+        return usernames;
     }
 }

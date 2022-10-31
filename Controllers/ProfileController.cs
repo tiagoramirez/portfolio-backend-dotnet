@@ -27,10 +27,10 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid id)
+    [HttpPut("{profileId}")]
+    public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid profileId)
     {
-        ServiceStateType state = await _profileService.UpdateAsync(profile, id);
+        ServiceStateType state = await _profileService.UpdateAsync(profile, profileId);
         if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Profile Updated" });
@@ -38,10 +38,10 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete("{profileId}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid profileId)
     {
-        ServiceStateType state = await _profileService.DeleteAsync(id);
+        ServiceStateType state = await _profileService.DeleteAsync(profileId);
         if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Profile Deleted" });

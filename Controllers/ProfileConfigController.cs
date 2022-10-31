@@ -16,10 +16,10 @@ public class ProfileConfigController : ControllerBase
         _profileConfigService = profileConfigService;
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid id)
+    [HttpPut("{configId}")]
+    public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid configId)
     {
-        ServiceStateType state = await _profileConfigService.UpdateAsync(config, id);
+        ServiceStateType state = await _profileConfigService.UpdateAsync(config, configId);
 
         if (state == ServiceStateType.Ok)
         {

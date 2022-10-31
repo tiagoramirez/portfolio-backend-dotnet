@@ -22,10 +22,10 @@ public class SocialMediaController : ControllerBase
         return Ok(_socialMediaService.GetAll());
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] User_SocialMedia socialMedia)
+    [HttpPost("{userId}")]
+    public async Task<IActionResult> Create([FromBody] User_SocialMedia socialMedia, [FromRoute] Guid userId)
     {
-        ServiceStateType state = await _socialMediaService.CreateAsync(socialMedia);
+        ServiceStateType state = await _socialMediaService.CreateAsync(socialMedia, userId);
         if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Social Media Created" });
@@ -33,10 +33,10 @@ public class SocialMediaController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete("{socialMediaId}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId)
     {
-        ServiceStateType state = await _socialMediaService.DeleteAsync(id);
+        ServiceStateType state = await _socialMediaService.DeleteAsync(socialMediaId);
         if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "Social Media Deleted" });

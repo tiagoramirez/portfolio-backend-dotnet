@@ -6,7 +6,7 @@ namespace portfolio.Services;
 public interface ISocialMediaService
 {
     IEnumerable<SocialMedia> GetAll();
-    Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia);
+    Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia, Guid userId);
     Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
@@ -19,8 +19,9 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia)
+    public async Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia, Guid userId)
     {
+        socialMedia.UserId = userId;
         try
         {
             await _context.User_SocialMedias.AddAsync(socialMedia);
