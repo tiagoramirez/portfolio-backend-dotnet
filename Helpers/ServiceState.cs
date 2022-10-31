@@ -30,6 +30,8 @@ public class ServiceState
                 return "Profile not found";
             case ServiceStateType.OneProfileRequired:
                 return "User can't have less than one profile";
+            case ServiceStateType.SkillNotFound:
+                return "Skill not found";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -50,5 +52,6 @@ public enum ServiceStateType
     SocialMediaNotFound,
     ProfileConfigNotFound,
     ProfileNotFound,
-    OneProfileRequired
+    OneProfileRequired,
+    SkillNotFound,
 }

@@ -134,7 +134,7 @@ public class UserService : IUserService
 
     public async Task<User> GetByUsernameAsync(string username)
     {
-        User user = _context.Users.Include(p => p.Profiles).Include(sm => sm.SocialMedias).FirstOrDefault(u => u.Username == username && u.Status);
+        User user = _context.Users.Include(p => p.Profiles).Include(sm => sm.SocialMedias).Include(s => s.Skills).FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
         user.Password = null;
         foreach (var profile in user.Profiles)
@@ -144,6 +144,10 @@ public class UserService : IUserService
         foreach (var socialMedia in user.SocialMedias)
         {
             socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
+        }
+        foreach (var userSkill in user.Skills)
+        {
+            userSkill.Skill = await _context.FindAsync<Skill>(userSkill.SkillId);
         }
         return user;
     }

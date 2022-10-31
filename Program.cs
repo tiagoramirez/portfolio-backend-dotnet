@@ -16,6 +16,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IProfileConfigService, ProfileConfigService>();
 builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
 
 var app = builder.Build();
 
