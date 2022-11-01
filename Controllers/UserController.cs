@@ -31,6 +31,19 @@ public class UserController : ControllerBase
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
         }
+        await _userService.LoadDescriptionsAsync(user);
+        return Ok(user);
+    }
+
+    [HttpGet("{username}/{profileId}")]
+    public async Task<IActionResult> GetUserInfo(string username, Guid profileId)
+    {
+        User user = await _userService.GetByUsernameAsync(username);
+        if (user == null)
+        {
+            return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
+        }
+        await _userService.LoadDescriptionsAsync(user, profileId);
         return Ok(user);
     }
 

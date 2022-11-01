@@ -9,6 +9,8 @@ public interface IUserService
 {
     Task<IEnumerable<string>> GetAllAsync();
     Task<User> GetByUsernameAsync(string username);
+    Task<User> LoadDescriptionsAsync(User user, Guid profileId);
+    Task<User> LoadDescriptionsAsync(User user);
     Task<ServiceStateType> UpdateNameAsync(Guid id, string name);
     Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username);
     Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password);
@@ -134,7 +136,14 @@ public class UserService : IUserService
 
     public async Task<User> GetByUsernameAsync(string username)
     {
-        User user = _context.Users.Include(p => p.Profiles).Include(sm => sm.SocialMedias).Include(s => s.Skills).FirstOrDefault(u => u.Username == username && u.Status);
+        User user = _context.Users
+                    .Include(p => p.Profiles)
+                    .Include(sm => sm.SocialMedias)
+                    .Include(s => s.Skills)
+                    .Include(ex => ex.Experiences)
+                    .Include(ed => ed.Educations)
+                    .Include(pr => pr.Projects)
+                    .FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
         user.Password = null;
         foreach (var profile in user.Profiles)
@@ -167,5 +176,51 @@ public class UserService : IUserService
         List<User> users = await _context.Users.Where(u => u.Status).ToListAsync();
         List<string> usernames = users.Select(u => u.Username).ToList();
         return usernames;
+    }
+
+    public async Task<User> LoadDescriptionsAsync(User user, Guid profileId)
+    {
+        foreach (var experience in user.Experiences)
+        {
+            Experience_Description expDesc = await _context.ExperienceDescriptions.Where(ed => ed.ExperienceId == experience.Id && ed.ProfileId == profileId).FirstOrDefaultAsync();
+            experience.Description = expDesc.Description;
+        }
+
+        foreach (var education in user.Educations)
+        {
+            Education_Description educDesc = await _context.EducationDescriptions.Where(ed => ed.EducationId == education.Id && ed.ProfileId == profileId).FirstOrDefaultAsync();
+            education.Description = educDesc.Description;
+        }
+
+        foreach (var project in user.Projects)
+        {
+            Project_Description projDesct = await _context.ProjectDescriptions.Where(pd => pd.ProjectId == project.Id && pd.ProfileId == profileId).FirstOrDefaultAsync();
+            project.Description = projDesct.Description;
+        }
+
+        return user;
+    }
+
+    public async Task<User> LoadDescriptionsAsync(User user)
+    {
+        foreach (var experience in user.Experiences)
+        {
+            Experience_Description expDesc = await _context.ExperienceDescriptions.Where(ed => ed.ExperienceId == experience.Id && ed.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
+            experience.Description = expDesc.Description;
+        }
+
+        foreach (var education in user.Educations)
+        {
+            Education_Description educDesc = await _context.EducationDescriptions.Where(ed => ed.EducationId == education.Id && ed.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
+            education.Description = educDesc.Description;
+        }
+
+        foreach (var project in user.Projects)
+        {
+            Project_Description projDesct = await _context.ProjectDescriptions.Where(pd => pd.ProjectId == project.Id && pd.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
+            project.Description = projDesct.Description;
+        }
+
+        return user;
     }
 }

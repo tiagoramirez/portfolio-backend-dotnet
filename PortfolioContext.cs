@@ -48,6 +48,7 @@ public class PortfolioContext : DbContext
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();
             educ.Property(table => table.End).IsRequired(false);
+            educ.Ignore(table => table.Description);
         });
 
         modelBuilder.Entity<Experience_Description>(desc =>
@@ -73,6 +74,7 @@ public class PortfolioContext : DbContext
             exp.Property(table => table.IsActual).IsRequired();
             exp.Property(table => table.Start).IsRequired();
             exp.Property(table => table.End).IsRequired(false);
+            exp.Ignore(table => table.Description);
         });
 
         modelBuilder.Entity<Profile>(prof =>
@@ -124,6 +126,7 @@ public class PortfolioContext : DbContext
             proj.Property(table => table.Id).ValueGeneratedOnAdd();
             proj.Property(table => table.Name).IsRequired().HasMaxLength(50);
             proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
+            proj.Ignore(table => table.Description);
         });
 
         List<Role> roles = new List<Role>();

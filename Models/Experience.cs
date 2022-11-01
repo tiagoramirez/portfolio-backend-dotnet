@@ -5,6 +5,7 @@ namespace portfolio.Models;
 public class Experience
 {
     public Guid Id { get; set; }
+    [JsonIgnore]
     public Guid UserId { get; set; }
     public string Position { get; set; }
     public string Company { get; set; }
@@ -12,10 +13,12 @@ public class Experience
     public bool IsActual { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
+    public string Description { get; set; }
 
     // Navigations Properties
     [JsonIgnore]
     public User User { get; set; }
+    [JsonIgnore]
     public ICollection<Experience_Description> Descriptions { get; set; }
 }
 
