@@ -34,6 +34,8 @@ public class ServiceState
                 return "Skill not found";
             case ServiceStateType.ExperienceNotFound:
                 return "Experience not found";
+            case ServiceStateType.EducationNotFound:
+                return "Education not found";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -57,4 +59,5 @@ public enum ServiceStateType
     OneProfileRequired,
     SkillNotFound,
     ExperienceNotFound,
+    EducationNotFound,
 }

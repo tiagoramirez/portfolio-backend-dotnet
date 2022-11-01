@@ -18,6 +18,8 @@ builder.Services.AddScoped<IProfileConfigService, ProfileConfigService>();
 builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
+builder.Services.AddScoped<IEducationService, EducationService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 var app = builder.Build();
 
