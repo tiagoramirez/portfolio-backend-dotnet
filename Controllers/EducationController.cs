@@ -6,6 +6,7 @@ using portfolio.Services;
 
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/[controller]")]
 public class EducationController : ControllerBase
@@ -17,16 +18,15 @@ public class EducationController : ControllerBase
         _educationService = educationService;
     }
 
-    [Authorize]
-    [HttpPost("{userId}")]
-    public async Task<IActionResult> Create([FromBody] Education education, [FromRoute] Guid userId)
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Education education, [FromHeader] string authorization)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _educationService.CreateAsync(education, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpDelete("{educationId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid educationId)
     {
@@ -35,7 +35,6 @@ public class EducationController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpPut("{educationId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Education education, [FromRoute] Guid educationId, [FromRoute] Guid profileId)
     {

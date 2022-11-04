@@ -6,6 +6,7 @@ using portfolio.Services;
 
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/[controller]")]
 public class ProjectController : ControllerBase
@@ -17,16 +18,15 @@ public class ProjectController : ControllerBase
         _projectService = projectService;
     }
 
-    [Authorize]
-    [HttpPost("{userId}")]
-    public async Task<IActionResult> Create([FromBody] Project project, [FromRoute] Guid userId)
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Project project, [FromHeader] string authorization)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _projectService.CreateAsync(project, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpDelete("{projectId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid projectId)
     {
@@ -35,7 +35,6 @@ public class ProjectController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpPut("{projectId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Project project, [FromRoute] Guid projectId, [FromRoute] Guid profileId)
     {

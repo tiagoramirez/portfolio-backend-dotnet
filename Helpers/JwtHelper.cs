@@ -1,12 +1,10 @@
-using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 
 namespace portfolio.Helpers;
 
 public class JwtHelper
 {
-    public static string GetId(string auth)
+    public static Guid GetId(string auth)
     {
         string token = auth.Remove(0, 7);
 
@@ -14,7 +12,7 @@ public class JwtHelper
 
         string jsonPayload = Encoding.UTF8.GetString(DecodePayload(payload));
 
-        return jsonPayload.Split('"')[3]; //Position where the Id is
+        return new Guid(jsonPayload.Split('"')[3]); //Position where the Id is
     }
 
     static byte[] DecodePayload(string input)

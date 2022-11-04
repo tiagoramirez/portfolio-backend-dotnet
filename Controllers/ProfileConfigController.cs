@@ -6,6 +6,7 @@ using portfolio.Services;
 
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/Config")]
 public class ProfileConfigController : ControllerBase
@@ -17,7 +18,6 @@ public class ProfileConfigController : ControllerBase
         _profileConfigService = profileConfigService;
     }
 
-    [Authorize]
     [HttpPut("{configId}")]
     public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid configId)
     {

@@ -6,6 +6,7 @@ using portfolio.Services;
 
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/[controller]")]
 public class ProfileController : ControllerBase
@@ -17,10 +18,10 @@ public class ProfileController : ControllerBase
         _profileService = profileService;
     }
 
-    [Authorize]
-    [HttpPost("{userId}")]
-    public async Task<IActionResult> Create([FromRoute] Guid userId)
+    [HttpPost]
+    public async Task<IActionResult> Create([FromHeader] string authorization)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _profileService.CreateAsync(userId);
         if (state == ServiceStateType.Ok)
         {
@@ -29,7 +30,6 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpPut("{profileId}")]
     public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid profileId)
     {
@@ -41,7 +41,6 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpDelete("{profileId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid profileId)
     {

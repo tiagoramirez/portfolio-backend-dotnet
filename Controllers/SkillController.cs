@@ -24,9 +24,10 @@ public class SkillController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("{userId}")]
-    public async Task<IActionResult> CreateAsync([FromBody] User_Skill skill, [FromRoute] Guid userId)
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync([FromBody] User_Skill skill, [FromHeader] string authorization)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _skillService.CreateAsync(skill, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });

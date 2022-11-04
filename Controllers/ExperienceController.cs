@@ -6,6 +6,7 @@ using portfolio.Services;
 
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/[controller]")]
 public class ExperienceController : ControllerBase
@@ -17,16 +18,15 @@ public class ExperienceController : ControllerBase
         _experienceService = experienceService;
     }
 
-    [Authorize]
-    [HttpPost("{userId}")]
-    public async Task<IActionResult> Create([FromBody] Experience experience, [FromRoute] Guid userId)
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Experience experience, [FromHeader] string authorization)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _experienceService.CreateAsync(experience, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpDelete("{experienceId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid experienceId)
     {
@@ -35,7 +35,6 @@ public class ExperienceController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpPut("{experienceId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Experience experience, [FromRoute] Guid experienceId, [FromRoute] Guid profileId)
     {

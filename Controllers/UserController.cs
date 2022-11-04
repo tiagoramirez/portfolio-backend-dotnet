@@ -48,9 +48,10 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdateName/{userId}/{name}")]
-    public async Task<IActionResult> UpdateName([FromRoute] Guid userId, [FromRoute] string name)
+    [HttpPut("UpdateName/{name}")]
+    public async Task<IActionResult> UpdateName([FromHeader] string authorization, [FromRoute] string name)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdateNameAsync(userId, name);
         if (state == ServiceStateType.Ok)
         {
@@ -60,9 +61,10 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdateUsername/{userId}/{username}")]
-    public async Task<IActionResult> UpdateUsername([FromRoute] Guid userId, [FromRoute] string username)
+    [HttpPut("UpdateUsername/{username}")]
+    public async Task<IActionResult> UpdateUsername([FromHeader] string authorization, [FromRoute] string username)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdateUsernameAsync(userId, username);
         if (state == ServiceStateType.Ok)
         {
@@ -72,9 +74,10 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdatePassword/{userId}/{password}")]
-    public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromRoute] string password)
+    [HttpPut("UpdatePassword/{password}")]
+    public async Task<IActionResult> UpdatePassword([FromHeader] string authorization, [FromRoute] string password)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdatePasswordAsync(userId, password);
         if (state == ServiceStateType.Ok)
         {
@@ -84,9 +87,10 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdateEmail/{userId}/{email}")]
-    public async Task<IActionResult> UpdateEmail([FromRoute] Guid userId, [FromRoute] string email)
+    [HttpPut("UpdateEmail/{email}")]
+    public async Task<IActionResult> UpdateEmail([FromHeader] string authorization, [FromRoute] string email)
     {
+        Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdateEmailAsync(userId, email);
         if (state == ServiceStateType.Ok)
         {
@@ -97,8 +101,10 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid userId)
+    public async Task<IActionResult> Delete([FromRoute] Guid userId, [FromHeader] string authorization)
     {
+        Guid userId2 = JwtHelper.GetId(authorization);
+        if (userId2 != userId) return BadRequest("Usuario invalido. Intenta de nuevo mas tarde...");
         ServiceStateType state = await _userService.DeleteAsync(userId);
         if (state == ServiceStateType.Ok)
         {
