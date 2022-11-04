@@ -31,7 +31,7 @@ public class UserController : ControllerBase
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
         }
-        await _userService.LoadDescriptionsAsync(user);
+        user = await _userService.LoadDescriptionsAsync(user, user.Profiles.FirstOrDefault().Id);
         return Ok(user);
     }
 
@@ -43,7 +43,8 @@ public class UserController : ControllerBase
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
         }
-        await _userService.LoadDescriptionsAsync(user, profileId);
+        user = await _userService.LoadDescriptionsAsync(user, profileId);
+        if (user == null) return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.ProfileNotFound) });
         return Ok(user);
     }
 

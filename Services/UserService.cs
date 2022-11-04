@@ -11,7 +11,6 @@ public interface IUserService
     Task<IEnumerable<string>> GetAllAsync();
     Task<UserDto> GetByUsernameAsync(string username);
     Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId);
-    Task<UserDto> LoadDescriptionsAsync(UserDto user);
     Task<ServiceStateType> UpdateNameAsync(Guid id, string name);
     Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username);
     Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password);
@@ -195,6 +194,10 @@ public class UserService : IUserService
 
     public async Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId)
     {
+        Guid userId = (await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username)).Id;
+
+        if (!await _context.Profiles.AnyAsync(p => p.Id == profileId && p.UserId == userId)) return null;
+
         foreach (var experience in user.Experiences)
         {
             Experience_Description expDesc = await _context.ExperienceDescriptions.Where(ed => ed.ExperienceId == experience.Id && ed.ProfileId == profileId).FirstOrDefaultAsync();
@@ -210,29 +213,6 @@ public class UserService : IUserService
         foreach (var project in user.Projects)
         {
             Project_Description projDesct = await _context.ProjectDescriptions.Where(pd => pd.ProjectId == project.Id && pd.ProfileId == profileId).FirstOrDefaultAsync();
-            project.Description = projDesct.Description;
-        }
-
-        return user;
-    }
-
-    public async Task<UserDto> LoadDescriptionsAsync(UserDto user)
-    {
-        foreach (var experience in user.Experiences)
-        {
-            Experience_Description expDesc = await _context.ExperienceDescriptions.Where(ed => ed.ExperienceId == experience.Id && ed.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
-            experience.Description = expDesc.Description;
-        }
-
-        foreach (var education in user.Educations)
-        {
-            Education_Description educDesc = await _context.EducationDescriptions.Where(ed => ed.EducationId == education.Id && ed.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
-            education.Description = educDesc.Description;
-        }
-
-        foreach (var project in user.Projects)
-        {
-            Project_Description projDesct = await _context.ProjectDescriptions.Where(pd => pd.ProjectId == project.Id && pd.ProfileId == user.Profiles.FirstOrDefault().Id).FirstOrDefaultAsync();
             project.Description = projDesct.Description;
         }
 
