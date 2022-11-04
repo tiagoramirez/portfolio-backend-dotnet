@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using portfolio.DTOs;
 using portfolio.Helpers;
-using portfolio.Models;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -26,7 +26,7 @@ public class UserController : ControllerBase
     [HttpGet("{username}")]
     public async Task<IActionResult> GetUserInfo(string username)
     {
-        User user = await _userService.GetByUsernameAsync(username);
+        UserDto user = await _userService.GetByUsernameAsync(username);
         if (user == null)
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
@@ -38,7 +38,7 @@ public class UserController : ControllerBase
     [HttpGet("{username}/{profileId}")]
     public async Task<IActionResult> GetUserInfo(string username, Guid profileId)
     {
-        User user = await _userService.GetByUsernameAsync(username);
+        UserDto user = await _userService.GetByUsernameAsync(username);
         if (user == null)
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });

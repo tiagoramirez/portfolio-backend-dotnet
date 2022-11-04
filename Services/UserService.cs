@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using portfolio.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
 
@@ -8,9 +9,9 @@ namespace portfolio.Services;
 public interface IUserService
 {
     Task<IEnumerable<string>> GetAllAsync();
-    Task<User> GetByUsernameAsync(string username);
-    Task<User> LoadDescriptionsAsync(User user, Guid profileId);
-    Task<User> LoadDescriptionsAsync(User user);
+    Task<UserDto> GetByUsernameAsync(string username);
+    Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId);
+    Task<UserDto> LoadDescriptionsAsync(UserDto user);
     Task<ServiceStateType> UpdateNameAsync(Guid id, string name);
     Task<ServiceStateType> UpdateUsernameAsync(Guid id, string username);
     Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password);
@@ -134,7 +135,7 @@ public class UserService : IUserService
         return ServiceStateType.UserNotFound;
     }
 
-    public async Task<User> GetByUsernameAsync(string username)
+    public async Task<UserDto> GetByUsernameAsync(string username)
     {
         User user = _context.Users
                     .Include(p => p.Profiles)
@@ -145,7 +146,7 @@ public class UserService : IUserService
                     .Include(pr => pr.Projects)
                     .FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
-        user.Password = null;
+
         foreach (var profile in user.Profiles)
         {
             profile.Config = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
@@ -158,7 +159,21 @@ public class UserService : IUserService
         {
             userSkill.Skill = await _context.FindAsync<Skill>(userSkill.SkillId);
         }
-        return user;
+
+        UserDto userDto = new UserDto()
+        {
+            Name = user.Name,
+            Username = user.Username,
+            Email = user.Email,
+            Profiles = user.Profiles,
+            SocialMedias = user.SocialMedias,
+            Skills = user.Skills,
+            Experiences = user.Experiences,
+            Educations = user.Educations,
+            Projects = user.Projects
+        };
+
+        return userDto;
     }
 
     public bool EmailAvailable(string email)
@@ -178,7 +193,7 @@ public class UserService : IUserService
         return usernames;
     }
 
-    public async Task<User> LoadDescriptionsAsync(User user, Guid profileId)
+    public async Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId)
     {
         foreach (var experience in user.Experiences)
         {
@@ -201,7 +216,7 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<User> LoadDescriptionsAsync(User user)
+    public async Task<UserDto> LoadDescriptionsAsync(UserDto user)
     {
         foreach (var experience in user.Experiences)
         {
