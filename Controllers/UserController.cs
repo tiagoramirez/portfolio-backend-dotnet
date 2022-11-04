@@ -49,33 +49,20 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdateName/{name}")]
-    public async Task<IActionResult> UpdateName([FromHeader] string authorization, [FromRoute] string name)
+    [HttpPut]
+    public async Task<IActionResult> UpdateName([FromHeader] string authorization, [FromBody] UserDto user)
     {
         Guid userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _userService.UpdateNameAsync(userId, name);
+        ServiceStateType state = await _userService.UpdateUserAsync(userId, user);
         if (state == ServiceStateType.Ok)
         {
-            return Ok(new { msg = "Name Updated" });
+            return Ok(new { msg = "User Updated" });
         }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
     [Authorize]
-    [HttpPut("UpdateUsername/{username}")]
-    public async Task<IActionResult> UpdateUsername([FromHeader] string authorization, [FromRoute] string username)
-    {
-        Guid userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _userService.UpdateUsernameAsync(userId, username);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "Username Updated" });
-        }
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
-    }
-
-    [Authorize]
-    [HttpPut("UpdatePassword/{password}")]
+    [HttpPut("Password/{password}")]
     public async Task<IActionResult> UpdatePassword([FromHeader] string authorization, [FromRoute] string password)
     {
         Guid userId = JwtHelper.GetId(authorization);
@@ -88,24 +75,11 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("UpdateEmail/{email}")]
-    public async Task<IActionResult> UpdateEmail([FromHeader] string authorization, [FromRoute] string email)
-    {
-        Guid userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _userService.UpdateEmailAsync(userId, email);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "Email Updated" });
-        }
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
-    }
-
-    [Authorize]
     [HttpDelete("{userId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid userId, [FromHeader] string authorization)
     {
         Guid userId2 = JwtHelper.GetId(authorization);
-        if (userId2 != userId) return BadRequest("Usuario invalido. Intenta de nuevo mas tarde...");
+        if (userId2 != userId) return BadRequest("Invalid user. Try again later...");
         ServiceStateType state = await _userService.DeleteAsync(userId);
         if (state == ServiceStateType.Ok)
         {

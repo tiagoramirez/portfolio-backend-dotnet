@@ -4,6 +4,7 @@ namespace portfolio.Auth.DTOs;
 
 public class RegisterDto
 {
+    [MaxLength(50, ErrorMessage = "Username must be less than 50 characters")]
     public string Name { get; set; }
     [MaxLength(100, ErrorMessage = "Email is too long (Max 100 characters)")]
     [EmailAddress(ErrorMessage = "Invalid Email")]
