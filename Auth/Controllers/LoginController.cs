@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using portfolio.Auth.DTOs;
 using portfolio.Auth.Services;
 using portfolio.Helpers;
 
@@ -15,13 +16,13 @@ public class LoginController : ControllerBase
         _loginService = loginService;
     }
 
-    [HttpGet("{username}/{password}")]
-    public async Task<IActionResult> Login([FromRoute] string username, [FromRoute] string password)
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
-        ServiceStateType state = await _loginService.LoginAsync(username, password);
+        ServiceStateType state = await _loginService.LoginAsync(login);
         if (state == ServiceStateType.Ok)
         {
-            string token = await _loginService.GenerateToken(username);
+            string token = await _loginService.GenerateToken(login);
             return Ok(new { tokenLogin = token });
         }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });

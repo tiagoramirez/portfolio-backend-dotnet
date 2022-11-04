@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using portfolio.Auth.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
 
@@ -10,9 +11,9 @@ namespace portfolio.Auth.Services;
 
 public interface ILoginService
 {
-    Task<ServiceStateType> LoginAsync(string username, string password);
+    Task<ServiceStateType> LoginAsync(LoginDto login);
 
-    Task<string> GenerateToken(string username);
+    Task<string> GenerateToken(LoginDto login);
 }
 
 public class LoginService : ILoginService
@@ -27,13 +28,13 @@ public class LoginService : ILoginService
         _config = config;
     }
 
-    public async Task<string> GenerateToken(string username)
+    public async Task<string> GenerateToken(LoginDto login)
     {
-        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username);
 
         Claim[] claims = new Claim[]{
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, username)
+            new Claim(ClaimTypes.Name, login.Username)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWT:Key").Value));
@@ -47,9 +48,9 @@ public class LoginService : ILoginService
         return token;
     }
 
-    public async Task<ServiceStateType> LoginAsync(string username, string password)
+    public async Task<ServiceStateType> LoginAsync(LoginDto login)
     {
-        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == Encrypt.GetSHA512(password));
+        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username && u.Password == Encrypt.GetSHA512(login.Password));
         if (user == null) return ServiceStateType.InvalidCredentials;
         return ServiceStateType.Ok;
     }

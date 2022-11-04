@@ -1,25 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using portfolio.Auth.DTOs;
 using portfolio.Auth.Services;
 using portfolio.Helpers;
-using portfolio.Models;
 
 namespace portfolio.Auth.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class AuthController : ControllerBase
+[Route("API/[controller]")]
+public class RegisterController : ControllerBase
 {
     IRegisterService _registerService;
 
-    public AuthController(IRegisterService registerService)
+    public RegisterController(IRegisterService registerService)
     {
         _registerService = registerService;
     }
 
-    [HttpPost("Register")]
-    public async Task<IActionResult> Register([FromBody] User user)
+    [HttpPost]
+    public async Task<IActionResult> Register([FromBody] RegisterDto register)
     {
-        ServiceStateType state = await _registerService.RegisterAsync(user);
+        ServiceStateType state = await _registerService.RegisterAsync(register);
 
         if (state == ServiceStateType.Ok)
         {

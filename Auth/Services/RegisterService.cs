@@ -1,3 +1,4 @@
+using portfolio.Auth.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Services;
@@ -6,7 +7,7 @@ namespace portfolio.Auth.Services;
 
 public interface IRegisterService
 {
-    Task<ServiceStateType> RegisterAsync(User user);
+    Task<ServiceStateType> RegisterAsync(RegisterDto register);
 }
 
 public class RegisterService : IRegisterService
@@ -22,15 +23,21 @@ public class RegisterService : IRegisterService
         _userService = userService;
     }
 
-    public async Task<ServiceStateType> RegisterAsync(User user)
+    public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
     {
-        if (!_userService.UsernameAvailable(user.Username)) return ServiceStateType.UsernameNotAvailable;
-        if (!_userService.EmailAvailable(user.Email)) return ServiceStateType.EmailNotAvailable;
+        if (!_userService.UsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
+        if (!_userService.EmailAvailable(register.Email)) return ServiceStateType.EmailNotAvailable;
 
-        user.Id = Guid.NewGuid();
-        user.Password = Encrypt.GetSHA512(user.Password);
-        user.Status = true;
-        user.Created = DateTime.Now;
+        User user = new User
+        {
+            Id = Guid.NewGuid(),
+            Name = register.Name,
+            Email = register.Email,
+            Username = register.Username,
+            Password = Encrypt.GetSHA512(register.Password),
+            Status = true,
+            Created = DateTime.Now,
+        };
         Guid roleId = _context.Roles.FirstOrDefault(r => r.RoleName == "User").Id;
         User_Role user_Role = new User_Role();
         user_Role.RoleId = roleId;
