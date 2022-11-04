@@ -29,13 +29,15 @@ public class ServiceState
             case ServiceStateType.ProfileNotFound:
                 return "Profile not found";
             case ServiceStateType.OneProfileRequired:
-                return "User can't have less than one profile";
+                return "Users can't have less than one profile";
             case ServiceStateType.SkillNotFound:
                 return "Skill not found";
             case ServiceStateType.ExperienceNotFound:
                 return "Experience not found";
             case ServiceStateType.EducationNotFound:
                 return "Education not found";
+            case ServiceStateType.InvalidCredentials:
+                return "Invalid credentials";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -60,4 +62,5 @@ public enum ServiceStateType
     SkillNotFound,
     ExperienceNotFound,
     EducationNotFound,
+    InvalidCredentials,
 }

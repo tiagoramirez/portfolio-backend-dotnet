@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -16,6 +17,7 @@ public class ProfileConfigController : ControllerBase
         _profileConfigService = profileConfigService;
     }
 
+    [Authorize]
     [HttpPut("{configId}")]
     public async Task<IActionResult> Update([FromBody] ProfileConfig config, [FromRoute] Guid configId)
     {

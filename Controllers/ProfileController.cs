@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -16,6 +17,7 @@ public class ProfileController : ControllerBase
         _profileService = profileService;
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> Create([FromRoute] Guid userId)
     {
@@ -27,6 +29,7 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("{profileId}")]
     public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid profileId)
     {
@@ -38,6 +41,7 @@ public class ProfileController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{profileId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid profileId)
     {

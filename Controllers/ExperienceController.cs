@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -16,6 +17,7 @@ public class ExperienceController : ControllerBase
         _experienceService = experienceService;
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> Create([FromBody] Experience experience, [FromRoute] Guid userId)
     {
@@ -24,6 +26,7 @@ public class ExperienceController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{experienceId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid experienceId)
     {
@@ -32,6 +35,7 @@ public class ExperienceController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("{experienceId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Experience experience, [FromRoute] Guid experienceId, [FromRoute] Guid profileId)
     {

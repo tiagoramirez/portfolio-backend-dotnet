@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -47,6 +47,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [Authorize]
     [HttpPut("UpdateName/{userId}/{name}")]
     public async Task<IActionResult> UpdateName([FromRoute] Guid userId, [FromRoute] string name)
     {
@@ -58,6 +59,7 @@ public class UserController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("UpdateUsername/{userId}/{username}")]
     public async Task<IActionResult> UpdateUsername([FromRoute] Guid userId, [FromRoute] string username)
     {
@@ -69,6 +71,7 @@ public class UserController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("UpdatePassword/{userId}/{password}")]
     public async Task<IActionResult> UpdatePassword([FromRoute] Guid userId, [FromRoute] string password)
     {
@@ -80,6 +83,7 @@ public class UserController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("UpdateEmail/{userId}/{email}")]
     public async Task<IActionResult> UpdateEmail([FromRoute] Guid userId, [FromRoute] string email)
     {
@@ -91,6 +95,7 @@ public class UserController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{userId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid userId)
     {

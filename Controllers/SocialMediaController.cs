@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -22,6 +23,7 @@ public class SocialMediaController : ControllerBase
         return Ok(_socialMediaService.GetAll());
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> Create([FromBody] User_SocialMedia socialMedia, [FromRoute] Guid userId)
     {
@@ -33,6 +35,7 @@ public class SocialMediaController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{socialMediaId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId)
     {

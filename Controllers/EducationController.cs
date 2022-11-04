@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -16,6 +17,7 @@ public class EducationController : ControllerBase
         _educationService = educationService;
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> Create([FromBody] Education education, [FromRoute] Guid userId)
     {
@@ -24,6 +26,7 @@ public class EducationController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{educationId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid educationId)
     {
@@ -32,6 +35,7 @@ public class EducationController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("{educationId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Education education, [FromRoute] Guid educationId, [FromRoute] Guid profileId)
     {

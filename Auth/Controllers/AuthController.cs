@@ -9,28 +9,17 @@ namespace portfolio.Auth.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    IAuthService _authService;
+    IRegisterService _registerService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IRegisterService registerService)
     {
-        _authService = authService;
-    }
-
-    [HttpGet("Login/{username}/{password}")]
-    public IActionResult Login([FromRoute] string username, [FromRoute] string password)
-    {
-        string token = _authService.Login(username, password);
-        if (token != null)
-        {
-            return Ok(new { tokenLogin = token });
-        }
-        return BadRequest(new { msg = "Invalid Credentials" });
+        _registerService = registerService;
     }
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] User user)
     {
-        ServiceStateType state = await _authService.RegisterAsync(user);
+        ServiceStateType state = await _registerService.RegisterAsync(user);
 
         if (state == ServiceStateType.Ok)
         {

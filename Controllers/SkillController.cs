@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -22,6 +23,7 @@ public class SkillController : ControllerBase
         return Ok(_skillService.GetAll());
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> CreateAsync([FromBody] User_Skill skill, [FromRoute] Guid userId)
     {
@@ -30,6 +32,7 @@ public class SkillController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{skillId}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid skillId)
     {

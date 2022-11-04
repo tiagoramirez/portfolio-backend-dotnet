@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -16,6 +17,7 @@ public class ProjectController : ControllerBase
         _projectService = projectService;
     }
 
+    [Authorize]
     [HttpPost("{userId}")]
     public async Task<IActionResult> Create([FromBody] Project project, [FromRoute] Guid userId)
     {
@@ -24,6 +26,7 @@ public class ProjectController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpDelete("{projectId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid projectId)
     {
@@ -32,6 +35,7 @@ public class ProjectController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
+    [Authorize]
     [HttpPut("{projectId}/{profileId}")]
     public async Task<IActionResult> Edit([FromBody] Project project, [FromRoute] Guid projectId, [FromRoute] Guid profileId)
     {

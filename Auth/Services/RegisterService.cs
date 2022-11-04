@@ -4,33 +4,22 @@ using portfolio.Services;
 
 namespace portfolio.Auth.Services;
 
-public interface IAuthService
+public interface IRegisterService
 {
-    string Login(string username, string password);
     Task<ServiceStateType> RegisterAsync(User user);
 }
 
-public class AuthService : IAuthService
+public class RegisterService : IRegisterService
 {
     PortfolioContext _context;
     IProfileService _profileService;
     IUserService _userService;
 
-    public AuthService(PortfolioContext context, IProfileService profileService, IUserService userService)
+    public RegisterService(PortfolioContext context, IProfileService profileService, IUserService userService)
     {
         _context = context;
         _profileService = profileService;
         _userService = userService;
-    }
-
-    public string Login(string username, string password)
-    {
-        User user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == Encrypt.GetSHA512(password));
-        if (user != null && user.Status)
-        {
-            return user.Id.ToString();
-        }
-        return null;
     }
 
     public async Task<ServiceStateType> RegisterAsync(User user)
