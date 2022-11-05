@@ -134,7 +134,7 @@ public class PortfolioContext : DbContext
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
-            ProfileConfigId = profiles[0].Id,
+            ProfileConfigId = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
             Description = "FullStack Developer || .NET + ANGULAR + SQL SERVER || Estudiante Ingeniería en Sistemas de Información en UTN",
             Phone = null,
             LocationState = "Capital Federal",
@@ -146,7 +146,7 @@ public class PortfolioContext : DbContext
         {
             prof.ToTable("Profile");
             prof.HasKey(table => table.Id);
-            // prof.HasMany(table => table.Descriptions).WithOne(description => description.Profile).HasForeignKey(description => description.ProfileId);
+
             prof.HasOne(table => table.User).WithMany(user => user.Profiles).HasForeignKey(profile => profile.UserId);
             prof.HasOne(table => table.Config).WithOne(profileConfig => profileConfig.Profile).HasForeignKey<ProfileConfig>(profileConfig => profileConfig.ProfileId);
             prof.HasMany(table => table.ExperienceDescriptions).WithOne(experienceDescription => experienceDescription.Profile).HasForeignKey(experienceDescription => experienceDescription.ProfileId);
@@ -164,7 +164,7 @@ public class PortfolioContext : DbContext
         List<ProfileConfig> profileConfigs = new List<ProfileConfig>();
         profileConfigs.Add(new ProfileConfig
         {
-            Id = Guid.NewGuid(),
+            Id = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
             ProfileId = profiles[0].Id,
             ShowPhoto = true,
             ShowBanner = true,
@@ -291,16 +291,18 @@ public class PortfolioContext : DbContext
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(educationDescriptions);
         });
-        // TODO
-        // ------------------------------------------------------------------------------------------------------------------
-        modelBuilder.Entity<Experience_Description>(desc =>
+
+        List<Experience> experiences = new List<Experience>();
+        experiences.Add(new Experience
         {
-            desc.ToTable("Experience_Description");
-            desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
-            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Position = "Analista Programador Junior",
+            Company = "Accusys",
+            Type = ExperienceType.FullTime,
+            IsActual = true,
+            Start = new DateTime(2022, 4, 5),
+            End = null
         });
 
         modelBuilder.Entity<Experience>(exp =>
@@ -316,16 +318,36 @@ public class PortfolioContext : DbContext
             exp.Property(table => table.IsActual).IsRequired();
             exp.Property(table => table.Start).IsRequired();
             exp.Property(table => table.End).IsRequired(false);
+            exp.HasData(experiences);
         });
 
-        modelBuilder.Entity<Project_Description>(desc =>
+        List<Experience_Description> experience_Descriptions = new List<Experience_Description>();
+        experience_Descriptions.Add(new Experience_Description
         {
-            desc.ToTable("Project_Description");
+            Id = Guid.NewGuid(),
+            ExperienceId = experiences[0].Id,
+            ProfileId = profiles[0].Id,
+            Description = "No se que poner aca 2"
+        });
+
+        modelBuilder.Entity<Experience_Description>(desc =>
+        {
+            desc.ToTable("Experience_Description");
             desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
+            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
+            desc.HasData(experience_Descriptions);
+        });
+
+        List<Project> projects = new List<Project>();
+        projects.Add(new Project
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Name = "Portfolio",
+            Url = "https://www.google.com/",
         });
 
         modelBuilder.Entity<Project>(proj =>
@@ -337,6 +359,26 @@ public class PortfolioContext : DbContext
             proj.Property(table => table.Id).ValueGeneratedOnAdd();
             proj.Property(table => table.Name).IsRequired().HasMaxLength(50);
             proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
+            proj.HasData(projects);
+        });
+
+        List<Project_Description> projectDescriptions = new List<Project_Description>();
+        projectDescriptions.Add(new Project_Description
+        {
+            Id = Guid.NewGuid(),
+            ProjectId = projects[0].Id,
+            ProfileId = profiles[0].Id,
+            Description = "No se que poner aca 3"
+        });
+
+        modelBuilder.Entity<Project_Description>(desc =>
+        {
+            desc.ToTable("Project_Description");
+            desc.HasKey(table => table.Id);
+            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
+            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
+            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
         });
     }
 }
