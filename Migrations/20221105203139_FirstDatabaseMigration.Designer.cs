@@ -12,8 +12,8 @@ using portfolio;
 namespace portfolio.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    [Migration("20221101171534_AddedIgnoreDescriptions")]
-    partial class AddedIgnoreDescriptions
+    [Migration("20221105203139_FirstDatabaseMigration")]
+    partial class FirstDatabaseMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,18 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Education", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b8f98496-02c6-40a1-9170-e11cf13895f3"),
+                            Institute = "Universidad Tecnologica Nacional",
+                            IsActual = true,
+                            Start = new DateTime(2020, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TitleName = "Ingenieria en Sistemas de Informacion",
+                            Type = 1,
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Education_Description", b =>
@@ -86,6 +98,15 @@ namespace portfolio.Migrations
                     b.HasIndex("ProfileId");
 
                     b.ToTable("Education_Description", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c700f39a-3601-42a2-a3fc-9a8e33a89dc3"),
+                            Description = "No se que poner aca",
+                            EducationId = new Guid("b8f98496-02c6-40a1-9170-e11cf13895f3"),
+                            ProfileId = new Guid("a0a12631-8100-461a-a899-317b8befab32")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Experience", b =>
@@ -124,6 +145,18 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Experience", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d9b2058b-604d-4b92-b9f9-8d1712034eb7"),
+                            Company = "Accusys",
+                            IsActual = true,
+                            Position = "Analista Programador Junior",
+                            Start = new DateTime(2022, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = 0,
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Experience_Description", b =>
@@ -150,6 +183,15 @@ namespace portfolio.Migrations
                     b.HasIndex("ProfileId");
 
                     b.ToTable("Experience_Description", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c5de045d-4fd9-4d06-b3e1-98fb54266ab5"),
+                            Description = "No se que poner aca 2",
+                            ExperienceId = new Guid("d9b2058b-604d-4b92-b9f9-8d1712034eb7"),
+                            ProfileId = new Guid("a0a12631-8100-461a-a899-317b8befab32")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Profile", b =>
@@ -160,7 +202,8 @@ namespace portfolio.Migrations
 
                     b.Property<string>("AboutMe")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -193,6 +236,18 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Profile", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a0a12631-8100-461a-a899-317b8befab32"),
+                            AboutMe = "Soy estudiante y programador. No se que mas poner salu2",
+                            Description = "FullStack Developer || .NET + ANGULAR + SQL SERVER || Estudiante Ingeniería en Sistemas de Información en UTN",
+                            LocationCountry = "Argentina",
+                            LocationState = "Capital Federal",
+                            ProfileConfigId = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.ProfileConfig", b =>
@@ -219,6 +274,17 @@ namespace portfolio.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProfileConfig", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
+                            ProfileId = new Guid("a0a12631-8100-461a-a899-317b8befab32"),
+                            ShowBanner = true,
+                            ShowLocation = true,
+                            ShowPhone = true,
+                            ShowPhoto = true
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Project", b =>
@@ -244,6 +310,15 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Project", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("55dd3f35-1054-4d79-a3f5-fe4233a6dadb"),
+                            Name = "Portfolio",
+                            Url = "https://www.google.com/",
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Project_Description", b =>
@@ -270,6 +345,15 @@ namespace portfolio.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Project_Description", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d81ba0f0-3c8d-44e9-81ba-86531ee21ae3"),
+                            Description = "No se que poner aca 3",
+                            ProfileId = new Guid("a0a12631-8100-461a-a899-317b8befab32"),
+                            ProjectId = new Guid("55dd3f35-1054-4d79-a3f5-fe4233a6dadb")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Role", b =>
@@ -290,12 +374,12 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ae71fb27-676f-43f0-8cab-0d2209369597"),
+                            Id = new Guid("e4476cc3-bee6-4d16-a693-9b07571562d3"),
                             RoleName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("328d0ca0-4ba0-4a70-ade2-c054bc7cb0d2"),
+                            Id = new Guid("b022bf32-80bc-420c-afaa-1d19d698d265"),
                             RoleName = "User"
                         });
                 });
@@ -321,151 +405,151 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6d7fad5f-ace2-461a-9e19-76a49d859759"),
+                            Id = new Guid("302f56b3-1e5c-46be-83d9-40c8452acb4e"),
                             Name = "C#",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("d05e500b-6623-49d7-883d-ec45f21a9951"),
+                            Id = new Guid("3c4706c3-93a8-47fc-9494-582715a91fbe"),
                             Name = ".NET",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("7b1ee93a-fd93-45d7-b5eb-5362b5040ae9"),
+                            Id = new Guid("7fd68f22-5269-47c9-8d54-8bd04cee5876"),
                             Name = ".NET WPF",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("e7562007-7022-49bb-86e9-7b3439cfc44b"),
+                            Id = new Guid("1cb5222f-662e-4872-ac0f-97cd6c33c1d1"),
                             Name = "Entity Framework",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("3f713a12-ae3c-474d-9b54-d7763ca35d45"),
+                            Id = new Guid("a22cce13-3a6a-44ca-be77-f3bb48992043"),
                             Name = "Python",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("2473e788-8a72-4a1d-a551-de3fa359afbf"),
+                            Id = new Guid("f23cafc1-fadc-4a17-b140-fcd5fae845c4"),
                             Name = "Java",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("cf8ba91f-ef54-4aa7-b667-d70280d1c478"),
+                            Id = new Guid("7577131d-3c6f-4dfe-b141-459d9f0a1d5b"),
                             Name = "Java Spring",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("f26c9a48-088e-45a3-9318-009a56976db7"),
+                            Id = new Guid("59bed9bc-1fc4-48ce-810f-4b3d1a500ccd"),
                             Name = "SQL",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("02b043f1-c0be-4a74-88dc-5ec271b465f3"),
+                            Id = new Guid("53a11c6d-4d99-4ff9-b929-f25823c77ee5"),
                             Name = "MS SQL Server",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("458011cd-0501-41fa-bdf0-a4008f5ae2da"),
+                            Id = new Guid("814824ac-7ddf-41c4-b999-421e458a6d66"),
                             Name = "MySql",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("d3acb776-edb9-4369-aa35-5d87a24bdd73"),
+                            Id = new Guid("b8b2012f-aae4-4df9-b679-54133b7a2c57"),
                             Name = "HTML",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("97fcce35-a6ea-4123-9c03-44eafc0197ac"),
+                            Id = new Guid("b0efdce6-be60-4c30-ac81-2436ce690868"),
                             Name = "CSS",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("9d590db8-e3d0-46f5-b506-444dc7998815"),
+                            Id = new Guid("483504cd-ae60-4202-b650-a2e2c2e677d6"),
                             Name = "Bootstrap",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("72e0093f-eb87-49eb-bb6a-a1522eb54a32"),
+                            Id = new Guid("937df4ec-e0c8-488a-b99c-de58fb783e08"),
                             Name = "JavaScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("e0357e64-6e4b-42f7-9277-3763f9bcbf25"),
+                            Id = new Guid("6271de2b-d86a-478f-a197-8cc5ae88e80a"),
                             Name = "JavaScript",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("6dbda30a-7cb3-4f8e-8c0b-60294f0dbc7e"),
+                            Id = new Guid("af14652c-925c-4130-8664-d341d1048bf7"),
                             Name = "TypeScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("e14f279c-4619-4b1b-83c0-365240c9bc61"),
+                            Id = new Guid("29d374f2-6767-428f-ba99-8eb82a621567"),
                             Name = "TypeScript",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("7e39892f-2670-4a3d-8a74-0ae549520f23"),
+                            Id = new Guid("cdfaae3a-c1ef-47df-924c-a78fda04fa9e"),
                             Name = "Angular",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("579cc7d3-76df-4255-a390-9ca98d1d9bfe"),
+                            Id = new Guid("240a322f-a03a-4c50-ae8e-7d718ae75c89"),
                             Name = "React",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("cb63a9a4-fc52-4df8-9d8f-2243ec039f92"),
+                            Id = new Guid("d5e64e12-5157-4478-98d6-47f8c3f84260"),
                             Name = "Git",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("51d16dc0-c8b2-4ca2-96dd-ce5bfe1add98"),
+                            Id = new Guid("350cd918-5cb2-43e3-a46c-dc9545a8ecc2"),
                             Name = "Scrum",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("e28ba5f0-f130-453c-bcf8-dbd389486544"),
+                            Id = new Guid("d7df352e-1ea0-4b0b-a358-b9e0284c4148"),
                             Name = "ERD / DER",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("19d5999e-84cb-4825-bc0f-082ab6c2accd"),
+                            Id = new Guid("42712e8d-6b8e-45ef-ac26-3715a03fbffe"),
                             Name = "UML",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("87a5ef1b-06e6-47e9-b62a-cfb5445f14e8"),
+                            Id = new Guid("641b2819-d127-4937-beaf-c47e41aaf9d2"),
                             Name = "JWT",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("6639970a-366c-4776-8063-e5640af80c8a"),
+                            Id = new Guid("b5ee8a8e-c7ed-45cd-8115-3e2ef6b3c711"),
                             Name = "Linux",
                             Type = 2
                         });
@@ -494,49 +578,49 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("341c9765-f0fb-47c9-8da6-cddf7733d96e"),
+                            Id = new Guid("44431256-3806-4e57-b5bd-6f44bc9fa373"),
                             IconClassName = "bi bi-facebook",
                             Name = "Facebook"
                         },
                         new
                         {
-                            Id = new Guid("57aa8cf7-5efb-41ba-8a67-2154f4aa083a"),
+                            Id = new Guid("f047df25-d206-4e5d-ab0d-a3de39b13885"),
                             IconClassName = "bi bi-whatsapp",
                             Name = "Whatsapp"
                         },
                         new
                         {
-                            Id = new Guid("cd061a63-9e6f-4fcb-a558-36768cec8dbe"),
+                            Id = new Guid("0c24eb93-87d7-44e6-864b-3d6972c31207"),
                             IconClassName = "bi bi-github",
                             Name = "Github"
                         },
                         new
                         {
-                            Id = new Guid("b53ecc95-f25c-4a03-b47b-ce71bd4fee92"),
+                            Id = new Guid("42fe74e3-93c7-4066-b56f-4d3c29afdad8"),
                             IconClassName = "bi bi-instagram",
                             Name = "Instagram"
                         },
                         new
                         {
-                            Id = new Guid("5f5fdb95-f591-4cf9-9f55-62e08b2a60f1"),
+                            Id = new Guid("7dc7c297-ee06-4c45-bb23-233a8bab6dc5"),
                             IconClassName = "bi bi-linkedin",
                             Name = "LinkedIn"
                         },
                         new
                         {
-                            Id = new Guid("8d9beed8-371d-458b-9dd8-788e12643b9a"),
+                            Id = new Guid("30fc334d-171b-4c32-839b-5ec821206918"),
                             IconClassName = "bi bi-twitter",
                             Name = "Twitter"
                         },
                         new
                         {
-                            Id = new Guid("df68facb-b1db-4232-ac8b-b0287220afd6"),
+                            Id = new Guid("0b393e67-1963-4e29-98e0-8e964d71e35f"),
                             IconClassName = "bi bi-youtube",
                             Name = "Youtube"
                         },
                         new
                         {
-                            Id = new Guid("900913d2-1ed5-4bb8-994d-afcf6699d531"),
+                            Id = new Guid("1640b025-e825-4a42-8f26-eaf7fb8846bc"),
                             IconClassName = "bi bi-person-circle",
                             Name = "Web Personal"
                         });
@@ -577,6 +661,18 @@ namespace portfolio.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043"),
+                            Created = new DateTime(2022, 11, 5, 17, 31, 39, 99, DateTimeKind.Local).AddTicks(811),
+                            Email = "tiagoramirez2001@gmail.com",
+                            Name = "Tiago Alberto Ramirez Marchisio",
+                            Password = "9d1b8cbb1b368f7595dc0ec177a9415f1666beeb3bd3079b135559e58d523563499a1dc93eac521903b5bba6fc9fa63c01aab0a3037bc6af61c0c16c09fc2e74",
+                            Status = true,
+                            Username = "tiagoramirez"
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.User_Role", b =>
@@ -598,6 +694,14 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("User_Role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2e6aa0f3-3850-4475-a208-255b44d8b869"),
+                            RoleId = new Guid("b022bf32-80bc-420c-afaa-1d19d698d265"),
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.User_Skill", b =>
@@ -622,6 +726,15 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("User_Skill", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dc9fccce-5f16-43c4-ac03-fa07d3f4e4ee"),
+                            Percentage = 90,
+                            SkillId = new Guid("302f56b3-1e5c-46be-83d9-40c8452acb4e"),
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.User_SocialMedia", b =>
@@ -648,6 +761,15 @@ namespace portfolio.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("User_SocialMedia", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0db0d442-a207-4c4c-b1d5-c57f996b9253"),
+                            SocialMediaId = new Guid("7dc7c297-ee06-4c45-bb23-233a8bab6dc5"),
+                            Url = "https://www.linkedin.com/in/tiagoramirezmar/",
+                            UserId = new Guid("3f3a9ce6-d6ad-475b-9aac-eda285e24043")
+                        });
                 });
 
             modelBuilder.Entity("portfolio.Models.Education", b =>
