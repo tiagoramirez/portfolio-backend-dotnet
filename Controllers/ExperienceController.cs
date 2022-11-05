@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
-using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -19,7 +19,7 @@ public class ExperienceController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Experience experience, [FromHeader] string authorization)
+    public async Task<IActionResult> Create([FromBody] ExperienceDto experience, [FromHeader] string authorization)
     {
         Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _experienceService.CreateAsync(experience, userId);
@@ -36,7 +36,7 @@ public class ExperienceController : ControllerBase
     }
 
     [HttpPut("{experienceId}/{profileId}")]
-    public async Task<IActionResult> Edit([FromBody] Experience experience, [FromRoute] Guid experienceId, [FromRoute] Guid profileId)
+    public async Task<IActionResult> Edit([FromBody] ExperienceDto experience, [FromRoute] Guid experienceId, [FromRoute] Guid profileId)
     {
         ServiceStateType state = await _experienceService.EditAsync(experience, experienceId, profileId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Edited" });

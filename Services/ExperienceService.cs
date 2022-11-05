@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface IExperienceService
 {
-    Task<ServiceStateType> CreateAsync(Experience experience, Guid userId);
-    Task<ServiceStateType> EditAsync(Experience experience, Guid experienceId, Guid profileId);
+    Task<ServiceStateType> CreateAsync(ExperienceDto experience, Guid userId);
+    Task<ServiceStateType> EditAsync(ExperienceDto experience, Guid experienceId, Guid profileId);
     Task<ServiceStateType> DeleteAsync(Guid experienceId);
 }
 
@@ -20,26 +21,25 @@ public class ExperienceService : IExperienceService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(Experience experience, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(ExperienceDto experience, Guid userId)
     {
         User user = await _context.Users.Include(p => p.Profiles).FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return ServiceStateType.UserNotFound;
 
-        experience.Id = Guid.NewGuid();
-        experience.UserId = userId;
+        Experience expToDb = new Experience(experience, userId);
 
         Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
         Experience_Description expDesc = new Experience_Description
         {
             Id = Guid.NewGuid(),
             ProfileId = firstProfileId,
-            ExperienceId = experience.Id,
+            ExperienceId = expToDb.Id,
             Description = experience.Description
         };
 
         try
         {
-            await _context.Experiences.AddAsync(experience);
+            await _context.Experiences.AddAsync(expToDb);
             await _context.ExperienceDescriptions.AddAsync(expDesc);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
@@ -68,7 +68,7 @@ public class ExperienceService : IExperienceService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(Experience experience, Guid experienceId, Guid profileId)
+    public async Task<ServiceStateType> EditAsync(ExperienceDto experience, Guid experienceId, Guid profileId)
     {
         Experience exp = await _context.Experiences.FindAsync(experienceId);
         if (exp == null) return ServiceStateType.ExperienceNotFound;

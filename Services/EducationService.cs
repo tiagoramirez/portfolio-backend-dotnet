@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface IEducationService
 {
-    Task<ServiceStateType> CreateAsync(Education education, Guid userId);
-    Task<ServiceStateType> EditAsync(Education education, Guid educationId, Guid profileId);
+    Task<ServiceStateType> CreateAsync(EducationDto education, Guid userId);
+    Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId, Guid profileId);
     Task<ServiceStateType> DeleteAsync(Guid educationId);
 
 }
@@ -21,26 +22,25 @@ public class EducationService : IEducationService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(Education education, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(EducationDto education, Guid userId)
     {
         User user = await _context.Users.Include(p => p.Profiles).FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return ServiceStateType.UserNotFound;
 
-        education.Id = Guid.NewGuid();
-        education.UserId = userId;
+        Education eduToDb = new Education(education, userId);
 
         Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
         Education_Description educDesc = new Education_Description
         {
             Id = Guid.NewGuid(),
             ProfileId = firstProfileId,
-            EducationId = education.Id,
+            EducationId = eduToDb.Id,
             Description = education.Description
         };
 
         try
         {
-            await _context.Educations.AddAsync(education);
+            await _context.Educations.AddAsync(eduToDb);
             await _context.EducationDescriptions.AddAsync(educDesc);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
@@ -69,7 +69,7 @@ public class EducationService : IEducationService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(Education education, Guid educationId, Guid profileId)
+    public async Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId, Guid profileId)
     {
         Education educ = await _context.Educations.FindAsync(educationId);
         if (educ == null) return ServiceStateType.ExperienceNotFound;

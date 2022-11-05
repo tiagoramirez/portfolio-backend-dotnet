@@ -157,7 +157,7 @@ public class PortfolioContext : DbContext
             prof.Property(table => table.Phone).HasMaxLength(16).IsRequired(false);
             prof.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
             prof.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
-            prof.Property(table => table.AboutMe).IsRequired();
+            prof.Property(table => table.AboutMe).IsRequired().HasMaxLength(255);
             prof.HasData(profiles);
         });
 
@@ -379,6 +379,7 @@ public class PortfolioContext : DbContext
             desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
             desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
+            desc.HasData(projectDescriptions);
         });
     }
 }

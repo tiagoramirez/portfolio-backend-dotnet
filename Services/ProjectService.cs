@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface IProjectService
 {
-    Task<ServiceStateType> CreateAsync(Project project, Guid userId);
-    Task<ServiceStateType> EditAsync(Project project, Guid projectId, Guid profileId);
+    Task<ServiceStateType> CreateAsync(ProjectDto project, Guid userId);
+    Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId, Guid profileId);
     Task<ServiceStateType> DeleteAsync(Guid projectId);
 }
 
@@ -20,26 +21,25 @@ public class ProjectService : IProjectService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(Project project, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(ProjectDto project, Guid userId)
     {
         User user = await _context.Users.Include(p => p.Profiles).FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return ServiceStateType.UserNotFound;
 
-        project.Id = Guid.NewGuid();
-        project.UserId = userId;
+        Project projToDb = new(project, userId);
 
         Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
         Project_Description projDesc = new Project_Description
         {
             Id = Guid.NewGuid(),
             ProfileId = firstProfileId,
-            ProjectId = project.Id,
+            ProjectId = projToDb.Id,
             Description = project.Description
         };
 
         try
         {
-            await _context.Projects.AddAsync(project);
+            await _context.Projects.AddAsync(projToDb);
             await _context.ProjectDescriptions.AddAsync(projDesc);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
@@ -68,7 +68,7 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(Project project, Guid projectId, Guid profileId)
+    public async Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId, Guid profileId)
     {
         Project proj = await _context.Projects.FindAsync(projectId);
         if (proj == null) return ServiceStateType.ExperienceNotFound;

@@ -1,7 +1,22 @@
+using portfolio.Models.DTOs;
+
 namespace portfolio.Models;
 
 public class Experience
 {
+    public Experience() { }
+
+    public Experience(ExperienceDto experience, Guid userId)
+    {
+        this.UserId = userId;
+        this.Position = experience.Position;
+        this.Company = experience.Company;
+        this.Type = experience.Type;
+        this.IsActual = experience.IsActual;
+        this.Start = experience.Start;
+        this.End = experience.End;
+    }
+
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public string Position { get; set; }

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using portfolio.DTOs;
+using portfolio.Models.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
 
@@ -103,31 +103,34 @@ public class UserService : IUserService
                     .FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
 
-        foreach (var profile in user.Profiles)
-        {
-            profile.Config = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
-        }
-        foreach (var socialMedia in user.SocialMedias)
-        {
-            socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
-        }
-        foreach (var userSkill in user.Skills)
-        {
-            userSkill.Skill = await _context.FindAsync<Skill>(userSkill.SkillId);
-        }
-
         UserDto userDto = new UserDto()
         {
             Name = user.Name,
             Username = user.Username,
             Email = user.Email,
-            Profiles = user.Profiles,
-            SocialMedias = user.SocialMedias,
-            Skills = user.Skills,
-            Experiences = user.Experiences,
-            Educations = user.Educations,
-            Projects = user.Projects
+            Profiles = new List<ProfileDto>(),
+            SocialMedias = new List<User_SocialMediaDto>(),
+            Skills = new List<User_SkillDto>(),
+            Experiences = new List<ExperienceDto>(),
+            Educations = new List<EducationDto>(),
+            Projects = new List<ProjectDto>()
         };
+
+        foreach (var profile in user.Profiles)
+        {
+            profile.Config = await _context.FindAsync<ProfileConfig>(profile.ProfileConfigId);
+            userDto.Profiles.Add(new ProfileDto(profile));
+        }
+        foreach (var socialMedia in user.SocialMedias)
+        {
+            socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
+            userDto.SocialMedias.Add(new User_SocialMediaDto(socialMedia));
+        }
+        foreach (var userSkill in user.Skills)
+        {
+            userSkill.Skill = await _context.FindAsync<Skill>(userSkill.SkillId);
+            userDto.Skills.Add(new User_SkillDto(userSkill));
+        }
 
         return userDto;
     }

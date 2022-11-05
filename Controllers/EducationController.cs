@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
-using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -19,7 +19,7 @@ public class EducationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Education education, [FromHeader] string authorization)
+    public async Task<IActionResult> Create([FromBody] EducationDto education, [FromHeader] string authorization)
     {
         Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _educationService.CreateAsync(education, userId);
@@ -36,7 +36,7 @@ public class EducationController : ControllerBase
     }
 
     [HttpPut("{educationId}/{profileId}")]
-    public async Task<IActionResult> Edit([FromBody] Education education, [FromRoute] Guid educationId, [FromRoute] Guid profileId)
+    public async Task<IActionResult> Edit([FromBody] EducationDto education, [FromRoute] Guid educationId, [FromRoute] Guid profileId)
     {
         ServiceStateType state = await _educationService.EditAsync(education, educationId, profileId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Edited" });

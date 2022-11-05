@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
-using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -19,7 +19,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Project project, [FromHeader] string authorization)
+    public async Task<IActionResult> Create([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
         Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _projectService.CreateAsync(project, userId);
@@ -36,7 +36,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPut("{projectId}/{profileId}")]
-    public async Task<IActionResult> Edit([FromBody] Project project, [FromRoute] Guid projectId, [FromRoute] Guid profileId)
+    public async Task<IActionResult> Edit([FromBody] ProjectDto project, [FromRoute] Guid projectId, [FromRoute] Guid profileId)
     {
         ServiceStateType state = await _projectService.EditAsync(project, projectId, profileId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Edited" });
