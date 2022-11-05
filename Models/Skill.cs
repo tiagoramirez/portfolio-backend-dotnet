@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace portfolio.Models;
 
 public class Skill
@@ -9,7 +7,6 @@ public class Skill
     public SkillType Type { get; set; }
 
     // Navigations Properties
-    [JsonIgnore]
     public virtual ICollection<User_Skill> User_Skills { get; set; }
 }
 
