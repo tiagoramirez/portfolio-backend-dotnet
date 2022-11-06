@@ -40,6 +40,8 @@ public class ServiceState
                 return "Invalid credentials";
             case ServiceStateType.PasswordsDoNotMatch:
                 return "Passwords do not match";
+            case ServiceStateType.ProfileLimitExceeded:
+                return "You can't have more than two profiles";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -66,4 +68,5 @@ public enum ServiceStateType
     EducationNotFound,
     InvalidCredentials,
     PasswordsDoNotMatch,
+    ProfileLimitExceeded,
 }

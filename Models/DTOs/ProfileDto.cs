@@ -4,6 +4,8 @@ namespace portfolio.Models.DTOs;
 
 public class ProfileDto
 {
+    public ProfileDto() { }
+
     public ProfileDto(Profile profile)
     {
         this.Id = profile.Id;

@@ -1,12 +1,15 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface IProfileConfigService
 {
     Task<ProfileConfig> CreateAsync();
-    Task<ServiceStateType> UpdateAsync(ProfileConfig config, Guid id);
+    Task<ServiceStateType> UpdateAsync(ProfileConfig config);
+    Task<ServiceStateType> UpdateAsync(ProfileConfigDto config, Guid profileId);
     Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
@@ -62,9 +65,31 @@ public class ProfileConfigService : IProfileConfigService
         return ServiceStateType.ProfileConfigNotFound;
     }
 
-    public async Task<ServiceStateType> UpdateAsync(ProfileConfig config, Guid id)
+    public async Task<ServiceStateType> UpdateAsync(ProfileConfigDto config, Guid profileId)
     {
-        ProfileConfig configToUpdate = await _context.ProfileConfigs.FindAsync(id);
+        ProfileConfig configToUpdate = await _context.ProfileConfigs.FirstOrDefaultAsync(c => c.ProfileId == profileId);
+        if (configToUpdate != null)
+        {
+            configToUpdate.ShowBanner = config.ShowBanner;
+            configToUpdate.ShowLocation = config.ShowLocation;
+            configToUpdate.ShowPhone = config.ShowPhone;
+            configToUpdate.ShowPhoto = config.ShowPhoto;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return ServiceStateType.Ok;
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
+        }
+        return ServiceStateType.ProfileConfigNotFound;
+    }
+
+    public async Task<ServiceStateType> UpdateAsync(ProfileConfig config)
+    {
+        ProfileConfig configToUpdate = await _context.ProfileConfigs.FindAsync(config.Id);
         if (configToUpdate != null)
         {
             configToUpdate.ShowBanner = config.ShowBanner;

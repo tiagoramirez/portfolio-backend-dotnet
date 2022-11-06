@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
-using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -31,7 +31,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPut("{profileId}")]
-    public async Task<IActionResult> Update([FromBody] Profile profile, [FromRoute] Guid profileId)
+    public async Task<IActionResult> Update([FromBody] ProfileDto profile, [FromRoute] Guid profileId)
     {
         ServiceStateType state = await _profileService.UpdateAsync(profile, profileId);
         if (state == ServiceStateType.Ok)

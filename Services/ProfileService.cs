@@ -1,12 +1,13 @@
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface IProfileService
 {
     Task<ServiceStateType> CreateAsync(Guid userId);
-    Task<ServiceStateType> UpdateAsync(Profile profile, Guid id);
+    Task<ServiceStateType> UpdateAsync(ProfileDto profile, Guid id);
     Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
@@ -27,6 +28,8 @@ public class ProfileService : IProfileService
         ProfileConfig config = await _profileConfigService.CreateAsync();
         if (config == null) return ServiceStateType.ProfileConfigNotFound;
 
+        if (_context.Profiles.Count(p => p.UserId == userId) == 2) return ServiceStateType.ProfileLimitExceeded;
+
         Profile profile = new Profile
         {
             Id = Guid.NewGuid(),
@@ -46,7 +49,7 @@ public class ProfileService : IProfileService
         }
 
         config.ProfileId = profile.Id;
-        if (await _profileConfigService.UpdateAsync(config, config.Id) == ServiceStateType.Ok)
+        if (await _profileConfigService.UpdateAsync(config) == ServiceStateType.Ok)
         {
             return ServiceStateType.Ok;
         }
@@ -76,7 +79,7 @@ public class ProfileService : IProfileService
         return ServiceStateType.OneProfileRequired;
     }
 
-    public async Task<ServiceStateType> UpdateAsync(Profile profile, Guid id)
+    public async Task<ServiceStateType> UpdateAsync(ProfileDto profile, Guid id)
     {
         Profile profileToUpdate = await _context.Profiles.FindAsync(id);
         if (profileToUpdate != null)

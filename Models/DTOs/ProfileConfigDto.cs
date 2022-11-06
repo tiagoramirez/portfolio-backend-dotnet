@@ -4,6 +4,8 @@ namespace portfolio.Models.DTOs;
 
 public class ProfileConfigDto
 {
+    public ProfileConfigDto() { }
+
     public ProfileConfigDto(ProfileConfig config)
     {
         this.ShowPhoto = config.ShowPhoto;
