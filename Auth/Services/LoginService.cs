@@ -50,7 +50,7 @@ public class LoginService : ILoginService
 
     public async Task<ServiceStateType> LoginAsync(LoginDto login)
     {
-        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username && u.Password == Encrypt.GetSHA512(login.Password));
+        User user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username && u.Password == Encrypt.GetSHA512(login.Password) && u.Status);
         if (user == null) return ServiceStateType.InvalidCredentials;
         return ServiceStateType.Ok;
     }

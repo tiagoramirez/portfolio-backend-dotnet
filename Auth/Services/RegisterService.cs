@@ -27,6 +27,7 @@ public class RegisterService : IRegisterService
     {
         if (!_userService.UsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
         if (!_userService.EmailAvailable(register.Email)) return ServiceStateType.EmailNotAvailable;
+        if (register.Password != register.PasswordConfirmation) return ServiceStateType.PasswordsDoNotMatch;
 
         User user = new User
         {

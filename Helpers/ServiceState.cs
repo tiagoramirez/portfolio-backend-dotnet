@@ -38,6 +38,8 @@ public class ServiceState
                 return "Education not found";
             case ServiceStateType.InvalidCredentials:
                 return "Invalid credentials";
+            case ServiceStateType.PasswordsDoNotMatch:
+                return "Passwords do not match";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -63,4 +65,5 @@ public enum ServiceStateType
     ExperienceNotFound,
     EducationNotFound,
     InvalidCredentials,
+    PasswordsDoNotMatch,
 }

@@ -131,6 +131,18 @@ public class UserService : IUserService
             userSkill.Skill = await _context.FindAsync<Skill>(userSkill.SkillId);
             userDto.Skills.Add(new User_SkillDto(userSkill));
         }
+        foreach (var experience in user.Experiences)
+        {
+            userDto.Experiences.Add(new ExperienceDto(experience));
+        }
+        foreach (var education in user.Educations)
+        {
+            userDto.Educations.Add(new EducationDto(education));
+        }
+        foreach (var project in user.Projects)
+        {
+            userDto.Projects.Add(new ProjectDto(project));
+        }
 
         return userDto;
     }
