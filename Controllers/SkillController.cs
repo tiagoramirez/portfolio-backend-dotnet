@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
-using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services;
 
 namespace portfolio.Controllers;
@@ -25,7 +25,7 @@ public class SkillController : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] User_Skill skill, [FromHeader] string authorization)
+    public async Task<IActionResult> CreateAsync([FromBody] User_SkillDto skill, [FromHeader] string authorization)
     {
         Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _skillService.CreateAsync(skill, userId);

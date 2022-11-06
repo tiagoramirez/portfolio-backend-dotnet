@@ -25,7 +25,7 @@ public class SocialMediaController : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] User_SocialMediaDto socialMedia, [FromRoute] Guid socialMediaId, [FromHeader] string authorization)
+    public async Task<IActionResult> Create([FromBody] User_SocialMediaDto socialMedia, [FromHeader] string authorization)
     {
         Guid userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _socialMediaService.CreateAsync(socialMedia, userId);
