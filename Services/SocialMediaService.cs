@@ -1,12 +1,13 @@
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 
 namespace portfolio.Services;
 
 public interface ISocialMediaService
 {
     IEnumerable<SocialMedia> GetAll();
-    Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia, Guid userId);
+    Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, Guid userId);
     Task<ServiceStateType> DeleteAsync(Guid id);
 }
 
@@ -19,12 +20,13 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SocialMedia socialMedia, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, Guid userId)
     {
-        socialMedia.UserId = userId;
+        User_SocialMedia socialMediaToDb = new User_SocialMedia(socialMedia, userId);
+
         try
         {
-            await _context.User_SocialMedias.AddAsync(socialMedia);
+            await _context.User_SocialMedias.AddAsync(socialMediaToDb);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
