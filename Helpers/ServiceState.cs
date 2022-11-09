@@ -24,8 +24,6 @@ public class ServiceState
                 return "Invalid username";
             case ServiceStateType.SocialMediaNotFound:
                 return "Social media not found";
-            case ServiceStateType.ProfileConfigNotFound:
-                return "Config not found";
             case ServiceStateType.ProfileNotFound:
                 return "Profile not found";
             case ServiceStateType.OneProfileRequired:
@@ -60,7 +58,6 @@ public enum ServiceStateType
     InvalidPassword,
     InvalidUsername,
     SocialMediaNotFound,
-    ProfileConfigNotFound,
     ProfileNotFound,
     OneProfileRequired,
     SkillNotFound,

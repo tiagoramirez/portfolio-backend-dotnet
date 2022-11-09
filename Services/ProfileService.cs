@@ -16,25 +16,18 @@ public class ProfileService : IProfileService
 {
     PortfolioContext _context;
 
-    IProfileConfigService _profileConfigService;
-
-    public ProfileService(PortfolioContext context, IProfileConfigService profileConfigService)
+    public ProfileService(PortfolioContext context)
     {
         _context = context;
-        _profileConfigService = profileConfigService;
     }
 
     public async Task<ServiceStateType> CreateAsync(Guid userId)
     {
-        ProfileConfig config = await _profileConfigService.CreateAsync();
-        if (config == null) return ServiceStateType.ProfileConfigNotFound;
-
         if (_context.Profiles.Count(p => p.UserId == userId) == 2) return ServiceStateType.ProfileLimitExceeded;
 
         Profile profile = new Profile
         {
             Id = Guid.NewGuid(),
-            ProfileConfigId = config.Id,
             UserId = userId,
             Description = "",
             AboutMe = "",
@@ -114,33 +107,24 @@ public class ProfileService : IProfileService
         try
         {
             await _context.SaveChangesAsync();
+            return ServiceStateType.Ok;
         }
         catch (System.Exception)
         {
             return ServiceStateType.InternalError;
         }
-
-        config.ProfileId = profile.Id;
-        if (await _profileConfigService.UpdateAsync(config) == ServiceStateType.Ok)
-        {
-            return ServiceStateType.Ok;
-        }
-        return ServiceStateType.InternalError;
     }
 
     public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
         Profile profile = await _context.Profiles.FindAsync(id);
         if (profile == null) return ServiceStateType.ProfileNotFound;
-        IEnumerable<Profile> userProfiles = _context.Profiles.Where(p => p.UserId == profile.UserId);
-        if (userProfiles.Count() > 1)
+        if (await _context.Profiles.CountAsync(p => p.UserId == profile.UserId) > 1)
         {
             try
             {
-                // NOT NECESSARY BECAUSE CASCADE DELETE
-                // _context.Profiles.Remove(profile);
-                // await _context.SaveChangesAsync();
-                await _profileConfigService.DeleteAsync(profile.ProfileConfigId);
+                _context.Profiles.Remove(profile);
+                await _context.SaveChangesAsync();
                 return ServiceStateType.Ok;
             }
             catch (System.Exception)

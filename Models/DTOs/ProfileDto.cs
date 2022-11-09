@@ -14,7 +14,10 @@ public class ProfileDto
         this.LocationState = profile.LocationState;
         this.LocationCountry = profile.LocationCountry;
         this.AboutMe = profile.AboutMe;
-        this.Config = new ProfileConfigDto(profile.Config);
+        this.ShowPhoto = profile.ShowPhoto;
+        this.ShowBanner = profile.ShowBanner;
+        this.ShowLocation = profile.ShowLocation;
+        this.ShowPhone = profile.ShowPhone;
     }
 
     public Guid Id { get; set; }
@@ -41,6 +44,19 @@ public class ProfileDto
     [MaxLength(255, ErrorMessage = "About me must be less than 255 characters")]
     public string AboutMe { get; set; }
 
-    // Navigations Properties
-    public ProfileConfigDto Config { get; set; }
+
+    [Required]
+    public bool ShowPhoto { get; set; }
+
+
+    [Required]
+    public bool ShowBanner { get; set; }
+
+
+    [Required]
+    public bool ShowLocation { get; set; }
+
+
+    [Required]
+    public bool ShowPhone { get; set; }
 }

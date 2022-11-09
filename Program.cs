@@ -18,7 +18,6 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
-builder.Services.AddScoped<IProfileConfigService, ProfileConfigService>();
 builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();

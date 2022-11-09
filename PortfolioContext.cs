@@ -11,7 +11,6 @@ public class PortfolioContext : DbContext
     public DbSet<Experience_Description> ExperienceDescriptions { get; set; }
     public DbSet<Experience> Experiences { get; set; }
     public DbSet<Profile> Profiles { get; set; }
-    public DbSet<ProfileConfig> ProfileConfigs { get; set; }
     public DbSet<Project_Description> ProjectDescriptions { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Role> Roles { get; set; }
@@ -134,21 +133,22 @@ public class PortfolioContext : DbContext
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
-            ProfileConfigId = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
             Description = "FullStack Developer || .NET + ANGULAR + SQL SERVER || Estudiante Ingeniería en Sistemas de Información en UTN",
             Phone = null,
             LocationState = "Capital Federal",
             LocationCountry = "Argentina",
-            AboutMe = "Soy estudiante y programador. No se que mas poner salu2"
+            AboutMe = "Soy estudiante y programador. No se que mas poner salu2",
+            ShowPhoto = false,
+            ShowBanner = false,
+            ShowLocation = true,
+            ShowPhone = true,
         });
 
         modelBuilder.Entity<Profile>(prof =>
         {
             prof.ToTable("Profile");
             prof.HasKey(table => table.Id);
-
             prof.HasOne(table => table.User).WithMany(user => user.Profiles).HasForeignKey(profile => profile.UserId);
-            prof.HasOne(table => table.Config).WithOne(profileConfig => profileConfig.Profile).HasForeignKey<ProfileConfig>(profileConfig => profileConfig.ProfileId);
             prof.HasMany(table => table.ExperienceDescriptions).WithOne(experienceDescription => experienceDescription.Profile).HasForeignKey(experienceDescription => experienceDescription.ProfileId);
             prof.HasMany(table => table.EducationDescriptions).WithOne(educationDescription => educationDescription.Profile).HasForeignKey(educationDescription => educationDescription.ProfileId);
             prof.HasMany(table => table.ProjectDescriptions).WithOne(projectDescription => projectDescription.Profile).HasForeignKey(projectDescription => projectDescription.ProfileId);
@@ -158,31 +158,11 @@ public class PortfolioContext : DbContext
             prof.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
             prof.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
             prof.Property(table => table.AboutMe).IsRequired().HasMaxLength(255);
+            prof.Property(table => table.ShowBanner).IsRequired();
+            prof.Property(table => table.ShowLocation).IsRequired();
+            prof.Property(table => table.ShowPhone).IsRequired();
+            prof.Property(table => table.ShowPhoto).IsRequired();
             prof.HasData(profiles);
-        });
-
-        List<ProfileConfig> profileConfigs = new List<ProfileConfig>();
-        profileConfigs.Add(new ProfileConfig
-        {
-            Id = new Guid("bdb6e2ce-da11-4d98-bbca-ef8908d64c5c"),
-            ProfileId = profiles[0].Id,
-            ShowPhoto = true,
-            ShowBanner = true,
-            ShowLocation = true,
-            ShowPhone = true,
-        });
-
-        modelBuilder.Entity<ProfileConfig>(config =>
-        {
-            config.ToTable("ProfileConfig");
-            config.HasKey(table => table.Id);
-            config.HasOne(table => table.Profile).WithOne(profile => profile.Config).HasForeignKey<Profile>(profile => profile.ProfileConfigId);
-            config.Property(table => table.Id).ValueGeneratedOnAdd();
-            config.Property(table => table.ShowBanner).IsRequired();
-            config.Property(table => table.ShowLocation).IsRequired();
-            config.Property(table => table.ShowPhone).IsRequired();
-            config.Property(table => table.ShowPhoto).IsRequired();
-            config.HasData(profileConfigs);
         });
 
         List<User_Role> userRoles = new List<User_Role>();
