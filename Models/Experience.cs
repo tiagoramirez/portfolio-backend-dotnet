@@ -8,6 +8,7 @@ public class Experience
 
     public Experience(ExperienceDto experience, Guid userId)
     {
+        this.Id = Guid.NewGuid();
         this.UserId = userId;
         this.Position = experience.Position;
         this.Company = experience.Company;

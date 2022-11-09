@@ -28,19 +28,20 @@ public class ExperienceService : IExperienceService
 
         Experience expToDb = new Experience(experience, userId);
 
-        Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
-        Experience_Description expDesc = new Experience_Description
-        {
-            Id = Guid.NewGuid(),
-            ProfileId = firstProfileId,
-            ExperienceId = expToDb.Id,
-            Description = experience.Description
-        };
-
         try
         {
             await _context.Experiences.AddAsync(expToDb);
-            await _context.ExperienceDescriptions.AddAsync(expDesc);
+            foreach (Profile profile in user.Profiles)
+            {
+                Experience_Description expDesc = new Experience_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    ExperienceId = expToDb.Id,
+                    Description = experience.Description
+                };
+                await _context.ExperienceDescriptions.AddAsync(expDesc);
+            }
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }

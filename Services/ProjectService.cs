@@ -28,19 +28,20 @@ public class ProjectService : IProjectService
 
         Project projToDb = new(project, userId);
 
-        Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
-        Project_Description projDesc = new Project_Description
-        {
-            Id = Guid.NewGuid(),
-            ProfileId = firstProfileId,
-            ProjectId = projToDb.Id,
-            Description = project.Description
-        };
-
         try
         {
             await _context.Projects.AddAsync(projToDb);
-            await _context.ProjectDescriptions.AddAsync(projDesc);
+            foreach (Profile profile in user.Profiles)
+            {
+                Project_Description projDesc = new Project_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    ProjectId = projToDb.Id,
+                    Description = project.Description
+                };
+                await _context.ProjectDescriptions.AddAsync(projDesc);
+            }
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }

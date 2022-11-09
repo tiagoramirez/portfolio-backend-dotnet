@@ -5,6 +5,8 @@ namespace portfolio.Models.DTOs;
 
 public class ExperienceDto
 {
+    public ExperienceDto() { }
+
     public ExperienceDto(Experience experience)
     {
         this.Id = experience.Id;

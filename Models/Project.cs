@@ -8,6 +8,7 @@ public class Project
 
     public Project(ProjectDto project, Guid userId)
     {
+        this.Id = Guid.NewGuid();
         this.UserId = userId;
         this.Name = project.Name;
         this.Url = project.Url;

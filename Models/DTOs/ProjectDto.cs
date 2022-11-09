@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 namespace portfolio.Models.DTOs;
 public class ProjectDto
 {
+    public ProjectDto() { }
+
     public ProjectDto(Project project)
     {
         this.Id = project.Id;
@@ -20,7 +22,7 @@ public class ProjectDto
 
     [Required]
     [MaxLength(255, ErrorMessage = "URL cannot exceed 255 characters")]
-    [DataType(DataType.Url, ErrorMessage = "Please enter a valid URL")]
+    [RegularExpression(@"(https?:\/\/(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?:\/\/(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})", ErrorMessage = "Please enter a valid URL")]
     public string Url { get; set; }
 
 
