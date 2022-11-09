@@ -116,6 +116,10 @@ public class UserService : IUserService
             Projects = new List<ProjectDto>()
         };
 
+        foreach (var profile in user.Profiles)
+        {
+            userDto.Profiles.Add(new ProfileDto(profile));
+        }
         foreach (var socialMedia in user.SocialMedias)
         {
             socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);

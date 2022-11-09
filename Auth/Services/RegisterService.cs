@@ -38,15 +38,11 @@ public class RegisterService : IRegisterService
             Password = Encrypt.GetSHA512(register.Password),
             Status = true,
             Created = DateTime.Now,
+            Role = "USR"
         };
-        Guid roleId = _context.Roles.FirstOrDefault(r => r.RoleName == "User").Id;
-        User_Role user_Role = new User_Role();
-        user_Role.RoleId = roleId;
-        user_Role.UserId = user.Id;
         try
         {
             await _context.Users.AddAsync(user);
-            await _context.User_Roles.AddAsync(user_Role);
             await _context.SaveChangesAsync();
             return await _profileService.CreateAsync(user.Id);
         }

@@ -9,10 +9,10 @@ public class User
     public string Password { get; set; }
     public bool Status { get; set; }
     public DateTime Created { get; set; }
+    public string Role { get; set; }
 
     // Navigations Properties
     public virtual ICollection<Profile> Profiles { get; set; }
-    public virtual ICollection<User_Role> Roles { get; set; }
     public virtual ICollection<User_SocialMedia> SocialMedias { get; set; }
     public virtual ICollection<User_Skill> Skills { get; set; }
     public virtual ICollection<Experience> Experiences { get; set; }

@@ -13,10 +13,8 @@ public class PortfolioContext : DbContext
     public DbSet<Profile> Profiles { get; set; }
     public DbSet<Project_Description> ProjectDescriptions { get; set; }
     public DbSet<Project> Projects { get; set; }
-    public DbSet<Role> Roles { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
-    public DbSet<User_Role> User_Roles { get; set; }
     public DbSet<User_Skill> User_Skills { get; set; }
     public DbSet<User_SocialMedia> User_SocialMedias { get; set; }
     public DbSet<User> Users { get; set; }
@@ -25,20 +23,6 @@ public class PortfolioContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        List<Role> roles = new List<Role>();
-        roles.Add(new Role { Id = Guid.NewGuid(), RoleName = "Admin" });
-        roles.Add(new Role { Id = Guid.NewGuid(), RoleName = "User" });
-
-        modelBuilder.Entity<Role>(role =>
-        {
-            role.ToTable("Role");
-            role.HasKey(table => table.Id);
-            role.HasMany(table => table.User_Roles).WithOne(user_role => user_role.Role).HasForeignKey(user_role => user_role.RoleId);
-            role.Property(table => table.Id).ValueGeneratedOnAdd();
-            role.Property(table => table.RoleName).IsRequired().HasMaxLength(50);
-            role.HasData(roles);
-        });
-
         List<Skill> skills = new List<Skill>();
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "C#", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET", Type = SkillType.BackEnd });
@@ -108,13 +92,13 @@ public class PortfolioContext : DbContext
             Password = Encrypt.GetSHA512("Tiago@1234"),
             Status = true,
             Created = DateTime.Now,
+            Role = "USR",
         });
 
         modelBuilder.Entity<User>(user =>
         {
             user.ToTable("User");
             user.HasKey(table => table.Id);
-            user.HasMany(table => table.Roles).WithOne(user_role => user_role.User).HasForeignKey(user_role => user_role.UserId);
             user.HasMany(table => table.Skills).WithOne(user_skill => user_skill.User).HasForeignKey(user_skill => user_skill.UserId);
             user.HasMany(table => table.SocialMedias).WithOne(user_socialMedia => user_socialMedia.User).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
             user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
@@ -125,6 +109,7 @@ public class PortfolioContext : DbContext
             user.Property(table => table.Name).IsRequired().HasMaxLength(50);
             user.Property(table => table.Email).IsRequired().HasMaxLength(100);
             user.Property(table => table.Status).IsRequired();
+            user.Property(table => table.Role).IsRequired().HasMaxLength(20);
             user.HasData(users);
         });
 
@@ -163,24 +148,6 @@ public class PortfolioContext : DbContext
             prof.Property(table => table.ShowPhone).IsRequired();
             prof.Property(table => table.ShowPhoto).IsRequired();
             prof.HasData(profiles);
-        });
-
-        List<User_Role> userRoles = new List<User_Role>();
-        userRoles.Add(new User_Role
-        {
-            Id = Guid.NewGuid(),
-            UserId = users[0].Id,
-            RoleId = roles[1].Id
-        });
-
-        modelBuilder.Entity<User_Role>(userRole =>
-        {
-            userRole.ToTable("User_Role");
-            userRole.HasKey(table => table.Id);
-            userRole.HasOne(table => table.User).WithMany(user => user.Roles).HasForeignKey(user_role => user_role.UserId);
-            userRole.HasOne(table => table.Role).WithMany(role => role.User_Roles).HasForeignKey(user_role => user_role.RoleId);
-            userRole.Property(table => table.Id).ValueGeneratedOnAdd();
-            userRole.HasData(userRoles);
         });
 
         List<User_Skill> userSkills = new List<User_Skill>();
@@ -255,6 +222,7 @@ public class PortfolioContext : DbContext
         List<Education_Description> educationDescriptions = new List<Education_Description>();
         educationDescriptions.Add(new Education_Description
         {
+            Id = Guid.NewGuid(),
             EducationId = educations[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca"
@@ -263,8 +231,10 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Education_Description>(desc =>
         {
             desc.ToTable("Education_Description");
+            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId).OnDelete(DeleteBehavior.NoAction);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(educationDescriptions);
         });
@@ -301,6 +271,7 @@ public class PortfolioContext : DbContext
         List<Experience_Description> experience_Descriptions = new List<Experience_Description>();
         experience_Descriptions.Add(new Experience_Description
         {
+            Id = Guid.NewGuid(),
             ExperienceId = experiences[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca 2"
@@ -309,8 +280,10 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Experience_Description>(desc =>
         {
             desc.ToTable("Experience_Description");
+            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(experience_Descriptions);
         });
@@ -339,6 +312,7 @@ public class PortfolioContext : DbContext
         List<Project_Description> projectDescriptions = new List<Project_Description>();
         projectDescriptions.Add(new Project_Description
         {
+            Id = Guid.NewGuid(),
             ProjectId = projects[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca 3"
@@ -347,8 +321,10 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Project_Description>(desc =>
         {
             desc.ToTable("Project_Description");
+            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
+            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(projectDescriptions);
         });

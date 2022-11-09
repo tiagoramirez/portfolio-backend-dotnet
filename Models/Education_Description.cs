@@ -2,6 +2,7 @@ namespace portfolio.Models;
 
 public class Education_Description
 {
+    public Guid Id { get; set; }
     public Guid ProfileId { get; set; }
     public Guid EducationId { get; set; }
     public string Description { get; set; }
