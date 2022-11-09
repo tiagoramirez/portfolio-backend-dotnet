@@ -255,7 +255,6 @@ public class PortfolioContext : DbContext
         List<Education_Description> educationDescriptions = new List<Education_Description>();
         educationDescriptions.Add(new Education_Description
         {
-            Id = Guid.NewGuid(),
             EducationId = educations[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca"
@@ -264,10 +263,8 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Education_Description>(desc =>
         {
             desc.ToTable("Education_Description");
-            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(educationDescriptions);
         });
@@ -304,7 +301,6 @@ public class PortfolioContext : DbContext
         List<Experience_Description> experience_Descriptions = new List<Experience_Description>();
         experience_Descriptions.Add(new Experience_Description
         {
-            Id = Guid.NewGuid(),
             ExperienceId = experiences[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca 2"
@@ -313,10 +309,8 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Experience_Description>(desc =>
         {
             desc.ToTable("Experience_Description");
-            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(experience_Descriptions);
         });
@@ -345,7 +339,6 @@ public class PortfolioContext : DbContext
         List<Project_Description> projectDescriptions = new List<Project_Description>();
         projectDescriptions.Add(new Project_Description
         {
-            Id = Guid.NewGuid(),
             ProjectId = projects[0].Id,
             ProfileId = profiles[0].Id,
             Description = "No se que poner aca 3"
@@ -354,10 +347,8 @@ public class PortfolioContext : DbContext
         modelBuilder.Entity<Project_Description>(desc =>
         {
             desc.ToTable("Project_Description");
-            desc.HasKey(table => table.Id);
             desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
             desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
             desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
             desc.HasData(projectDescriptions);
         });

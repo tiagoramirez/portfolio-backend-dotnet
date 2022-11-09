@@ -50,7 +50,6 @@ public class ProfileService : IProfileService
             {
                 await _context.EducationDescriptions.AddAsync(new Education_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     EducationId = education.Id,
                     Description = desc
@@ -71,7 +70,6 @@ public class ProfileService : IProfileService
             {
                 await _context.ExperienceDescriptions.AddAsync(new Experience_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     ExperienceId = experience.Id,
                     Description = desc
@@ -92,7 +90,6 @@ public class ProfileService : IProfileService
             {
                 await _context.ProjectDescriptions.AddAsync(new Project_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     ProjectId = project.Id,
                     Description = desc

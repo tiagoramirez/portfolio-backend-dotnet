@@ -36,7 +36,6 @@ public class EducationService : IEducationService
             {
                 Education_Description educDesc = new Education_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     EducationId = eduToDb.Id,
                     Description = education.Description

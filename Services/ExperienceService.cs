@@ -35,7 +35,6 @@ public class ExperienceService : IExperienceService
             {
                 Experience_Description expDesc = new Experience_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     ExperienceId = expToDb.Id,
                     Description = experience.Description

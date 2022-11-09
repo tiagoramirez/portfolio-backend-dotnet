@@ -35,7 +35,6 @@ public class ProjectService : IProjectService
             {
                 Project_Description projDesc = new Project_Description
                 {
-                    Id = Guid.NewGuid(),
                     ProfileId = profile.Id,
                     ProjectId = projToDb.Id,
                     Description = project.Description
