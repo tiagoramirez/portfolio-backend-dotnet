@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 namespace portfolio.Models.DTOs;
 public class EducationDto
 {
+    public EducationDto() { }
+
     public EducationDto(Education education)
     {
         this.Id = education.Id;

@@ -29,19 +29,20 @@ public class EducationService : IEducationService
 
         Education eduToDb = new Education(education, userId);
 
-        Guid firstProfileId = user.Profiles.FirstOrDefault().Id;
-        Education_Description educDesc = new Education_Description
-        {
-            Id = Guid.NewGuid(),
-            ProfileId = firstProfileId,
-            EducationId = eduToDb.Id,
-            Description = education.Description
-        };
-
         try
         {
             await _context.Educations.AddAsync(eduToDb);
-            await _context.EducationDescriptions.AddAsync(educDesc);
+            foreach (Profile profile in user.Profiles)
+            {
+                Education_Description educDesc = new Education_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    EducationId = eduToDb.Id,
+                    Description = education.Description
+                };
+                await _context.EducationDescriptions.AddAsync(educDesc);
+            }
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }

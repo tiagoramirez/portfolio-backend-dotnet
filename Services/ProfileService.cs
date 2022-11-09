@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
@@ -41,6 +42,77 @@ public class ProfileService : IProfileService
         try
         {
             await _context.Profiles.AddAsync(profile);
+        }
+        catch (System.Exception)
+        {
+            return ServiceStateType.InternalError;
+        }
+
+        List<Education> educations = await _context.Educations.Where(e => e.UserId == userId).ToListAsync();
+
+        foreach (Education education in educations)
+        {
+            string desc = (await _context.EducationDescriptions.FirstOrDefaultAsync(ed => ed.EducationId == education.Id)).Description;
+            try
+            {
+                await _context.EducationDescriptions.AddAsync(new Education_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    EducationId = education.Id,
+                    Description = desc
+                });
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
+        }
+
+        List<Experience> experiences = await _context.Experiences.Where(e => e.UserId == userId).ToListAsync();
+
+        foreach (Experience experience in experiences)
+        {
+            string desc = (await _context.ExperienceDescriptions.FirstOrDefaultAsync(ed => ed.ExperienceId == experience.Id)).Description;
+            try
+            {
+                await _context.ExperienceDescriptions.AddAsync(new Experience_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    ExperienceId = experience.Id,
+                    Description = desc
+                });
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
+        }
+
+        List<Project> projects = await _context.Projects.Where(e => e.UserId == userId).ToListAsync();
+
+        foreach (Project project in projects)
+        {
+            string desc = (await _context.ProjectDescriptions.FirstOrDefaultAsync(ed => ed.ProjectId == project.Id)).Description;
+            try
+            {
+                await _context.ProjectDescriptions.AddAsync(new Project_Description
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileId = profile.Id,
+                    ProjectId = project.Id,
+                    Description = desc
+                });
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
+        }
+
+        try
+        {
             await _context.SaveChangesAsync();
         }
         catch (System.Exception)

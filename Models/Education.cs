@@ -8,6 +8,7 @@ public class Education
 
     public Education(EducationDto education, Guid userId)
     {
+        this.Id = Guid.NewGuid(); //Necessary when creating new education for description purpose
         this.UserId = userId;
         this.TitleName = education.TitleName;
         this.Institute = education.Institute;
