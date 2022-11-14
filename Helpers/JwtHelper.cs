@@ -15,6 +15,17 @@ public class JwtHelper
         return new Guid(jsonPayload.Split('"')[3]); //Position where the Id is
     }
 
+    public static string GetUsername(string auth)
+    {
+        string token = auth.Remove(0, 7);
+
+        string payload = token.Split('.')[1];
+
+        string jsonPayload = Encoding.UTF8.GetString(DecodePayload(payload));
+
+        return jsonPayload.Split('"')[7]; //Position where the Id is
+    }
+
     static byte[] DecodePayload(string input)
     {
         var output = input;

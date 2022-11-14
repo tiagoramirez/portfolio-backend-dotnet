@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using portfolio;
 using portfolio.Auth.Services;
+using portfolio.Middlewares;
 using portfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseEditDeleteMiddleware();
 
 app.MapControllers();
 
