@@ -6,9 +6,15 @@ using portfolio.Models;
 
 namespace portfolio.Services;
 
+public class UserInfo
+{
+    public string Name { get; set; }
+    public string Username { get; set; }
+}
+
 public interface IUserService
 {
-    Task<IEnumerable<string>> GetAllAsync();
+    Task<IEnumerable<UserInfo>> GetAllAsync();
     Task<UserDto> GetByUsernameAsync(string username);
     Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId);
     Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user);
@@ -156,11 +162,9 @@ public class UserService : IUserService
         return !_context.Users.Any(u => u.Username == username);
     }
 
-    public async Task<IEnumerable<string>> GetAllAsync()
+    public async Task<IEnumerable<UserInfo>> GetAllAsync()
     {
-        List<User> users = await _context.Users.Where(u => u.Status).ToListAsync();
-        List<string> usernames = users.Select(u => u.Username).ToList();
-        return usernames;
+        return await _context.Users.Where(u => u.Status).Select(u => new UserInfo { Name = u.Name, Username = u.Username }).ToListAsync();
     }
 
     public async Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId)
