@@ -18,8 +18,12 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int count)
     {
+        if (count == 1)
+        {
+            return Ok(await _userService.GetCount());
+        }
         return Ok(await _userService.GetAllAsync());
     }
 

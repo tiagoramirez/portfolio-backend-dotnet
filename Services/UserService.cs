@@ -15,6 +15,7 @@ public class UserInfo
 public interface IUserService
 {
     Task<IEnumerable<UserInfo>> GetAllAsync();
+    Task<int> GetCount();
     Task<UserDto> GetByUsernameAsync(string username);
     Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId);
     Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user);
@@ -165,6 +166,11 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserInfo>> GetAllAsync()
     {
         return await _context.Users.Where(u => u.Status).Select(u => new UserInfo { Name = u.Name, Username = u.Username }).ToListAsync();
+    }
+
+    public async Task<int> GetCount()
+    {
+        return await _context.Users.Where(u => u.Status).CountAsync();
     }
 
     public async Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId)
