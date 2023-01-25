@@ -25,6 +25,6 @@ public class User_SocialMediaDto
     public string Url { get; set; }
 
 
-    // Navigations Properties
+    // Navigation Properties
     public SocialMediaDto SocialMediaInfo { get; set; }
 }

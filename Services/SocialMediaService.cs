@@ -1,15 +1,9 @@
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
-
-public interface ISocialMediaService
-{
-    IEnumerable<SocialMedia> GetAll();
-    Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, Guid userId);
-    Task<ServiceStateType> DeleteAsync(Guid id);
-}
 
 public class SocialMediaService : ISocialMediaService
 {
@@ -52,8 +46,13 @@ public class SocialMediaService : ISocialMediaService
         }
     }
 
-    public IEnumerable<SocialMedia> GetAll()
+    public IEnumerable<SocialMediaDto> GetAll()
     {
-        return _context.SocialMedias;
+        List<SocialMediaDto> socialMedias = new List<SocialMediaDto>();
+        foreach (SocialMedia socialMedia in _context.SocialMedias)
+        {
+            socialMedias.Add(new SocialMediaDto(socialMedia));
+        }
+        return socialMedias;
     }
 }

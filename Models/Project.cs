@@ -12,14 +12,19 @@ public class Project
         this.UserId = userId;
         this.Name = project.Name;
         this.Url = project.Url;
+        this.NativeDesc = project.NativeDesc;
+        this.HasEnglishDesc = project.HasEnglishDesc;
+        this.EnglishDesc = project.EnglishDesc;
     }
 
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public string Name { get; set; }
     public string Url { get; set; }
+    public string NativeDesc { get; set; }
+    public bool HasEnglishDesc { get; set; }
+    public string EnglishDesc { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public User User { get; set; }
-    public ICollection<Project_Description> Descriptions { get; set; }
 }

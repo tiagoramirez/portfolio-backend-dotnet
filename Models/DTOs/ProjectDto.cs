@@ -10,6 +10,9 @@ public class ProjectDto
         this.Id = project.Id;
         this.Name = project.Name;
         this.Url = project.Url;
+        this.NativeDesc = project.NativeDesc;
+        this.HasEnglishDesc = project.HasEnglishDesc;
+        this.EnglishDesc = project.EnglishDesc;
     }
 
     public Guid Id { get; set; }
@@ -28,5 +31,13 @@ public class ProjectDto
 
     [Required]
     [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
-    public string Description { get; set; }
+    public string NativeDesc { get; set; }
+
+
+    [Required]
+    public bool HasEnglishDesc { get; set; }
+
+
+    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    public string EnglishDesc { get; set; }
 }

@@ -19,8 +19,49 @@ public class UserDto
     [RegularExpression(@"^[a-zA-Z0-9_]+[a-zA-Z0-9._]{4,15}$", ErrorMessage = "Username must be between 4 and 15 characters, and can only contain letters, numbers, underscores and dots.")]
     public string Username { get; set; }
 
-    // Navigations Properties
-    public virtual ICollection<ProfileDto> Profiles { get; set; }
+
+    [Required]
+    public bool IsEnglishModeEnabled { get; set; }
+
+
+    [Required]
+    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    public string NativeDesc { get; set; }
+
+
+    [Required]
+    public bool HasEnglishDesc { get; set; }
+
+
+    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    public string EnglishDesc { get; set; }
+
+
+    [MaxLength(16, ErrorMessage = "Phone cannot exceed 16 characters")]
+    public string Phone { get; set; }
+
+
+    [MaxLength(50, ErrorMessage = "Country cannot exceed 50 characters")]
+    public string LocationCountry { get; set; }
+
+
+    [MaxLength(50, ErrorMessage = "State cannot exceed 50 characters")]
+    public string LocationState { get; set; }
+
+
+    [Required]
+    [MaxLength(255, ErrorMessage = "About Me cannot exceed 255 characters")]
+    public string NativeAboutMe { get; set; }
+
+
+    [Required]
+    public bool HasEnglishAboutMe { get; set; }
+
+
+    [MaxLength(255, ErrorMessage = "About Me cannot exceed 255 characters")]
+    public string EnglishAboutMe { get; set; }
+
+    // Navigation Properties
     public virtual ICollection<User_SocialMediaDto> SocialMedias { get; set; }
     public virtual ICollection<User_SkillDto> Skills { get; set; }
     public virtual ICollection<ExperienceDto> Experiences { get; set; }

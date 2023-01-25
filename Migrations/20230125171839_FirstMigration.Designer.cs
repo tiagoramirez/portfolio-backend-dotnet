@@ -12,7 +12,7 @@ using portfolio;
 namespace portfolio.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    [Migration("20221109045917_FirstMigration")]
+    [Migration("20230125171839_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,13 @@ namespace portfolio.Migrations
                     b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EnglishDesc")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("HasEnglishDesc")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Institute")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -40,6 +47,11 @@ namespace portfolio.Migrations
 
                     b.Property<bool>("IsActual")
                         .HasColumnType("bit");
+
+                    b.Property<string>("NativeDesc")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -64,48 +76,16 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("012573c5-95d7-477c-b6bc-65aa33eed87b"),
+                            Id = new Guid("226e9ebd-0a5b-49b8-83a9-40d72e6e165d"),
+                            EnglishDesc = "3rd year with an average of 9/10",
+                            HasEnglishDesc = true,
                             Institute = "Universidad Tecnologica Nacional",
                             IsActual = true,
+                            NativeDesc = "Me encuentro en 3ro con un promedio de 9/10",
                             Start = new DateTime(2020, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TitleName = "Ingenieria en Sistemas de Informacion",
                             Type = 1,
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
-                        });
-                });
-
-            modelBuilder.Entity("portfolio.Models.Education_Description", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<Guid>("EducationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EducationId");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("Education_Description", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("34d07f34-8d5b-498d-a476-4009caec806f"),
-                            Description = "No se que poner aca",
-                            EducationId = new Guid("012573c5-95d7-477c-b6bc-65aa33eed87b"),
-                            ProfileId = new Guid("341e92cd-1b0f-4361-8773-4a2c1b13c8cf")
+                            UserId = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623")
                         });
                 });
 
@@ -123,8 +103,20 @@ namespace portfolio.Migrations
                     b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EnglishDesc")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("HasEnglishDesc")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActual")
                         .HasColumnType("bit");
+
+                    b.Property<string>("NativeDesc")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Position")
                         .IsRequired()
@@ -149,113 +141,16 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2e1f8b91-8240-49eb-953f-34ac20d08feb"),
+                            Id = new Guid("321f1b90-5cc1-45fe-b184-14c52c15e356"),
                             Company = "Accusys",
+                            EnglishDesc = "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS",
+                            HasEnglishDesc = true,
                             IsActual = true,
+                            NativeDesc = "Manejo y optimización de querys, tables, stored procedures y views en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS",
                             Position = "Analista Programador Junior",
                             Start = new DateTime(2022, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0,
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
-                        });
-                });
-
-            modelBuilder.Entity("portfolio.Models.Experience_Description", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<Guid>("ExperienceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExperienceId");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("Experience_Description", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("463f14e1-6269-4564-8bb7-35557b728d1e"),
-                            Description = "No se que poner aca 2",
-                            ExperienceId = new Guid("2e1f8b91-8240-49eb-953f-34ac20d08feb"),
-                            ProfileId = new Guid("341e92cd-1b0f-4361-8773-4a2c1b13c8cf")
-                        });
-                });
-
-            modelBuilder.Entity("portfolio.Models.Profile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AboutMe")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("LocationCountry")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LocationState")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<bool>("ShowBanner")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowLocation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowPhone")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowPhoto")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Profile", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("341e92cd-1b0f-4361-8773-4a2c1b13c8cf"),
-                            AboutMe = "Soy estudiante y programador. No se que mas poner salu2",
-                            Description = "FullStack Developer || .NET + ANGULAR + SQL SERVER || Estudiante Ingeniería en Sistemas de Información en UTN",
-                            LocationCountry = "Argentina",
-                            LocationState = "Capital Federal",
-                            ShowBanner = false,
-                            ShowLocation = true,
-                            ShowPhone = true,
-                            ShowPhoto = false,
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
+                            UserId = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623")
                         });
                 });
 
@@ -265,10 +160,22 @@ namespace portfolio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("EnglishDesc")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("HasEnglishDesc")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NativeDesc")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Url")
                         .HasMaxLength(255)
@@ -286,45 +193,13 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3cf4ab06-4291-4480-87b5-bc9690e9dbff"),
+                            Id = new Guid("4924ae1d-c1e1-4648-b090-67a2d5babae8"),
+                            EnglishDesc = "Personal portfolio made with REACT + .NET 6 + SQL Server",
+                            HasEnglishDesc = true,
                             Name = "Portfolio",
-                            Url = "https://www.google.com/",
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
-                        });
-                });
-
-            modelBuilder.Entity("portfolio.Models.Project_Description", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Project_Description", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("11b73830-fde5-4e71-863a-ff00e3cafea7"),
-                            Description = "No se que poner aca 3",
-                            ProfileId = new Guid("341e92cd-1b0f-4361-8773-4a2c1b13c8cf"),
-                            ProjectId = new Guid("3cf4ab06-4291-4480-87b5-bc9690e9dbff")
+                            NativeDesc = "Portfolio personal realizado con REACT + .NET 6 + SQL Server",
+                            Url = "https://www.github.com/tiagoramirez",
+                            UserId = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623")
                         });
                 });
 
@@ -349,152 +224,212 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ddc485a0-40f9-4eda-9374-abf5fe8d2f23"),
+                            Id = new Guid("6766e706-95f1-4a5a-bb88-9666b4688ed8"),
                             Name = "C#",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("fd806ee9-17d8-4a34-9f13-0bc96abb0988"),
-                            Name = ".NET",
+                            Id = new Guid("44460f48-b515-47ca-ad37-3f36f50c6bf4"),
+                            Name = ".NET API",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("636ceeec-2e41-4d5c-9c24-ff0cc49e9fa9"),
+                            Id = new Guid("3b9e203e-cd34-404e-8bdd-942897c94fba"),
+                            Name = ".NET CORE 6",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("4866ba30-45fd-482b-8c55-750b8f08a9a3"),
                             Name = ".NET WPF",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("49e693ad-5f1a-4b46-9c16-ebf6ae802bc3"),
+                            Id = new Guid("65476b02-4a91-4413-a878-a608b84fb1c7"),
                             Name = "Entity Framework",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("9f7c8d04-4d3f-4178-a1e1-7d5117b99fe4"),
+                            Id = new Guid("194bd24c-234e-4595-9739-8b4d42f5bbf0"),
+                            Name = "Fluent API",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("da28b598-6c13-493e-9604-fcc5a2a0adf1"),
+                            Name = "Migrations",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("35f3a94d-4a84-4f10-aab3-30bf7f348225"),
+                            Name = "Middlewares",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("b9c7d499-6f03-47c0-a1dd-ed227002f7c6"),
                             Name = "Python",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("4bf709e4-0943-4795-a556-efd213040dfa"),
+                            Id = new Guid("b8601e35-050b-43d5-95dd-e7329e40dd9b"),
                             Name = "Java",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("2cc5017f-1791-442e-b696-a8609b6945f8"),
+                            Id = new Guid("5a8761a7-672e-4a9a-838b-5e5760e5fe86"),
                             Name = "Java Spring",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("262fbd07-0eda-45bc-94df-b6d4f817455a"),
+                            Id = new Guid("2cfc462d-d4f4-421e-91b8-397f2e3dae0d"),
                             Name = "SQL",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("7c50337b-0123-4817-9296-993d6b487942"),
+                            Id = new Guid("b77ba9c1-d0b4-43ff-8f2f-388bc6b6f619"),
                             Name = "MS SQL Server",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("f4545c94-5789-46a9-b56f-eb8ff454d9ff"),
+                            Id = new Guid("6ad111ed-fdce-4f64-a391-f4c8f58fcc4b"),
                             Name = "MySql",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("aa1ff9a7-5a49-4c35-b144-d3a9001f5fab"),
+                            Id = new Guid("df8c09ea-0b8d-4208-bf10-af33f6f246a5"),
                             Name = "HTML",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("7588dc0b-ca85-40e2-9aaf-fa194abb2136"),
+                            Id = new Guid("0409c919-93f0-4539-8528-e87a5d38b279"),
                             Name = "CSS",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("3768c235-8b65-4979-8c22-f6cb3f6e5c99"),
+                            Id = new Guid("19f1777b-1cb9-465d-a038-0d7534a375fd"),
                             Name = "Bootstrap",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("6f0a7575-5c61-4cfc-86f2-6b5a9e0395a0"),
+                            Id = new Guid("36283495-e75c-4dbe-b123-a952c2833998"),
                             Name = "JavaScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("36c25853-003e-4b6d-ba87-1c02b8f0d1ff"),
-                            Name = "JavaScript",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("f2c17292-0918-460b-b4f8-c112d1a7cda8"),
+                            Id = new Guid("ec8ae4d4-547d-478f-8165-0ab836c05517"),
                             Name = "TypeScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("38e468b1-f0f2-4b9b-bd11-36d7ab8a9f26"),
-                            Name = "TypeScript",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("3f89db3e-4a3d-4e26-b2d7-af1ca9f21ed6"),
+                            Id = new Guid("dc3f6090-61ad-4787-a069-083854970e3c"),
                             Name = "Angular",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("18a95593-b682-4fee-be54-f1d09d238cad"),
+                            Id = new Guid("882c211a-f041-4266-bea8-79ad1e444c65"),
                             Name = "React",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("3e667d06-810a-481d-8a8f-0dc8decc71be"),
+                            Id = new Guid("e5040d11-511b-4ad8-8122-e32184eb250f"),
+                            Name = "Redux Toolkit",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("36485eac-391d-4fec-bbba-953208f45446"),
+                            Name = "React Router",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("160a18d1-89db-4066-9e7b-97ca65e7579b"),
+                            Name = "Vite",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("8f4829c1-abaf-4b7b-85b0-1b63df652039"),
+                            Name = "Vitest",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("1a6ed2b6-3764-4361-8c14-4981e27b46b7"),
+                            Name = "Testing library",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc3573d8-5ce9-4d54-957c-228f8d664620"),
+                            Name = "TailwindCss",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("308a1bc1-f1ae-47a5-8eac-a0b46f00547c"),
                             Name = "Git",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("c0effba8-3cbf-4e07-891e-64266b379a6b"),
+                            Id = new Guid("74b92a1b-653a-40d9-9ab2-cea21bfe2b98"),
                             Name = "Scrum",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("d6626385-f711-4fd8-b15d-47621d82631b"),
+                            Id = new Guid("ed5db99f-9ee7-47b0-837a-4228b0ef455f"),
                             Name = "ERD / DER",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("584d9d09-9774-4cbf-8976-48235a1319fc"),
+                            Id = new Guid("d12f5371-3188-4093-92fe-f8e0cce79f08"),
                             Name = "UML",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("aa1792bd-8d18-4fb6-ac60-0de7194dea6e"),
+                            Id = new Guid("223d1817-e2ce-4faf-9b51-9f8bea5e27a8"),
                             Name = "JWT",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("293d7f9c-e690-46b0-b395-1a6e78565b59"),
+                            Id = new Guid("ab988062-44c6-46ed-91fb-f7133235b287"),
                             Name = "Linux",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("4aedfdd4-3186-42a7-873a-f874d26dc705"),
+                            Name = "REST API",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("013edfa0-8360-4d40-a527-807c64467d5f"),
+                            Name = "Node",
                             Type = 2
                         });
                 });
@@ -522,49 +457,49 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a7cf925-a986-402f-b071-9af97c4675ba"),
+                            Id = new Guid("47e58a44-637c-474e-8d65-7e2a835060ee"),
                             IconClassName = "bi bi-facebook",
                             Name = "Facebook"
                         },
                         new
                         {
-                            Id = new Guid("2c45ad9d-e004-4794-95e6-12ad2ec8f137"),
+                            Id = new Guid("f18ac089-567b-4535-8149-32a5cfa48bd5"),
                             IconClassName = "bi bi-whatsapp",
                             Name = "Whatsapp"
                         },
                         new
                         {
-                            Id = new Guid("630b7386-3277-40cd-a351-2455518fb75f"),
+                            Id = new Guid("c2215325-6e09-47be-a73a-ffca4bbc7dff"),
                             IconClassName = "bi bi-github",
                             Name = "Github"
                         },
                         new
                         {
-                            Id = new Guid("8d699d15-fffd-482b-a961-9da20435bdaf"),
+                            Id = new Guid("4aba67d9-43c6-4131-a387-753f4e714691"),
                             IconClassName = "bi bi-instagram",
                             Name = "Instagram"
                         },
                         new
                         {
-                            Id = new Guid("f235ed99-b649-407a-8b4a-1b5bf9c397ee"),
+                            Id = new Guid("2b941890-c242-40a0-8edc-d26df41674cb"),
                             IconClassName = "bi bi-linkedin",
                             Name = "LinkedIn"
                         },
                         new
                         {
-                            Id = new Guid("6c5a5e1a-a263-47ef-845e-cee98ee0106a"),
+                            Id = new Guid("d69938a6-6ac2-4562-8378-1bca0723fe81"),
                             IconClassName = "bi bi-twitter",
                             Name = "Twitter"
                         },
                         new
                         {
-                            Id = new Guid("637cea0e-f422-46d7-aae5-833b7d896982"),
+                            Id = new Guid("fbb84a48-7496-4b4c-bed3-e3416203f844"),
                             IconClassName = "bi bi-youtube",
                             Name = "Youtube"
                         },
                         new
                         {
-                            Id = new Guid("c1e31298-5fc3-464d-b3ff-38bb8f672ce2"),
+                            Id = new Guid("ac62a1f7-d350-40f2-8bc1-4b42bfdbe1ff"),
                             IconClassName = "bi bi-person-circle",
                             Name = "Web Personal"
                         });
@@ -584,15 +519,54 @@ namespace portfolio.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("EnglishAboutMe")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("EnglishDesc")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("HasEnglishAboutMe")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasEnglishDesc")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnglishModeEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocationCountry")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LocationState")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("NativeAboutMe")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("NativeDesc")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -614,10 +588,19 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b"),
-                            Created = new DateTime(2022, 11, 9, 1, 59, 17, 128, DateTimeKind.Local).AddTicks(5327),
+                            Id = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623"),
+                            Created = new DateTime(2023, 1, 25, 14, 18, 39, 247, DateTimeKind.Local).AddTicks(6399),
                             Email = "tiagoramirez2001@gmail.com",
+                            EnglishAboutMe = "Fullstack Dev. with 1 year of experience in the IT area. My main stack: React + .NET 6 API + SQL Server + Node",
+                            EnglishDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
+                            HasEnglishAboutMe = true,
+                            HasEnglishDesc = true,
+                            IsEnglishModeEnabled = true,
+                            LocationCountry = "Argentina",
+                            LocationState = "Chaco",
                             Name = "Tiago Alberto Ramirez Marchisio",
+                            NativeAboutMe = "Fullstack Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + .NET 6 API + SQL Server + Node",
+                            NativeDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
                             Password = "9d1b8cbb1b368f7595dc0ec177a9415f1666beeb3bd3079b135559e58d523563499a1dc93eac521903b5bba6fc9fa63c01aab0a3037bc6af61c0c16c09fc2e74",
                             Role = "USR",
                             Status = true,
@@ -651,10 +634,10 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("60cf3cd7-2136-4955-9dfd-48e7cef6f322"),
+                            Id = new Guid("33b0765b-d4aa-4069-8804-63010c512db9"),
                             Percentage = 90,
-                            SkillId = new Guid("ddc485a0-40f9-4eda-9374-abf5fe8d2f23"),
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
+                            SkillId = new Guid("6766e706-95f1-4a5a-bb88-9666b4688ed8"),
+                            UserId = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623")
                         });
                 });
 
@@ -686,10 +669,10 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b5379019-b458-4c5d-8b26-507c750c73e5"),
-                            SocialMediaId = new Guid("f235ed99-b649-407a-8b4a-1b5bf9c397ee"),
+                            Id = new Guid("d2df9f5b-0010-4284-aa68-24a5d3f6c39d"),
+                            SocialMediaId = new Guid("2b941890-c242-40a0-8edc-d26df41674cb"),
                             Url = "https://www.linkedin.com/in/tiagoramirezmar/",
-                            UserId = new Guid("179bddbd-ce7b-4557-94d4-99a420b23e4b")
+                            UserId = new Guid("0ddb19ca-da35-46a5-b267-f15ec3d11623")
                         });
                 });
 
@@ -704,59 +687,10 @@ namespace portfolio.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("portfolio.Models.Education_Description", b =>
-                {
-                    b.HasOne("portfolio.Models.Education", "Education")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("EducationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("portfolio.Models.Profile", "Profile")
-                        .WithMany("EducationDescriptions")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Education");
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("portfolio.Models.Experience", b =>
                 {
                     b.HasOne("portfolio.Models.User", "User")
                         .WithMany("Experiences")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Experience_Description", b =>
-                {
-                    b.HasOne("portfolio.Models.Experience", "Experience")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("ExperienceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("portfolio.Models.Profile", "Profile")
-                        .WithMany("ExperienceDescriptions")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Experience");
-
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Profile", b =>
-                {
-                    b.HasOne("portfolio.Models.User", "User")
-                        .WithMany("Profiles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -773,25 +707,6 @@ namespace portfolio.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Project_Description", b =>
-                {
-                    b.HasOne("portfolio.Models.Profile", "Profile")
-                        .WithMany("ProjectDescriptions")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("portfolio.Models.Project", "Project")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("portfolio.Models.User_Skill", b =>
@@ -832,30 +747,6 @@ namespace portfolio.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("portfolio.Models.Education", b =>
-                {
-                    b.Navigation("Descriptions");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Experience", b =>
-                {
-                    b.Navigation("Descriptions");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Profile", b =>
-                {
-                    b.Navigation("EducationDescriptions");
-
-                    b.Navigation("ExperienceDescriptions");
-
-                    b.Navigation("ProjectDescriptions");
-                });
-
-            modelBuilder.Entity("portfolio.Models.Project", b =>
-                {
-                    b.Navigation("Descriptions");
-                });
-
             modelBuilder.Entity("portfolio.Models.Skill", b =>
                 {
                     b.Navigation("User_Skills");
@@ -871,8 +762,6 @@ namespace portfolio.Migrations
                     b.Navigation("Educations");
 
                     b.Navigation("Experiences");
-
-                    b.Navigation("Profiles");
 
                     b.Navigation("Projects");
 

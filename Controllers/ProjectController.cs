@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models.DTOs;
-using portfolio.Services;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Controllers;
 
@@ -35,10 +35,10 @@ public class ProjectController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpPut("{projectId}/{profileId}")]
-    public async Task<IActionResult> Edit([FromBody] ProjectDto project, [FromRoute] Guid projectId, [FromRoute] Guid profileId)
+    [HttpPut("{projectId}")]
+    public async Task<IActionResult> Edit([FromBody] ProjectDto project, [FromRoute] Guid projectId)
     {
-        ServiceStateType state = await _projectService.EditAsync(project, projectId, profileId);
+        ServiceStateType state = await _projectService.EditAsync(project, projectId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }

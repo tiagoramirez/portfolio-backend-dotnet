@@ -6,12 +6,8 @@ namespace portfolio;
 
 public class PortfolioContext : DbContext
 {
-    public DbSet<Education_Description> EducationDescriptions { get; set; }
     public DbSet<Education> Educations { get; set; }
-    public DbSet<Experience_Description> ExperienceDescriptions { get; set; }
     public DbSet<Experience> Experiences { get; set; }
-    public DbSet<Profile> Profiles { get; set; }
-    public DbSet<Project_Description> ProjectDescriptions { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
@@ -25,30 +21,42 @@ public class PortfolioContext : DbContext
     {
         List<Skill> skills = new List<Skill>();
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "C#", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET API", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET CORE 6", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET WPF", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Entity Framework", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Fluent API", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Migrations", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Middlewares", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Python", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java Spring", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "SQL", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MS SQL Server", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MySql", Type = SkillType.BackEnd });
+
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "HTML", Type = SkillType.FrontEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "CSS", Type = SkillType.FrontEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Bootstrap", Type = SkillType.FrontEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.BackEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Angular", Type = SkillType.FrontEnd });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Redux Toolkit", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React Router", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vite", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vitest", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Testing library", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TailwindCss", Type = SkillType.FrontEnd });
+
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Git", Type = SkillType.DeveloperTool });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Scrum", Type = SkillType.DeveloperTool });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "ERD / DER", Type = SkillType.DeveloperTool });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "UML", Type = SkillType.DeveloperTool });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JWT", Type = SkillType.DeveloperTool });
         skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Linux", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "REST API", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Node", Type = SkillType.DeveloperTool });
 
         modelBuilder.Entity<Skill>(skill =>
         {
@@ -93,6 +101,16 @@ public class PortfolioContext : DbContext
             Status = true,
             Created = DateTime.Now,
             Role = "USR",
+            IsEnglishModeEnabled = true,
+            NativeDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
+            HasEnglishDesc = true,
+            EnglishDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
+            Phone = null,
+            LocationCountry = "Argentina",
+            LocationState = "Chaco",
+            NativeAboutMe = "Fullstack Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + .NET 6 API + SQL Server + Node",
+            HasEnglishAboutMe = true,
+            EnglishAboutMe = "Fullstack Dev. with 1 year of experience in the IT area. My main stack: React + .NET 6 API + SQL Server + Node"
         });
 
         modelBuilder.Entity<User>(user =>
@@ -102,7 +120,6 @@ public class PortfolioContext : DbContext
             user.HasMany(table => table.Skills).WithOne(user_skill => user_skill.User).HasForeignKey(user_skill => user_skill.UserId);
             user.HasMany(table => table.SocialMedias).WithOne(user_socialMedia => user_socialMedia.User).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
             user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
-            user.HasMany(table => table.Profiles).WithOne(profile => profile.User).HasForeignKey(profile => profile.UserId);
             user.Property(table => table.Id).ValueGeneratedOnAdd();
             user.Property(table => table.Username).IsRequired().HasMaxLength(15);
             user.Property(table => table.Password).IsRequired().HasMaxLength(255);
@@ -110,44 +127,17 @@ public class PortfolioContext : DbContext
             user.Property(table => table.Email).IsRequired().HasMaxLength(100);
             user.Property(table => table.Status).IsRequired();
             user.Property(table => table.Role).IsRequired().HasMaxLength(20);
+            user.Property(table => table.IsEnglishModeEnabled).IsRequired();
+            user.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            user.Property(table => table.HasEnglishDesc).IsRequired();
+            user.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
+            user.Property(table => table.Phone).IsRequired(false).HasMaxLength(16);
+            user.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
+            user.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
+            user.Property(table => table.NativeAboutMe).IsRequired().HasMaxLength(255);
+            user.Property(table => table.HasEnglishAboutMe).IsRequired();
+            user.Property(table => table.EnglishAboutMe).IsRequired(false).HasMaxLength(255);
             user.HasData(users);
-        });
-
-        List<Profile> profiles = new List<Profile>();
-        profiles.Add(new Profile
-        {
-            Id = Guid.NewGuid(),
-            UserId = users[0].Id,
-            Description = "FullStack Developer || .NET + ANGULAR + SQL SERVER || Estudiante Ingeniería en Sistemas de Información en UTN",
-            Phone = null,
-            LocationState = "Capital Federal",
-            LocationCountry = "Argentina",
-            AboutMe = "Soy estudiante y programador. No se que mas poner salu2",
-            ShowPhoto = false,
-            ShowBanner = false,
-            ShowLocation = true,
-            ShowPhone = true,
-        });
-
-        modelBuilder.Entity<Profile>(prof =>
-        {
-            prof.ToTable("Profile");
-            prof.HasKey(table => table.Id);
-            prof.HasOne(table => table.User).WithMany(user => user.Profiles).HasForeignKey(profile => profile.UserId);
-            prof.HasMany(table => table.ExperienceDescriptions).WithOne(experienceDescription => experienceDescription.Profile).HasForeignKey(experienceDescription => experienceDescription.ProfileId);
-            prof.HasMany(table => table.EducationDescriptions).WithOne(educationDescription => educationDescription.Profile).HasForeignKey(educationDescription => educationDescription.ProfileId);
-            prof.HasMany(table => table.ProjectDescriptions).WithOne(projectDescription => projectDescription.Profile).HasForeignKey(projectDescription => projectDescription.ProfileId);
-            prof.Property(table => table.Id).ValueGeneratedOnAdd();
-            prof.Property(table => table.Description).IsRequired().HasMaxLength(255);
-            prof.Property(table => table.Phone).HasMaxLength(16).IsRequired(false);
-            prof.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
-            prof.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
-            prof.Property(table => table.AboutMe).IsRequired().HasMaxLength(255);
-            prof.Property(table => table.ShowBanner).IsRequired();
-            prof.Property(table => table.ShowLocation).IsRequired();
-            prof.Property(table => table.ShowPhone).IsRequired();
-            prof.Property(table => table.ShowPhoto).IsRequired();
-            prof.HasData(profiles);
         });
 
         List<User_Skill> userSkills = new List<User_Skill>();
@@ -200,14 +190,16 @@ public class PortfolioContext : DbContext
             IsActual = true,
             Type = EducationType.College,
             Start = new DateTime(2020, 4, 1),
-            End = null
+            End = null,
+            NativeDesc = "Me encuentro en 3ro con un promedio de 9/10",
+            HasEnglishDesc = true,
+            EnglishDesc = "3rd year with an average of 9/10"
         });
 
         modelBuilder.Entity<Education>(educ =>
         {
             educ.ToTable("Education");
             educ.HasKey(table => table.Id);
-            educ.HasMany(table => table.Descriptions).WithOne(description => description.Education).HasForeignKey(description => description.EducationId);
             educ.HasOne(table => table.User).WithMany(user => user.Educations).HasForeignKey(education => education.UserId);
             educ.Property(table => table.Id).ValueGeneratedOnAdd();
             educ.Property(table => table.Institute).IsRequired().HasMaxLength(50);
@@ -216,27 +208,10 @@ public class PortfolioContext : DbContext
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();
             educ.Property(table => table.End).IsRequired(false);
+            educ.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            educ.Property(table => table.HasEnglishDesc).IsRequired();
+            educ.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
             educ.HasData(educations);
-        });
-
-        List<Education_Description> educationDescriptions = new List<Education_Description>();
-        educationDescriptions.Add(new Education_Description
-        {
-            Id = Guid.NewGuid(),
-            EducationId = educations[0].Id,
-            ProfileId = profiles[0].Id,
-            Description = "No se que poner aca"
-        });
-
-        modelBuilder.Entity<Education_Description>(desc =>
-        {
-            desc.ToTable("Education_Description");
-            desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.EducationDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Education).WithMany(education => education.Descriptions).HasForeignKey(description => description.EducationId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
-            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
-            desc.HasData(educationDescriptions);
         });
 
         List<Experience> experiences = new List<Experience>();
@@ -249,14 +224,16 @@ public class PortfolioContext : DbContext
             Type = ExperienceType.FullTime,
             IsActual = true,
             Start = new DateTime(2022, 4, 5),
-            End = null
+            End = null,
+            NativeDesc = "Manejo y optimización de querys, tables, stored procedures y views en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS",
+            HasEnglishDesc = true,
+            EnglishDesc = "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS"
         });
 
         modelBuilder.Entity<Experience>(exp =>
         {
             exp.ToTable("Experience");
             exp.HasKey(table => table.Id);
-            exp.HasMany(table => table.Descriptions).WithOne(description => description.Experience).HasForeignKey(description => description.ExperienceId);
             exp.HasOne(table => table.User).WithMany(user => user.Experiences).HasForeignKey(experience => experience.UserId);
             exp.Property(table => table.Id).ValueGeneratedOnAdd();
             exp.Property(table => table.Position).IsRequired().HasMaxLength(100);
@@ -265,27 +242,10 @@ public class PortfolioContext : DbContext
             exp.Property(table => table.IsActual).IsRequired();
             exp.Property(table => table.Start).IsRequired();
             exp.Property(table => table.End).IsRequired(false);
+            exp.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            exp.Property(table => table.HasEnglishDesc).IsRequired();
+            exp.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
             exp.HasData(experiences);
-        });
-
-        List<Experience_Description> experience_Descriptions = new List<Experience_Description>();
-        experience_Descriptions.Add(new Experience_Description
-        {
-            Id = Guid.NewGuid(),
-            ExperienceId = experiences[0].Id,
-            ProfileId = profiles[0].Id,
-            Description = "No se que poner aca 2"
-        });
-
-        modelBuilder.Entity<Experience_Description>(desc =>
-        {
-            desc.ToTable("Experience_Description");
-            desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ExperienceDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Experience).WithMany(experience => experience.Descriptions).HasForeignKey(description => description.ExperienceId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
-            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
-            desc.HasData(experience_Descriptions);
         });
 
         List<Project> projects = new List<Project>();
@@ -294,39 +254,24 @@ public class PortfolioContext : DbContext
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
             Name = "Portfolio",
-            Url = "https://www.google.com/",
+            Url = "https://www.github.com/tiagoramirez",
+            NativeDesc = "Portfolio personal realizado con REACT + .NET 6 + SQL Server",
+            HasEnglishDesc = true,
+            EnglishDesc = "Personal portfolio made with REACT + .NET 6 + SQL Server"
         });
 
         modelBuilder.Entity<Project>(proj =>
         {
             proj.ToTable("Project");
             proj.HasKey(table => table.Id);
-            proj.HasMany(table => table.Descriptions).WithOne(description => description.Project).HasForeignKey(description => description.ProjectId);
             proj.HasOne(table => table.User).WithMany(user => user.Projects).HasForeignKey(project => project.UserId);
             proj.Property(table => table.Id).ValueGeneratedOnAdd();
             proj.Property(table => table.Name).IsRequired().HasMaxLength(50);
             proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
+            proj.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            proj.Property(table => table.HasEnglishDesc).IsRequired();
+            proj.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
             proj.HasData(projects);
-        });
-
-        List<Project_Description> projectDescriptions = new List<Project_Description>();
-        projectDescriptions.Add(new Project_Description
-        {
-            Id = Guid.NewGuid(),
-            ProjectId = projects[0].Id,
-            ProfileId = profiles[0].Id,
-            Description = "No se que poner aca 3"
-        });
-
-        modelBuilder.Entity<Project_Description>(desc =>
-        {
-            desc.ToTable("Project_Description");
-            desc.HasKey(table => table.Id);
-            desc.HasOne(table => table.Profile).WithMany(profile => profile.ProjectDescriptions).HasForeignKey(description => description.ProfileId);
-            desc.HasOne(table => table.Project).WithMany(project => project.Descriptions).HasForeignKey(description => description.ProjectId).OnDelete(DeleteBehavior.NoAction);
-            desc.Property(table => table.Id).ValueGeneratedOnAdd();
-            desc.Property(table => table.Description).IsRequired().HasMaxLength(255);
-            desc.HasData(projectDescriptions);
         });
     }
 }

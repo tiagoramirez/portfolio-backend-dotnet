@@ -5,6 +5,7 @@ using portfolio;
 using portfolio.Auth.Services;
 using portfolio.Middlewares;
 using portfolio.Services;
+using portfolio.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,6 @@ builder.Services.AddSqlServer<PortfolioContext>(builder.Configuration.GetConnect
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();

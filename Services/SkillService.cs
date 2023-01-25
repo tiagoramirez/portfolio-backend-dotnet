@@ -1,15 +1,9 @@
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
-
-public interface ISkillService
-{
-    IEnumerable<Skill> GetAll();
-    Task<ServiceStateType> CreateAsync(User_SkillDto skill, Guid userId);
-    Task<ServiceStateType> DeleteAsync(Guid id);
-}
 
 public class SkillService : ISkillService
 {
@@ -53,8 +47,13 @@ public class SkillService : ISkillService
         }
     }
 
-    public IEnumerable<Skill> GetAll()
+    public IEnumerable<SkillDto> GetAll()
     {
-        return _context.Skills;
+        List<SkillDto> skills = new List<SkillDto>();
+        foreach (Skill skill in _context.Skills)
+        {
+            skills.Add(new SkillDto(skill));
+        }
+        return skills;
     }
 }

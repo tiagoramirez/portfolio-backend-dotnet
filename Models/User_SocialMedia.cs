@@ -19,7 +19,7 @@ public class User_SocialMedia
     public Guid SocialMediaId { get; set; }
     public string Url { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public User User { get; set; }
     public SocialMedia SocialMedia { get; set; }
 }

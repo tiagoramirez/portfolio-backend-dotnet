@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Models.DTOs;
 using portfolio.Helpers;
-using portfolio.Services;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Controllers;
 
@@ -18,11 +18,11 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] int count)
+    public async Task<IActionResult> GetAllUsers([FromQuery] int count)
     {
         if (count == 1)
         {
-            return Ok(await _userService.GetCount());
+            return Ok(await _userService.GetTotalUsersAsync());
         }
         return Ok(await _userService.GetAllAsync());
     }
@@ -35,20 +35,6 @@ public class UserController : ControllerBase
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
         }
-        user = await _userService.LoadDescriptionsAsync(user, user.Profiles.FirstOrDefault().Id);
-        return Ok(user);
-    }
-
-    [HttpGet("{username}/{profileId}")]
-    public async Task<IActionResult> GetUserInfo(string username, Guid profileId)
-    {
-        UserDto user = await _userService.GetByUsernameAsync(username);
-        if (user == null)
-        {
-            return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
-        }
-        user = await _userService.LoadDescriptionsAsync(user, profileId);
-        if (user == null) return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.ProfileNotFound) });
         return Ok(user);
     }
 
@@ -84,7 +70,7 @@ public class UserController : ControllerBase
     {
         Guid userId2 = JwtHelper.GetId(authorization);
         if (userId2 != userId) return BadRequest("Invalid user. Try again later...");
-        ServiceStateType state = await _userService.DeleteAsync(userId);
+        ServiceStateType state = await _userService.DeleteUserAsync(userId);
         if (state == ServiceStateType.Ok)
         {
             return Ok(new { msg = "User Deleted" });

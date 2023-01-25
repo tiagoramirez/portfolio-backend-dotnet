@@ -6,7 +6,7 @@ public class Skill
     public string Name { get; set; }
     public SkillType Type { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public virtual ICollection<User_Skill> User_Skills { get; set; }
 }
 

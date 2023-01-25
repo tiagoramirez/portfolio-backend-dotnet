@@ -24,10 +24,6 @@ public class ServiceState
                 return "Invalid username";
             case ServiceStateType.SocialMediaNotFound:
                 return "Social media not found";
-            case ServiceStateType.ProfileNotFound:
-                return "Profile not found";
-            case ServiceStateType.OneProfileRequired:
-                return "Users can't have less than one profile";
             case ServiceStateType.SkillNotFound:
                 return "Skill not found";
             case ServiceStateType.ExperienceNotFound:
@@ -38,8 +34,6 @@ public class ServiceState
                 return "Invalid credentials";
             case ServiceStateType.PasswordsDoNotMatch:
                 return "Passwords do not match";
-            case ServiceStateType.ProfileLimitExceeded:
-                return "You can't have more than two profiles";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -58,12 +52,9 @@ public enum ServiceStateType
     InvalidPassword,
     InvalidUsername,
     SocialMediaNotFound,
-    ProfileNotFound,
-    OneProfileRequired,
     SkillNotFound,
     ExperienceNotFound,
     EducationNotFound,
     InvalidCredentials,
     PasswordsDoNotMatch,
-    ProfileLimitExceeded,
 }

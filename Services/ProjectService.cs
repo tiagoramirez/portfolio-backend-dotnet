@@ -2,15 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
-
-public interface IProjectService
-{
-    Task<ServiceStateType> CreateAsync(ProjectDto project, Guid userId);
-    Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId, Guid profileId);
-    Task<ServiceStateType> DeleteAsync(Guid projectId);
-}
 
 public class ProjectService : IProjectService
 {
@@ -23,24 +17,12 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceStateType> CreateAsync(ProjectDto project, Guid userId)
     {
-        User user = await _context.Users.Include(p => p.Profiles).FirstOrDefaultAsync(u => u.Id == userId);
-        if (user == null) return ServiceStateType.UserNotFound;
+        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
 
-        Project projToDb = new(project, userId);
-
+        Project projectToDb = new(project, userId);
         try
         {
-            await _context.Projects.AddAsync(projToDb);
-            foreach (Profile profile in user.Profiles)
-            {
-                Project_Description projDesc = new Project_Description
-                {
-                    ProfileId = profile.Id,
-                    ProjectId = projToDb.Id,
-                    Description = project.Description
-                };
-                await _context.ProjectDescriptions.AddAsync(projDesc);
-            }
+            await _context.Projects.AddAsync(projectToDb);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
@@ -52,13 +34,12 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceStateType> DeleteAsync(Guid projectId)
     {
-        Project proj = await _context.Projects.FindAsync(projectId);
-        if (proj == null) return ServiceStateType.ExperienceNotFound;
+        Project project = await _context.Projects.FindAsync(projectId);
+        if (project == null) return ServiceStateType.ExperienceNotFound;
 
         try
         {
-            _context.ProjectDescriptions.Where(pd => pd.ProjectId == projectId).ToList().ForEach(pd => _context.ProjectDescriptions.Remove(pd));
-            _context.Projects.Remove(proj);
+            _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
@@ -68,16 +49,19 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId, Guid profileId)
+    public async Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId)
     {
         Project proj = await _context.Projects.FindAsync(projectId);
         if (proj == null) return ServiceStateType.ExperienceNotFound;
+
         proj.Name = project.Name;
         proj.Url = project.Url;
+        proj.NativeDesc = project.NativeDesc;
+        proj.HasEnglishDesc = project.HasEnglishDesc;
+        proj.EnglishDesc = project.EnglishDesc;
+
         try
         {
-            Project_Description projDesc = await _context.ProjectDescriptions.FirstOrDefaultAsync(ed => ed.ProjectId == projectId && ed.ProfileId == profileId);
-            projDesc.Description = project.Description;
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }

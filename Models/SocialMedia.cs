@@ -6,6 +6,6 @@ public class SocialMedia
     public string Name { get; set; }
     public string IconClassName { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public virtual ICollection<User_SocialMedia> User_SocialMedias { get; set; }
 }

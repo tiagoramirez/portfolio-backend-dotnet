@@ -18,7 +18,7 @@ public class User_Skill
     public Guid UserId { get; set; }
     public Guid SkillId { get; set; }
     public int Percentage { get; set; }
-    // Navigations Properties
+    // Navigation Properties
     public User User { get; set; }
     public Skill Skill { get; set; }
 }

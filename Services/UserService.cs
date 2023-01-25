@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using portfolio.Models.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
 
@@ -10,19 +11,6 @@ public class UserInfo
 {
     public string Name { get; set; }
     public string Username { get; set; }
-}
-
-public interface IUserService
-{
-    Task<IEnumerable<UserInfo>> GetAllAsync();
-    Task<int> GetCount();
-    Task<UserDto> GetByUsernameAsync(string username);
-    Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId);
-    Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user);
-    Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password);
-    Task<ServiceStateType> DeleteAsync(Guid id);
-    bool UsernameAvailable(string username);
-    bool EmailAvailable(string email);
 }
 
 public class UserService : IUserService
@@ -34,7 +22,7 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteUserAsync(Guid id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -53,55 +41,14 @@ public class UserService : IUserService
         return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user)
+    public async Task<IEnumerable<UserInfo>> GetAllAsync()
     {
-        User userToEdit = await _context.Users.FindAsync(id);
-        if (userToEdit != null && userToEdit.Status)
-        {
-            if (!EmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
-            if (!UsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
-            userToEdit.Email = user.Email;
-            userToEdit.Name = user.Name;
-            userToEdit.Username = user.Username;
-            try
-            {
-                await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
-            }
-            catch (System.Exception)
-            {
-                return ServiceStateType.UserNotFound;
-            }
-        }
-        return ServiceStateType.UserNotFound;
-    }
-
-    public async Task<ServiceStateType> UpdatePasswordAsync(Guid id, string password)
-    {
-        Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
-        if (!passwordRegex.Match(password).Success) return ServiceStateType.InvalidPassword;
-
-        User user = await _context.Users.FindAsync(id);
-        if (user != null && user.Status)
-        {
-            user.Password = Encrypt.GetSHA512(password);
-            try
-            {
-                await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
-            }
-            catch (System.Exception)
-            {
-                return ServiceStateType.InternalError;
-            }
-        }
-        return ServiceStateType.UserNotFound;
+        return await _context.Users.Where(u => u.Status).Select(u => new UserInfo { Name = u.Name, Username = u.Username }).ToListAsync();
     }
 
     public async Task<UserDto> GetByUsernameAsync(string username)
     {
         User user = _context.Users
-                    .Include(p => p.Profiles)
                     .Include(sm => sm.SocialMedias)
                     .Include(s => s.Skills)
                     .Include(ex => ex.Experiences)
@@ -113,9 +60,18 @@ public class UserService : IUserService
         UserDto userDto = new UserDto()
         {
             Name = user.Name,
-            Username = user.Username,
             Email = user.Email,
-            Profiles = new List<ProfileDto>(),
+            Username = user.Username,
+            IsEnglishModeEnabled = user.IsEnglishModeEnabled,
+            NativeDesc = user.NativeDesc,
+            HasEnglishDesc = user.HasEnglishDesc,
+            EnglishDesc = user.EnglishDesc,
+            Phone = user.Phone,
+            LocationCountry = user.LocationCountry,
+            LocationState = user.LocationState,
+            NativeAboutMe = user.NativeAboutMe,
+            HasEnglishAboutMe = user.HasEnglishAboutMe,
+            EnglishAboutMe = user.EnglishAboutMe,
             SocialMedias = new List<User_SocialMediaDto>(),
             Skills = new List<User_SkillDto>(),
             Experiences = new List<ExperienceDto>(),
@@ -123,10 +79,6 @@ public class UserService : IUserService
             Projects = new List<ProjectDto>()
         };
 
-        foreach (var profile in user.Profiles)
-        {
-            userDto.Profiles.Add(new ProfileDto(profile));
-        }
         foreach (var socialMedia in user.SocialMedias)
         {
             socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
@@ -153,50 +105,91 @@ public class UserService : IUserService
         return userDto;
     }
 
-    public bool EmailAvailable(string email)
-    {
-        return !_context.Users.Any(u => u.Email == email);
-    }
-
-    public bool UsernameAvailable(string username)
-    {
-        return !_context.Users.Any(u => u.Username == username);
-    }
-
-    public async Task<IEnumerable<UserInfo>> GetAllAsync()
-    {
-        return await _context.Users.Where(u => u.Status).Select(u => new UserInfo { Name = u.Name, Username = u.Username }).ToListAsync();
-    }
-
-    public async Task<int> GetCount()
+    public async Task<int> GetTotalUsersAsync()
     {
         return await _context.Users.Where(u => u.Status).CountAsync();
     }
 
-    public async Task<UserDto> LoadDescriptionsAsync(UserDto user, Guid profileId)
+    public bool IsEmailAvailable(string email)
     {
-        Guid userId = (await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username)).Id;
+        return !_context.Users.Any(u => u.Email == email);
+    }
 
-        if (!await _context.Profiles.AnyAsync(p => p.Id == profileId && p.UserId == userId)) return null;
+    public bool IsUsernameAvailable(string username)
+    {
+        return !_context.Users.Any(u => u.Username == username);
+    }
 
-        foreach (var experience in user.Experiences)
+    public async Task<ServiceStateType> ToggleEnglishModeAsync(Guid id)
+    {
+        User user = await _context.Users.FindAsync(id);
+        if (user != null && user.Status)
         {
-            Experience_Description expDesc = await _context.ExperienceDescriptions.Where(ed => ed.ExperienceId == experience.Id && ed.ProfileId == profileId).FirstOrDefaultAsync();
-            experience.Description = expDesc.Description;
+            user.IsEnglishModeEnabled = !user.IsEnglishModeEnabled;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return ServiceStateType.Ok;
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
         }
+        return ServiceStateType.UserNotFound;
+    }
 
-        foreach (var education in user.Educations)
+    public async Task<ServiceStateType> UpdatePasswordAsync(Guid id, string newPass)
+    {
+        Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
+        if (!passwordRegex.Match(newPass).Success) return ServiceStateType.InvalidPassword;
+
+        User user = await _context.Users.FindAsync(id);
+        if (user != null && user.Status)
         {
-            Education_Description educDesc = await _context.EducationDescriptions.Where(ed => ed.EducationId == education.Id && ed.ProfileId == profileId).FirstOrDefaultAsync();
-            education.Description = educDesc.Description;
+            user.Password = Encrypt.GetSHA512(newPass);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return ServiceStateType.Ok;
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.InternalError;
+            }
         }
+        return ServiceStateType.UserNotFound;
+    }
 
-        foreach (var project in user.Projects)
+    public async Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user)
+    {
+        User userToEdit = await _context.Users.FindAsync(id);
+        if (userToEdit != null && userToEdit.Status)
         {
-            Project_Description projDesct = await _context.ProjectDescriptions.Where(pd => pd.ProjectId == project.Id && pd.ProfileId == profileId).FirstOrDefaultAsync();
-            project.Description = projDesct.Description;
+            if (!IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
+            if (!IsUsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
+            userToEdit.Email = user.Email;
+            userToEdit.Name = user.Name;
+            userToEdit.Username = user.Username;
+            userToEdit.NativeDesc = user.NativeDesc;
+            userToEdit.HasEnglishDesc = user.HasEnglishDesc;
+            userToEdit.EnglishDesc = user.EnglishDesc;
+            userToEdit.Phone = user.Phone;
+            userToEdit.LocationCountry = user.LocationCountry;
+            userToEdit.LocationState = user.LocationState;
+            userToEdit.NativeAboutMe = user.NativeAboutMe;
+            userToEdit.HasEnglishAboutMe = user.HasEnglishAboutMe;
+            userToEdit.EnglishAboutMe = user.EnglishAboutMe;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return ServiceStateType.Ok;
+            }
+            catch (System.Exception)
+            {
+                return ServiceStateType.UserNotFound;
+            }
         }
-
-        return user;
+        return ServiceStateType.UserNotFound;
     }
 }

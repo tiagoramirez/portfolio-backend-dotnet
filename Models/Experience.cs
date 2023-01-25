@@ -16,6 +16,9 @@ public class Experience
         this.IsActual = experience.IsActual;
         this.Start = experience.Start;
         this.End = experience.End;
+        this.NativeDesc = experience.NativeDesc;
+        this.HasEnglishDesc = experience.HasEnglishDesc;
+        this.EnglishDesc = experience.EnglishDesc;
     }
 
     public Guid Id { get; set; }
@@ -26,10 +29,12 @@ public class Experience
     public bool IsActual { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
+    public string NativeDesc { get; set; }
+    public bool HasEnglishDesc { get; set; }
+    public string EnglishDesc { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public User User { get; set; }
-    public ICollection<Experience_Description> Descriptions { get; set; }
 }
 
 public enum ExperienceType

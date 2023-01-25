@@ -16,6 +16,9 @@ public class Education
         this.IsActual = education.IsActual;
         this.Start = education.Start;
         this.End = education.End;
+        this.NativeDesc = education.NativeDesc;
+        this.HasEnglishDesc = education.HasEnglishDesc;
+        this.EnglishDesc = education.EnglishDesc;
     }
 
     public Guid Id { get; set; }
@@ -26,10 +29,12 @@ public class Education
     public bool IsActual { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
+    public string NativeDesc { get; set; }
+    public bool HasEnglishDesc { get; set; }
+    public string EnglishDesc { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public User User { get; set; }
-    public ICollection<Education_Description> Descriptions { get; set; }
 }
 
 public enum EducationType

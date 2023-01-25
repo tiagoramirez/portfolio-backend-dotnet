@@ -14,6 +14,9 @@ public class EducationDto
         this.IsActual = education.IsActual;
         this.Start = education.Start;
         this.End = education.End;
+        this.NativeDesc = education.NativeDesc;
+        this.HasEnglishDesc = education.HasEnglishDesc;
+        this.EnglishDesc = education.EnglishDesc;
     }
 
     public Guid Id { get; set; }
@@ -46,5 +49,13 @@ public class EducationDto
 
     [Required]
     [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
-    public string Description { get; set; }
+    public string NativeDesc { get; set; }
+
+
+    [Required]
+    public bool HasEnglishDesc { get; set; }
+
+
+    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    public string EnglishDesc { get; set; }
 }

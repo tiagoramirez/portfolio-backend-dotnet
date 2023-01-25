@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Helpers;
 using portfolio.Models.DTOs;
-using portfolio.Services;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Controllers;
 
@@ -35,10 +35,10 @@ public class ExperienceController : ControllerBase
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpPut("{experienceId}/{profileId}")]
-    public async Task<IActionResult> Edit([FromBody] ExperienceDto experience, [FromRoute] Guid experienceId, [FromRoute] Guid profileId)
+    [HttpPut("{experienceId}")]
+    public async Task<IActionResult> Edit([FromBody] ExperienceDto experience, [FromRoute] Guid experienceId)
     {
-        ServiceStateType state = await _experienceService.EditAsync(experience, experienceId, profileId);
+        ServiceStateType state = await _experienceService.EditAsync(experience, experienceId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }

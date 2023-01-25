@@ -2,16 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
-
-public interface IEducationService
-{
-    Task<ServiceStateType> CreateAsync(EducationDto education, Guid userId);
-    Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId, Guid profileId);
-    Task<ServiceStateType> DeleteAsync(Guid educationId);
-
-}
 
 public class EducationService : IEducationService
 {
@@ -24,24 +17,12 @@ public class EducationService : IEducationService
 
     public async Task<ServiceStateType> CreateAsync(EducationDto education, Guid userId)
     {
-        User user = await _context.Users.Include(p => p.Profiles).FirstOrDefaultAsync(u => u.Id == userId);
-        if (user == null) return ServiceStateType.UserNotFound;
+        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
 
-        Education eduToDb = new Education(education, userId);
-
+        Education educationToDb = new Education(education, userId);
         try
         {
-            await _context.Educations.AddAsync(eduToDb);
-            foreach (Profile profile in user.Profiles)
-            {
-                Education_Description educDesc = new Education_Description
-                {
-                    ProfileId = profile.Id,
-                    EducationId = eduToDb.Id,
-                    Description = education.Description
-                };
-                await _context.EducationDescriptions.AddAsync(educDesc);
-            }
+            await _context.Educations.AddAsync(educationToDb);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
@@ -58,7 +39,6 @@ public class EducationService : IEducationService
 
         try
         {
-            _context.EducationDescriptions.Where(ed => ed.EducationId == educationId).ToList().ForEach(ed => _context.EducationDescriptions.Remove(ed));
             _context.Educations.Remove(education);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
@@ -69,20 +49,23 @@ public class EducationService : IEducationService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId, Guid profileId)
+    public async Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId)
     {
         Education educ = await _context.Educations.FindAsync(educationId);
         if (educ == null) return ServiceStateType.ExperienceNotFound;
+
         educ.Type = education.Type;
         educ.Institute = education.Institute;
         educ.TitleName = education.TitleName;
         educ.IsActual = education.IsActual;
         educ.Start = education.Start;
         educ.End = education.End;
+        educ.NativeDesc = education.NativeDesc;
+        educ.HasEnglishDesc = education.HasEnglishDesc;
+        educ.EnglishDesc = education.EnglishDesc;
+
         try
         {
-            Education_Description educDesc = await _context.EducationDescriptions.FirstOrDefaultAsync(ed => ed.EducationId == educationId && ed.ProfileId == profileId);
-            educDesc.Description = education.Description;
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }

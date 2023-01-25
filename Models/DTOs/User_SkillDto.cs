@@ -24,6 +24,6 @@ public class User_SkillDto
     [Range(0, 100, ErrorMessage = "Percentage must be between 0 and 100")]
     public int Percentage { get; set; }
 
-    // Navigations Properties
+    // Navigation Properties
     public SkillDto SkillInfo { get; set; }
 }

@@ -16,6 +16,9 @@ public class ExperienceDto
         this.IsActual = experience.IsActual;
         this.Start = experience.Start;
         this.End = experience.End;
+        this.NativeDesc = experience.NativeDesc;
+        this.HasEnglishDesc = experience.HasEnglishDesc;
+        this.EnglishDesc = experience.EnglishDesc;
     }
 
     public Guid Id { get; set; }
@@ -47,5 +50,13 @@ public class ExperienceDto
 
     [Required]
     [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
-    public string Description { get; set; }
+    public string NativeDesc { get; set; }
+
+
+    [Required]
+    public bool HasEnglishDesc { get; set; }
+
+
+    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    public string EnglishDesc { get; set; }
 }
