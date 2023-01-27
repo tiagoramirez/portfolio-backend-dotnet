@@ -6,7 +6,7 @@ public class Education
 {
     public Education() { }
 
-    public Education(EducationDto education, Guid userId)
+    public Education(EducationDto education, string userId)
     {
         this.Id = Guid.NewGuid(); //Necessary when creating new education for description purpose
         this.UserId = userId;
@@ -22,7 +22,7 @@ public class Education
     }
 
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public string TitleName { get; set; }
     public string Institute { get; set; }
     public EducationType Type { get; set; }

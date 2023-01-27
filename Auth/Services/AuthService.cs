@@ -8,7 +8,7 @@ namespace portfolio.Auth.Services;
 
 public interface IAuthService
 {
-    Task<bool> CheckRegistered(string email, Guid id);
+    Task<bool> CheckRegistered(string email, string id);
     Task<string> RegisterAsync(RegisterDto register);
 }
 
@@ -29,7 +29,7 @@ public class AuthService : IAuthService
 
         User user = new User
         {
-            Id = Guid.NewGuid(),
+            Id = register.Id,
             Name = register.Name,
             Email = register.Email,
             Username = register.Username,
@@ -59,7 +59,7 @@ public class AuthService : IAuthService
         }
     }
 
-    public async Task<bool> CheckRegistered(string email, Guid id)
+    public async Task<bool> CheckRegistered(string email, string id)
     {
         return await _context.Users.AnyAsync(u => u.Email == email && u.Id == id);
     }

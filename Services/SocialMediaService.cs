@@ -14,7 +14,7 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, string userId)
     {
         User_SocialMedia socialMediaToDb = new User_SocialMedia(socialMedia, userId);
 

@@ -15,7 +15,7 @@ public class ProjectService : IProjectService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(ProjectDto project, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(ProjectDto project, string userId)
     {
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
 

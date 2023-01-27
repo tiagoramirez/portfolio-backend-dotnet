@@ -21,7 +21,7 @@ public class ExperienceController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ExperienceDto experience, [FromHeader] string authorization)
     {
-        Guid userId = JwtHelper.GetId(authorization);
+        string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _experienceService.CreateAsync(experience, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });

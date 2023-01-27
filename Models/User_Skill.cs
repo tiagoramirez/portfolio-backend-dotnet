@@ -6,7 +6,7 @@ public class User_Skill
 {
     public User_Skill() { }
 
-    public User_Skill(User_SkillDto skill, Guid userId)
+    public User_Skill(User_SkillDto skill, string userId)
     {
         this.UserId = userId;
         this.SkillId = skill.SkillId;
@@ -15,7 +15,7 @@ public class User_Skill
 
 
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public Guid SkillId { get; set; }
     public int Percentage { get; set; }
     // Navigation Properties

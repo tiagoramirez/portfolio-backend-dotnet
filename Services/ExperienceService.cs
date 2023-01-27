@@ -15,7 +15,7 @@ public class ExperienceService : IExperienceService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(ExperienceDto experience, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(ExperienceDto experience, string userId)
     {
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
 

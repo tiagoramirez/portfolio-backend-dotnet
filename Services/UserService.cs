@@ -22,7 +22,7 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<ServiceStateType> DeleteUserAsync(Guid id)
+    public async Task<ServiceStateType> DeleteUserAsync(string id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -110,7 +110,7 @@ public class UserService : IUserService
         return await _context.Users.Where(u => u.Status).CountAsync();
     }
 
-    public async Task<string> GetUsernameByIdEmailAsync(Guid id, string email)
+    public async Task<string> GetUsernameByIdEmailAsync(string id, string email)
     {
         User user = await _context.Users.Where(u => u.Status && u.Email == email && u.Id == id).FirstOrDefaultAsync();
         return user.Username;
@@ -126,7 +126,7 @@ public class UserService : IUserService
         return !_context.Users.Any(u => u.Username == username);
     }
 
-    public async Task<ServiceStateType> ToggleEnglishModeAsync(Guid id)
+    public async Task<ServiceStateType> ToggleEnglishModeAsync(string id)
     {
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
@@ -145,28 +145,9 @@ public class UserService : IUserService
         return ServiceStateType.UserNotFound;
     }
 
-    public async Task<ServiceStateType> UpdatePasswordAsync(Guid id, string newPass)
-    {
-        Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
-        if (!passwordRegex.Match(newPass).Success) return ServiceStateType.InvalidPassword;
+    // Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
 
-        User user = await _context.Users.FindAsync(id);
-        if (user != null && user.Status)
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
-            }
-            catch (System.Exception)
-            {
-                return ServiceStateType.InternalError;
-            }
-        }
-        return ServiceStateType.UserNotFound;
-    }
-
-    public async Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user)
+    public async Task<ServiceStateType> UpdateUserAsync(string id, UserDto user)
     {
         User userToEdit = await _context.Users.FindAsync(id);
         if (userToEdit != null && userToEdit.Status)

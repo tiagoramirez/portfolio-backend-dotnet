@@ -9,11 +9,10 @@ public interface IUserService
     Task<IEnumerable<UserInfo>> GetAllAsync();
     Task<UserDto> GetByUsernameAsync(string username);
     Task<int> GetTotalUsersAsync();
-    Task<string> GetUsernameByIdEmailAsync(Guid id, string email);
+    Task<string> GetUsernameByIdEmailAsync(string id, string email);
     bool IsUsernameAvailable(string username);
     bool IsEmailAvailable(string email);
-    Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user);
-    Task<ServiceStateType> UpdatePasswordAsync(Guid id, string newPass);
-    Task<ServiceStateType> DeleteUserAsync(Guid id);
-    Task<ServiceStateType> ToggleEnglishModeAsync(Guid id);
+    Task<ServiceStateType> UpdateUserAsync(string id, UserDto user);
+    Task<ServiceStateType> DeleteUserAsync(string id);
+    Task<ServiceStateType> ToggleEnglishModeAsync(string id);
 }

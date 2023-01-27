@@ -21,7 +21,7 @@ public class ProjectController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
-        Guid userId = JwtHelper.GetId(authorization);
+        string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _projectService.CreateAsync(project, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });

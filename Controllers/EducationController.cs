@@ -21,7 +21,7 @@ public class EducationController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] EducationDto education, [FromHeader] string authorization)
     {
-        Guid userId = JwtHelper.GetId(authorization);
+        string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _educationService.CreateAsync(education, userId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Created" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });

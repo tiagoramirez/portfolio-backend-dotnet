@@ -6,7 +6,7 @@ public class User_SocialMedia
 {
     public User_SocialMedia() { }
 
-    public User_SocialMedia(User_SocialMediaDto socialMedia, Guid userId)
+    public User_SocialMedia(User_SocialMediaDto socialMedia, string userId)
     {
         this.UserId = userId;
         this.SocialMediaId = socialMedia.SocialMediaId;
@@ -15,7 +15,7 @@ public class User_SocialMedia
 
 
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public Guid SocialMediaId { get; set; }
     public string Url { get; set; }
 

@@ -18,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllUsers([FromQuery] int count, [FromQuery] string email, [FromQuery] Guid id)
+    public async Task<IActionResult> UsersInfo([FromQuery] int count, [FromQuery] string email, [FromQuery] string id)
     {
         if (count == 1)
         {
@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateName([FromHeader] string authorization, [FromBody] UserDto user)
     {
-        Guid userId = JwtHelper.GetId(authorization);
+        string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdateUserAsync(userId, user);
         if (state == ServiceStateType.Ok)
         {
@@ -58,23 +58,10 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("Password/{password}")]
-    public async Task<IActionResult> UpdatePassword([FromHeader] string authorization, [FromRoute] string password)
-    {
-        Guid userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _userService.UpdatePasswordAsync(userId, password);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "Password Updated" });
-        }
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
-    }
-
-    [Authorize]
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid userId, [FromHeader] string authorization)
+    public async Task<IActionResult> Delete([FromRoute] string userId, [FromHeader] string authorization)
     {
-        Guid userId2 = JwtHelper.GetId(authorization);
+        string userId2 = JwtHelper.GetId(authorization);
         if (userId2 != userId) return BadRequest("Invalid user. Try again later...");
         ServiceStateType state = await _userService.DeleteUserAsync(userId);
         if (state == ServiceStateType.Ok)

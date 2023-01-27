@@ -6,7 +6,7 @@ public class Experience
 {
     public Experience() { }
 
-    public Experience(ExperienceDto experience, Guid userId)
+    public Experience(ExperienceDto experience, string userId)
     {
         this.Id = Guid.NewGuid();
         this.UserId = userId;
@@ -22,7 +22,7 @@ public class Experience
     }
 
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public string Position { get; set; }
     public string Company { get; set; }
     public ExperienceType Type { get; set; }

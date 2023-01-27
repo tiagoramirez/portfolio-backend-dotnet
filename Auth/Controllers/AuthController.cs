@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("/Registered")]
-    public async Task<bool> IsRegistered([FromQuery] string username, [FromQuery] Guid id)
+    public async Task<bool> IsRegistered([FromQuery] string username, [FromQuery] string id)
     {
         return await _authService.CheckRegistered(username, id);
     }

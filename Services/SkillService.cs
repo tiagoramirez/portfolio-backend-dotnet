@@ -15,7 +15,7 @@ public class SkillService : ISkillService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SkillDto skill, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(User_SkillDto skill, string userId)
     {
         User_Skill skillToDb = new User_Skill(skill, userId);
 

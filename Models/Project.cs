@@ -6,7 +6,7 @@ public class Project
 {
     public Project() { }
 
-    public Project(ProjectDto project, Guid userId)
+    public Project(ProjectDto project, string userId)
     {
         this.Id = Guid.NewGuid();
         this.UserId = userId;
@@ -18,7 +18,7 @@ public class Project
     }
 
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public string Name { get; set; }
     public string Url { get; set; }
     public string NativeDesc { get; set; }

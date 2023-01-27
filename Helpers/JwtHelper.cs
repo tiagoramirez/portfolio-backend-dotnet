@@ -4,7 +4,7 @@ namespace portfolio.Helpers;
 
 public class JwtHelper
 {
-    public static Guid GetId(string auth)
+    public static string GetId(string auth)
     {
         string token = auth.Remove(0, 7);
 
@@ -12,7 +12,7 @@ public class JwtHelper
 
         string jsonPayload = Encoding.UTF8.GetString(DecodePayload(payload));
 
-        return new Guid(jsonPayload.Split('"')[3]); //Position where the Id is
+        return jsonPayload.Split('"')[3]; //Position where the Id is
     }
 
     public static string GetUsername(string auth)

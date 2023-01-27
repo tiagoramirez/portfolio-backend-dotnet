@@ -15,7 +15,7 @@ public class EducationService : IEducationService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(EducationDto education, Guid userId)
+    public async Task<ServiceStateType> CreateAsync(EducationDto education, string userId)
     {
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
 
