@@ -23,8 +23,4 @@ public class RegisterDto
     [Required]
     [RegularExpression(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*", ErrorMessage = "Password must be between 8 and 20 characters, and must contain at least one uppercase letter, one lowercase letter, one number and one special character.")]
     public string Password { get; set; }
-
-
-    [Required]
-    public string PasswordConfirmation { get; set; }
 }

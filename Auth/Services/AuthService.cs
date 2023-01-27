@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Auth.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
@@ -8,7 +9,7 @@ namespace portfolio.Auth.Services;
 public interface IAuthService
 {
     Task<bool> CheckRegistered(string email, Guid id);
-    // Task<ServiceStateType> AddUserAsync(RegisterDto register);
+    Task<string> RegisterAsync(RegisterDto register);
 }
 
 public class AuthService : IAuthService
@@ -22,10 +23,9 @@ public class AuthService : IAuthService
         _userService = userService;
     }
 
-    public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
+    public async Task<string> RegisterAsync(RegisterDto register)
     {
-        if (!_userService.IsUsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
-        if (register.Password != register.PasswordConfirmation) return ServiceStateType.PasswordsDoNotMatch;
+        if (!_userService.IsUsernameAvailable(register.Username)) return null;
 
         User user = new User
         {
@@ -51,11 +51,16 @@ public class AuthService : IAuthService
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return user.Id.ToString();
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
+    }
+
+    public async Task<bool> CheckRegistered(string email, Guid id)
+    {
+        return await _context.Users.AnyAsync(u => u.Email == email && u.Id == id);
     }
 }

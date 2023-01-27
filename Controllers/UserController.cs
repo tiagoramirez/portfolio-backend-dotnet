@@ -24,7 +24,7 @@ public class UserController : ControllerBase
         {
             return Ok(await _userService.GetTotalUsersAsync());
         }
-        if (email != null && id != null)
+        if (email != null)
         {
             string username = await _userService.GetUsernameByIdEmailAsync(id, email);
             if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
