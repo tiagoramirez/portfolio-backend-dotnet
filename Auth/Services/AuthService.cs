@@ -9,7 +9,7 @@ namespace portfolio.Auth.Services;
 public interface IAuthService
 {
     Task<bool> CheckRegistered(string email, string id);
-    Task<string> RegisterAsync(RegisterDto register);
+    Task<ServiceStateType> RegisterAsync(RegisterDto register);
 }
 
 public class AuthService : IAuthService
@@ -23,9 +23,9 @@ public class AuthService : IAuthService
         _userService = userService;
     }
 
-    public async Task<string> RegisterAsync(RegisterDto register)
+    public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
     {
-        if (!_userService.IsUsernameAvailable(register.Username)) return null;
+        if (!_userService.IsUsernameAvailable(register.Username)) return ServiceStateType.EmailNotAvailable;
 
         User user = new User
         {
@@ -51,11 +51,11 @@ public class AuthService : IAuthService
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return user.Id.ToString();
+            return ServiceStateType.Ok;
         }
         catch (System.Exception)
         {
-            return null;
+            return ServiceStateType.InternalError;
         }
     }
 

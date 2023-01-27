@@ -16,13 +16,15 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [HttpPost("/Register")]
-    public async Task<string> Register([FromBody] RegisterDto register)
+    [HttpPost("Register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto register)
     {
-        return await _authService.RegisterAsync(register);
+        ServiceStateType state = await _authService.RegisterAsync(register);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "User registered in Backend" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpGet("/Registered")]
+    [HttpGet("Registered")]
     public async Task<bool> IsRegistered([FromQuery] string username, [FromQuery] string id)
     {
         return await _authService.CheckRegistered(username, id);
