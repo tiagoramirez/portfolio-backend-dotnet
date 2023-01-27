@@ -18,11 +18,17 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllUsers([FromQuery] int count)
+    public async Task<IActionResult> GetAllUsers([FromQuery] int count, [FromQuery] string email, [FromQuery] Guid id)
     {
         if (count == 1)
         {
             return Ok(await _userService.GetTotalUsersAsync());
+        }
+        if (email != null && id != null)
+        {
+            string username = await _userService.GetUsernameByIdEmailAsync(id, email);
+            if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
+            return Ok(username);
         }
         return Ok(await _userService.GetAllAsync());
     }

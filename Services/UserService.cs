@@ -110,6 +110,12 @@ public class UserService : IUserService
         return await _context.Users.Where(u => u.Status).CountAsync();
     }
 
+    public async Task<string> GetUsernameByIdEmailAsync(Guid id, string email)
+    {
+        User user = await _context.Users.Where(u => u.Status && u.Email == email && u.Id == id).FirstOrDefaultAsync();
+        return user.Username;
+    }
+
     public bool IsEmailAvailable(string email)
     {
         return !_context.Users.Any(u => u.Email == email);
@@ -147,7 +153,6 @@ public class UserService : IUserService
         User user = await _context.Users.FindAsync(id);
         if (user != null && user.Status)
         {
-            user.Password = Encrypt.GetSHA512(newPass);
             try
             {
                 await _context.SaveChangesAsync();

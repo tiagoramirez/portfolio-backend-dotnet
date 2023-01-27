@@ -9,6 +9,7 @@ public interface IUserService
     Task<IEnumerable<UserInfo>> GetAllAsync();
     Task<UserDto> GetByUsernameAsync(string username);
     Task<int> GetTotalUsersAsync();
+    Task<string> GetUsernameByIdEmailAsync(Guid id, string email);
     bool IsUsernameAvailable(string username);
     bool IsEmailAvailable(string email);
     Task<ServiceStateType> UpdateUserAsync(Guid id, UserDto user);

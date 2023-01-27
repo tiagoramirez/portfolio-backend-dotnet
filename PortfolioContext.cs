@@ -97,7 +97,6 @@ public class PortfolioContext : DbContext
             Name = "Tiago Alberto Ramirez Marchisio",
             Email = "tiagoramirez2001@gmail.com",
             Username = "tiagoramirez",
-            Password = Encrypt.GetSHA512("Tiago@1234"),
             Status = true,
             Created = DateTime.Now,
             Role = "USR",
@@ -122,7 +121,6 @@ public class PortfolioContext : DbContext
             user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
             user.Property(table => table.Id).ValueGeneratedOnAdd();
             user.Property(table => table.Username).IsRequired().HasMaxLength(15);
-            user.Property(table => table.Password).IsRequired().HasMaxLength(255);
             user.Property(table => table.Name).IsRequired().HasMaxLength(50);
             user.Property(table => table.Email).IsRequired().HasMaxLength(100);
             user.Property(table => table.Status).IsRequired();

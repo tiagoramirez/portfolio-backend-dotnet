@@ -5,17 +5,18 @@ using portfolio.Services.Interfaces;
 
 namespace portfolio.Auth.Services;
 
-public interface IRegisterService
+public interface IAuthService
 {
-    Task<ServiceStateType> RegisterAsync(RegisterDto register);
+    Task<bool> CheckRegistered(string email, Guid id);
+    // Task<ServiceStateType> AddUserAsync(RegisterDto register);
 }
 
-public class RegisterService : IRegisterService
+public class AuthService : IAuthService
 {
     PortfolioContext _context;
     IUserService _userService;
 
-    public RegisterService(PortfolioContext context, IUserService userService)
+    public AuthService(PortfolioContext context, IUserService userService)
     {
         _context = context;
         _userService = userService;
@@ -24,7 +25,6 @@ public class RegisterService : IRegisterService
     public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
     {
         if (!_userService.IsUsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
-        if (!_userService.IsEmailAvailable(register.Email)) return ServiceStateType.EmailNotAvailable;
         if (register.Password != register.PasswordConfirmation) return ServiceStateType.PasswordsDoNotMatch;
 
         User user = new User
@@ -33,7 +33,6 @@ public class RegisterService : IRegisterService
             Name = register.Name,
             Email = register.Email,
             Username = register.Username,
-            Password = Encrypt.GetSHA512(register.Password),
             Status = true,
             Created = DateTime.Now,
             Role = "USR",

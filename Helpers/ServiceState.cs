@@ -12,8 +12,6 @@ public class ServiceState
                 return "Internal error. Try again later.";
             case ServiceStateType.UsernameNotAvailable:
                 return "Username not available";
-            case ServiceStateType.EmailNotAvailable:
-                return "Email not available";
             case ServiceStateType.UserNotFound:
                 return "User not found";
             case ServiceStateType.InvalidEmail:
@@ -34,6 +32,8 @@ public class ServiceState
                 return "Invalid credentials";
             case ServiceStateType.PasswordsDoNotMatch:
                 return "Passwords do not match";
+            case ServiceStateType.IncorrectEmailIdCombination:
+                return "Incorrect Emai and Id combination";
             default:
                 return "Unknown error. Try again later.";
         }
@@ -57,4 +57,5 @@ public enum ServiceStateType
     EducationNotFound,
     InvalidCredentials,
     PasswordsDoNotMatch,
+    IncorrectEmailIdCombination
 }
