@@ -29,4 +29,12 @@ public class AuthController : ControllerBase
     {
         return await _authService.CheckRegistered(email, id);
     }
+    
+    [HttpGet("Login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto login)
+    {
+        ServiceStateType state = await _authService.CheckLogin(login);
+        if (state == ServiceStateType.Ok) return Ok(_authService.GenerateToken(login));
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+    }
 }
