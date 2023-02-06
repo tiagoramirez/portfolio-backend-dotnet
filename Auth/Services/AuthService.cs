@@ -14,8 +14,8 @@ public interface IAuthService
 {
     Task<bool> CheckRegistered(string email, string id);
     Task<ServiceStateType> RegisterAsync(RegisterDto register);
-    string GenerateToken(LoginDto login);
-    Task<ServiceStateType> CheckLogin(LoginDto login);
+    string GenerateToken(string id, string username);
+    Task<ServiceStateType> CheckLogin(string id, string username, string email);
 }
 
 public class AuthService : IAuthService
@@ -72,11 +72,11 @@ public class AuthService : IAuthService
         return await _context.Users.AnyAsync(u => u.Email == email && u.Id == id);
     }
 
-    public string GenerateToken(LoginDto login)
+    public string GenerateToken(string id, string username)
     {
         Claim[] claims = new Claim[]{
-            new Claim(ClaimTypes.Sid, login.Id),
-            new Claim(ClaimTypes.NameIdentifier, login.Username)
+            new Claim(ClaimTypes.Sid, id),
+            new Claim(ClaimTypes.NameIdentifier, username)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWT:Key").Value));
@@ -90,9 +90,9 @@ public class AuthService : IAuthService
         return token;
     }
 
-    public async Task<ServiceStateType> CheckLogin(LoginDto login)
+    public async Task<ServiceStateType> CheckLogin(string id, string username, string email)
     {
-        if (await _context.Users.AnyAsync(u => u.Username == login.Username && u.Id == login.Id))
+        if (await _context.Users.AnyAsync(u => u.Username == username && u.Id == id && u.Email == email))
         {
             return ServiceStateType.Ok;
         }
