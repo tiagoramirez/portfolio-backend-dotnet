@@ -22,9 +22,9 @@ public class EducationController : ControllerBase
     public async Task<IActionResult> Create([FromBody] EducationDto education, [FromHeader] string authorization)
     {
         string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _educationService.CreateAsync(education, userId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Created" });
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+        Guid? id = await _educationService.CreateAsync(education, userId);
+        if (id != null) return Ok(new { msg = "Education Created", id });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
     [HttpDelete("{educationId}")]

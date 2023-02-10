@@ -15,20 +15,22 @@ public class EducationService : IEducationService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(EducationDto education, string userId)
+    public async Task<Guid?> CreateAsync(EducationDto education, string userId)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
+        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
+
+        education.Id = Guid.NewGuid();
 
         Education educationToDb = new Education(education, userId);
         try
         {
             await _context.Educations.AddAsync(educationToDb);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return education.Id;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
     }
 
