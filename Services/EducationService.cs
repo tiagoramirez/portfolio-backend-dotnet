@@ -19,14 +19,13 @@ public class EducationService : IEducationService
     {
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
 
-        education.Id = Guid.NewGuid();
-
         Education educationToDb = new Education(education, userId);
+
         try
         {
             await _context.Educations.AddAsync(educationToDb);
             await _context.SaveChangesAsync();
-            return education.Id;
+            return educationToDb.Id;
         }
         catch (System.Exception)
         {
