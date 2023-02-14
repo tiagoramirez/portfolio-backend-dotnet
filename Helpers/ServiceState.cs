@@ -12,6 +12,8 @@ public class ServiceState
                 return "Internal error. Try again later.";
             case ServiceStateType.UsernameNotAvailable:
                 return "Username not available";
+            case ServiceStateType.EmailNotAvailable:
+                return "Email not available";
             case ServiceStateType.UserNotFound:
                 return "User not found";
             case ServiceStateType.InvalidEmail:
