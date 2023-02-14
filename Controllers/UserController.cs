@@ -18,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> UsersInfo([FromQuery] int count, [FromQuery] string email, [FromQuery] string id)
+    public async Task<IActionResult> UsersInfo([FromQuery] int count, [FromQuery] string email, [FromQuery] string id, [FromQuery] string available)
     {
         if (count == 1)
         {
@@ -29,6 +29,10 @@ public class UserController : ControllerBase
             string username = await _userService.GetUsernameByIdEmailAsync(id, email);
             if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
             return Ok(username);
+        }
+        if (available != null)
+        {
+            return Ok(await _userService.IsUsernameAvailable(available));
         }
         return Ok(await _userService.GetAllAsync());
     }

@@ -116,14 +116,16 @@ public class UserService : IUserService
         return user.Username;
     }
 
-    public bool IsEmailAvailable(string email)
+    public async Task<bool> IsEmailAvailable(string email)
     {
-        return !_context.Users.Any(u => u.Email == email);
+        return !(await _context.Users.AnyAsync(u => u.Email == email));
     }
 
-    public bool IsUsernameAvailable(string username)
+    public async Task<bool> IsUsernameAvailable(string username)
     {
-        return !_context.Users.Any(u => u.Username == username);
+        bool usernameExists = await _context.Users.AnyAsync(u => u.Username == username);
+        System.Console.WriteLine("usernameExistsusernameExistsusernameExistsusernameExists: "+usernameExists);
+        return !usernameExists;
     }
 
     public async Task<ServiceStateType> ToggleEnglishModeAsync(string id)
@@ -152,8 +154,8 @@ public class UserService : IUserService
         User userToEdit = await _context.Users.FindAsync(id);
         if (userToEdit != null && userToEdit.Status)
         {
-            if (!IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
-            if (!IsUsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
+            if (!await IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
+            if (!await IsUsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
             userToEdit.Email = user.Email;
             userToEdit.Name = user.Name;
             userToEdit.Username = user.Username;
