@@ -22,9 +22,9 @@ public class ExperienceController : ControllerBase
     public async Task<IActionResult> Create([FromBody] ExperienceDto experience, [FromHeader] string authorization)
     {
         string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _experienceService.CreateAsync(experience, userId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Created" });
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+        Guid? id = await _experienceService.CreateAsync(experience, userId);
+        if (id != null) return Ok(new { msg = "Experience Created", id });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
     [HttpDelete("{experienceId}")]

@@ -22,9 +22,9 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> Create([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
         string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _projectService.CreateAsync(project, userId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Created" });
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+        Guid? id = await _projectService.CreateAsync(project, userId);
+        if (id != null) return Ok(new { msg = "Project Created", id });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
     [HttpDelete("{projectId}")]

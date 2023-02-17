@@ -5,7 +5,7 @@ namespace portfolio.Services.Interfaces;
 
 public interface IExperienceService
 {
-    Task<ServiceStateType> CreateAsync(ExperienceDto experience, string userId);
+    Task<Guid?> CreateAsync(ExperienceDto experience, string userId);
     Task<ServiceStateType> EditAsync(ExperienceDto experience, Guid experienceId);
     Task<ServiceStateType> DeleteAsync(Guid experienceId);
 }

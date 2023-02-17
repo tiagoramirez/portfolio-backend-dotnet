@@ -15,20 +15,21 @@ public class ProjectService : IProjectService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(ProjectDto project, string userId)
+    public async Task<Guid?> CreateAsync(ProjectDto project, string userId)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
+        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
 
         Project projectToDb = new(project, userId);
+        
         try
         {
             await _context.Projects.AddAsync(projectToDb);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return projectToDb.Id;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
     }
 

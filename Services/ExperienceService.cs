@@ -15,20 +15,21 @@ public class ExperienceService : IExperienceService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(ExperienceDto experience, string userId)
+    public async Task<Guid?> CreateAsync(ExperienceDto experience, string userId)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return ServiceStateType.UserNotFound;
+        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
 
         Experience experienceToDb = new Experience(experience, userId);
+        
         try
         {
             await _context.Experiences.AddAsync(experienceToDb);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return experienceToDb.Id;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
     }
 
