@@ -50,7 +50,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPut]
-    public async Task<IActionResult> UpdateName([FromHeader] string authorization, [FromBody] UserDto user)
+    public async Task<IActionResult> UpdateUser([FromHeader] string authorization, [FromBody] UserDto user)
     {
         string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _userService.UpdateUserAsync(userId, user);

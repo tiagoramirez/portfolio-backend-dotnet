@@ -147,16 +147,14 @@ public class UserService : IUserService
         return ServiceStateType.UserNotFound;
     }
 
-    // Regex passwordRegex = new Regex(@"(?=^.{8,20}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*");
-
     public async Task<ServiceStateType> UpdateUserAsync(string id, UserDto user)
     {
         User userToEdit = await _context.Users.FindAsync(id);
         if (userToEdit != null && userToEdit.Status)
         {
-            if (!await IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
+            // if (!await IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
             if (!await IsUsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
-            userToEdit.Email = user.Email;
+            // userToEdit.Email = user.Email;
             userToEdit.Name = user.Name;
             userToEdit.Username = user.Username;
             userToEdit.NativeDesc = user.NativeDesc;
