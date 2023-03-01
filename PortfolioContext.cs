@@ -93,7 +93,7 @@ public class PortfolioContext : DbContext
         List<User> users = new List<User>();
         users.Add(new User
         {
-            Id = "XShNoGTpZzRov6b2yFVcLCIFRZ33",
+            Id = "00000000000000000000000000000",
             Name = "Tiago Alberto Ramirez Marchisio",
             Email = "tiagoramirez2001@gmail.com",
             Username = "tiagoramirez",
@@ -101,15 +101,15 @@ public class PortfolioContext : DbContext
             Created = DateTime.Now,
             Role = "USR",
             IsEnglishModeEnabled = true,
-            NativeDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
+            NativeDesc = "FullStack Web Dev. con +1 año de exp. || React + Typescript + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
             HasEnglishDesc = true,
-            EnglishDesc = "FullStack Dev. || React + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
+            EnglishDesc = "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
             Phone = null,
             LocationCountry = "Argentina",
             LocationState = "Chaco",
-            NativeAboutMe = "Fullstack Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + .NET 6 API + SQL Server + Node",
+            NativeAboutMe = "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node",
             HasEnglishAboutMe = true,
-            EnglishAboutMe = "Fullstack Dev. with 1 year of experience in the IT area. My main stack: React + .NET 6 API + SQL Server + Node"
+            EnglishAboutMe = "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node"
         });
 
         modelBuilder.Entity<User>(user =>
@@ -189,9 +189,9 @@ public class PortfolioContext : DbContext
             Type = EducationType.College,
             Start = new DateTime(2020, 4, 1),
             End = null,
-            NativeDesc = "Me encuentro en 3ro con un promedio de 9/10",
+            NativeDesc = "Me encuentro en 3er año con un promedio de 9/10",
             HasEnglishDesc = true,
-            EnglishDesc = "3rd year with an average of 9/10"
+            EnglishDesc = "Currently at 3rd year with an average of 9/10"
         });
 
         modelBuilder.Entity<Education>(educ =>
@@ -223,7 +223,7 @@ public class PortfolioContext : DbContext
             IsActual = true,
             Start = new DateTime(2022, 4, 5),
             End = null,
-            NativeDesc = "Manejo y optimización de querys, tables, stored procedures y views en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS",
+            NativeDesc = "Manejo y optimización de querys, tablas, stored procedures y vistas en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS",
             HasEnglishDesc = true,
             EnglishDesc = "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS"
         });
@@ -253,9 +253,9 @@ public class PortfolioContext : DbContext
             UserId = users[0].Id,
             Name = "Portfolio",
             Url = "https://www.github.com/tiagoramirez",
-            NativeDesc = "Portfolio personal realizado con REACT + .NET 6 + SQL Server",
+            NativeDesc = "Portfolio personal realizado con REACT + Typescript + Tailwindcss + .NET 6 + SQL Server",
             HasEnglishDesc = true,
-            EnglishDesc = "Personal portfolio made with REACT + .NET 6 + SQL Server"
+            EnglishDesc = "Personal portfolio made with REACT + Typescript + Tailwindcss + .NET 6 + SQL Server"
         });
 
         modelBuilder.Entity<Project>(proj =>
