@@ -24,6 +24,16 @@ builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", app =>
+    {
+        app.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
@@ -47,10 +57,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(x => x.AllowAnyHeader()
-      .AllowAnyMethod()
-      .AllowAnyOrigin());
-    //   .WithOrigins("http://localhost:5173"));
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 
