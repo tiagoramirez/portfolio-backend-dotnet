@@ -76,7 +76,7 @@ public class PortfolioContext : DbContext
         socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "LinkedIn", IconClassName = "bi bi-linkedin" });
         socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Twitter", IconClassName = "bi bi-twitter" });
         socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Youtube", IconClassName = "bi bi-youtube" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Web Personal", IconClassName = "bi bi-person-circle" });
+        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Personal", IconClassName = "bi bi-person-circle" });
 
         modelBuilder.Entity<SocialMedia>(sm =>
         {
@@ -105,7 +105,7 @@ public class PortfolioContext : DbContext
             EnglishDesc = "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
             Phone = null,
             LocationCountry = "Argentina",
-            LocationState = "Chaco",
+            LocationState = "C.A.B.A.",
             NativeAboutMe = "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node",
             HasEnglishAboutMe = true,
             EnglishAboutMe = "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node"
@@ -138,13 +138,41 @@ public class PortfolioContext : DbContext
         });
 
         List<User_Skill> userSkills = new List<User_Skill>();
-        userSkills.Add(new User_Skill
-        {
-            Id = Guid.NewGuid(),
-            UserId = users[0].Id,
-            SkillId = skills[0].Id,
-            Percentage = 90
-        });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[0].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[1].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[2].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[3].Id, Percentage = 75 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[4].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[5].Id, Percentage = 95 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[6].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[7].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[9].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[10].Id, Percentage = 70 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[11].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[12].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[13].Id, Percentage = 70 });
+
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[14].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[15].Id, Percentage = 80 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[17].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[18].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[19].Id, Percentage = 70 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[20].Id, Percentage = 95 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[21].Id, Percentage = 95 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[22].Id, Percentage = 95 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[23].Id, Percentage = 80 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[24].Id, Percentage = 80 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[25].Id, Percentage = 80 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[26].Id, Percentage = 95 });
+
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[27].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[28].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[29].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[30].Id, Percentage = 100 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[31].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[32].Id, Percentage = 80 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[33].Id, Percentage = 90 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[34].Id, Percentage = 85 });
 
         modelBuilder.Entity<User_Skill>(userSkill =>
         {
@@ -158,6 +186,13 @@ public class PortfolioContext : DbContext
         });
 
         List<User_SocialMedia> userSocialMedias = new List<User_SocialMedia>();
+        userSocialMedias.Add(new User_SocialMedia
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            SocialMediaId = socialMedias[2].Id,
+            Url = "https://www.github.com/tiagoramirez/"
+        });
         userSocialMedias.Add(new User_SocialMedia
         {
             Id = Guid.NewGuid(),
@@ -251,7 +286,7 @@ public class PortfolioContext : DbContext
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
             Name = "Portfolio",
-            Url = "https://www.github.com/tiagoramirez",
+            Url = "https://tiagoramirez-portfolio.netlify.app/tiagoramirez",
             NativeDesc = "Portfolio personal realizado con REACT + Typescript + Tailwindcss + .NET 6 + SQL Server",
             HasEnglishDesc = true,
             EnglishDesc = "Personal portfolio made with REACT + Typescript + Tailwindcss + .NET 6 + SQL Server"
