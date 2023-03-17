@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using portfolio.Models.DTOs;
 using portfolio.Helpers;
@@ -124,7 +123,6 @@ public class UserService : IUserService
     public async Task<bool> IsUsernameAvailable(string username)
     {
         bool usernameExists = await _context.Users.AnyAsync(u => u.Username == username);
-        System.Console.WriteLine("usernameExistsusernameExistsusernameExistsusernameExists: "+usernameExists);
         return !usernameExists;
     }
 
