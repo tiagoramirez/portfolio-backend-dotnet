@@ -24,7 +24,6 @@ public class UserDto
     public bool IsEnglishModeEnabled { get; set; }
 
 
-    [Required]
     [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
     public string NativeDesc { get; set; }
 
@@ -49,7 +48,6 @@ public class UserDto
     public string LocationState { get; set; }
 
 
-    [Required]
     [MaxLength(255, ErrorMessage = "About Me cannot exceed 255 characters")]
     public string NativeAboutMe { get; set; }
 
