@@ -20,7 +20,7 @@ public class ExperienceService : IExperienceService
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
 
         Experience experienceToDb = new Experience(experience, userId);
-        
+
         try
         {
             await _context.Experiences.AddAsync(experienceToDb);

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using portfolio.Models.DTOs;
 using portfolio.Helpers;
 using portfolio.Models;
+using portfolio.Models.DTOs;
 using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using portfolio.Models.DTOs;
 using portfolio.Helpers;
+using portfolio.Models.DTOs;
 using portfolio.Services.Interfaces;
 
 namespace portfolio.Controllers;

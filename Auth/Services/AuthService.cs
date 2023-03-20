@@ -33,7 +33,7 @@ public class AuthService : IAuthService
 
     public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
     {
-        if (! await _userService.IsUsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
+        if (!await _userService.IsUsernameAvailable(register.Username)) return ServiceStateType.UsernameNotAvailable;
 
         User user = new User
         {

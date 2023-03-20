@@ -20,7 +20,7 @@ public class ProjectService : IProjectService
         if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
 
         Project projectToDb = new(project, userId);
-        
+
         try
         {
             await _context.Projects.AddAsync(projectToDb);
