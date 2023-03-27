@@ -92,7 +92,7 @@ public class PortfolioContext : DbContext
         List<User> users = new List<User>();
         users.Add(new User
         {
-            Id = "00000000000000000000000000000",
+            Id = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1",
             Name = "Tiago Alberto Ramirez Marchisio",
             Email = "tiagoramirez2001@gmail.com",
             Username = "tiagoramirez",
