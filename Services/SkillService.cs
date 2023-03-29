@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
@@ -47,10 +48,10 @@ public class SkillService : ISkillService
         }
     }
 
-    public IEnumerable<SkillDto> GetAll()
+    public async Task<IEnumerable<SkillDto>> GetAllAsync()
     {
         List<SkillDto> skills = new List<SkillDto>();
-        foreach (Skill skill in _context.Skills)
+        foreach (Skill skill in await _context.Skills.ToListAsync())
         {
             skills.Add(new SkillDto(skill));
         }

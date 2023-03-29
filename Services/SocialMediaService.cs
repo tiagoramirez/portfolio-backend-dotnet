@@ -14,13 +14,13 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SocialMediaDto socialMedia, string userId)
+    public async Task<ServiceStateType> CreateAsync(SocialMediaDto socialMedia, string userId)
     {
-        User_SocialMedia socialMediaToDb = new User_SocialMedia(socialMedia, userId);
+        SocialMedia socialMediaToDb = new SocialMedia(socialMedia, userId);
 
         try
         {
-            await _context.User_SocialMedias.AddAsync(socialMediaToDb);
+            await _context.Social_Medias.AddAsync(socialMediaToDb);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
@@ -32,11 +32,11 @@ public class SocialMediaService : ISocialMediaService
 
     public async Task<ServiceStateType> DeleteAsync(Guid id)
     {
-        User_SocialMedia socialMedia = await _context.User_SocialMedias.FindAsync(id);
+        SocialMedia socialMedia = await _context.Social_Medias.FindAsync(id);
         if (socialMedia == null) return ServiceStateType.SocialMediaNotFound;
         try
         {
-            _context.User_SocialMedias.Remove(socialMedia);
+            _context.Social_Medias.Remove(socialMedia);
             await _context.SaveChangesAsync();
             return ServiceStateType.Ok;
         }
@@ -44,15 +44,5 @@ public class SocialMediaService : ISocialMediaService
         {
             return ServiceStateType.InternalError;
         }
-    }
-
-    public IEnumerable<SocialMediaDto> GetAll()
-    {
-        List<SocialMediaDto> socialMedias = new List<SocialMediaDto>();
-        foreach (SocialMedia socialMedia in _context.SocialMedias)
-        {
-            socialMedias.Add(new SocialMediaDto(socialMedia));
-        }
-        return socialMedias;
     }
 }

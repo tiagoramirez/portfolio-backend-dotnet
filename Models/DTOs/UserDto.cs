@@ -36,10 +36,6 @@ public class UserDto
     public string EnglishDesc { get; set; }
 
 
-    [MaxLength(16, ErrorMessage = "Phone cannot exceed 16 characters")]
-    public string Phone { get; set; }
-
-
     [MaxLength(50, ErrorMessage = "Country cannot exceed 50 characters")]
     public string LocationCountry { get; set; }
 
@@ -60,7 +56,7 @@ public class UserDto
     public string EnglishAboutMe { get; set; }
 
     // Navigation Properties
-    public virtual ICollection<User_SocialMediaDto> SocialMedias { get; set; }
+    public virtual ICollection<SocialMediaDto> SocialMedias { get; set; }
     public virtual ICollection<User_SkillDto> Skills { get; set; }
     public virtual ICollection<ExperienceDto> Experiences { get; set; }
     public virtual ICollection<EducationDto> Educations { get; set; }

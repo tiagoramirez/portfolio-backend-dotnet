@@ -9,9 +9,8 @@ public class PortfolioContext : DbContext
     public DbSet<Experience> Experiences { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Skill> Skills { get; set; }
-    public DbSet<SocialMedia> SocialMedias { get; set; }
     public DbSet<User_Skill> User_Skills { get; set; }
-    public DbSet<User_SocialMedia> User_SocialMedias { get; set; }
+    public DbSet<SocialMedia> Social_Medias { get; set; }
     public DbSet<User> Users { get; set; }
 
     public PortfolioContext(DbContextOptions<PortfolioContext> options) : base(options) { }
@@ -68,27 +67,6 @@ public class PortfolioContext : DbContext
             skill.HasData(skills);
         });
 
-        List<SocialMedia> socialMedias = new List<SocialMedia>();
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Facebook", IconClassName = "bi bi-facebook" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Whatsapp", IconClassName = "bi bi-whatsapp" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Github", IconClassName = "bi bi-github" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Instagram", IconClassName = "bi bi-instagram" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "LinkedIn", IconClassName = "bi bi-linkedin" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Twitter", IconClassName = "bi bi-twitter" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Youtube", IconClassName = "bi bi-youtube" });
-        socialMedias.Add(new SocialMedia { Id = Guid.NewGuid(), Name = "Personal", IconClassName = "bi bi-person-circle" });
-
-        modelBuilder.Entity<SocialMedia>(sm =>
-        {
-            sm.ToTable("SocialMedia");
-            sm.HasKey(table => table.Id);
-            sm.HasMany(table => table.User_SocialMedias).WithOne(user_socialMedia => user_socialMedia.SocialMedia).HasForeignKey(user_socialMedia => user_socialMedia.SocialMediaId);
-            sm.Property(table => table.Id).ValueGeneratedOnAdd();
-            sm.Property(table => table.Name).IsRequired().HasMaxLength(20);
-            sm.Property(table => table.IconClassName).IsRequired().HasMaxLength(100);
-            sm.HasData(socialMedias);
-        });
-
         List<User> users = new List<User>();
         users.Add(new User
         {
@@ -98,12 +76,10 @@ public class PortfolioContext : DbContext
             Username = "tiagoramirez",
             Status = true,
             Created = DateTime.Now,
-            Role = "USR",
             IsEnglishModeEnabled = true,
             NativeDesc = "FullStack Web Dev. con +1 año de exp. || React + Typescript + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
             HasEnglishDesc = true,
             EnglishDesc = "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
-            Phone = null,
             LocationCountry = "Argentina",
             LocationState = "C.A.B.A.",
             NativeAboutMe = "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node",
@@ -115,20 +91,20 @@ public class PortfolioContext : DbContext
         {
             user.ToTable("User");
             user.HasKey(table => table.Id);
+            user.HasMany(table => table.Educations).WithOne(educ => educ.User).HasForeignKey(educ => educ.UserId);
+            user.HasMany(table => table.Experiences).WithOne(exp => exp.User).HasForeignKey(exp => exp.UserId);
+            user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
             user.HasMany(table => table.Skills).WithOne(user_skill => user_skill.User).HasForeignKey(user_skill => user_skill.UserId);
             user.HasMany(table => table.SocialMedias).WithOne(user_socialMedia => user_socialMedia.User).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
-            user.HasMany(table => table.Projects).WithOne(project => project.User).HasForeignKey(project => project.UserId);
             user.Property(table => table.Id).ValueGeneratedOnAdd();
-            user.Property(table => table.Username).IsRequired().HasMaxLength(15);
             user.Property(table => table.Name).IsRequired().HasMaxLength(50);
             user.Property(table => table.Email).IsRequired().HasMaxLength(100);
+            user.Property(table => table.Username).IsRequired().HasMaxLength(15);
             user.Property(table => table.Status).IsRequired();
-            user.Property(table => table.Role).IsRequired().HasMaxLength(20);
             user.Property(table => table.IsEnglishModeEnabled).IsRequired();
             user.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
             user.Property(table => table.HasEnglishDesc).IsRequired();
             user.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
-            user.Property(table => table.Phone).IsRequired(false).HasMaxLength(16);
             user.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
             user.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
             user.Property(table => table.NativeAboutMe).IsRequired().HasMaxLength(255);
@@ -185,29 +161,29 @@ public class PortfolioContext : DbContext
             userSkill.HasData(userSkills);
         });
 
-        List<User_SocialMedia> userSocialMedias = new List<User_SocialMedia>();
-        userSocialMedias.Add(new User_SocialMedia
+        List<SocialMedia> userSocialMedias = new List<SocialMedia>();
+        userSocialMedias.Add(new SocialMedia
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
-            SocialMediaId = socialMedias[2].Id,
+            Name = "Github",
             Url = "https://www.github.com/tiagoramirez/"
         });
-        userSocialMedias.Add(new User_SocialMedia
+        userSocialMedias.Add(new SocialMedia
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
-            SocialMediaId = socialMedias[4].Id,
+            Name = "LinkedIn",
             Url = "https://www.linkedin.com/in/tiagoramirezmar/"
         });
 
-        modelBuilder.Entity<User_SocialMedia>(userSocialMedia =>
+        modelBuilder.Entity<SocialMedia>(userSocialMedia =>
         {
-            userSocialMedia.ToTable("User_SocialMedia");
+            userSocialMedia.ToTable("SocialMedia");
             userSocialMedia.HasKey(table => table.Id);
             userSocialMedia.HasOne(table => table.User).WithMany(user => user.SocialMedias).HasForeignKey(user_socialMedia => user_socialMedia.UserId);
-            userSocialMedia.HasOne(table => table.SocialMedia).WithMany(socialMedia => socialMedia.User_SocialMedias).HasForeignKey(user_socialMedia => user_socialMedia.SocialMediaId);
             userSocialMedia.Property(table => table.Id).ValueGeneratedOnAdd();
+            userSocialMedia.Property(table => table.Name).IsRequired().HasMaxLength(20);
             userSocialMedia.Property(table => table.Url).IsRequired().HasMaxLength(255);
             userSocialMedia.HasData(userSocialMedias);
         });
@@ -234,8 +210,8 @@ public class PortfolioContext : DbContext
             educ.HasKey(table => table.Id);
             educ.HasOne(table => table.User).WithMany(user => user.Educations).HasForeignKey(education => education.UserId);
             educ.Property(table => table.Id).ValueGeneratedOnAdd();
-            educ.Property(table => table.Institute).IsRequired().HasMaxLength(50);
             educ.Property(table => table.TitleName).IsRequired().HasMaxLength(50);
+            educ.Property(table => table.Institute).IsRequired().HasMaxLength(50);
             educ.Property(table => table.Type).IsRequired();
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();

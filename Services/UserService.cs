@@ -65,13 +65,12 @@ public class UserService : IUserService
             NativeDesc = user.NativeDesc,
             HasEnglishDesc = user.HasEnglishDesc,
             EnglishDesc = user.EnglishDesc,
-            Phone = user.Phone,
             LocationCountry = user.LocationCountry,
             LocationState = user.LocationState,
             NativeAboutMe = user.NativeAboutMe,
             HasEnglishAboutMe = user.HasEnglishAboutMe,
             EnglishAboutMe = user.EnglishAboutMe,
-            SocialMedias = new List<User_SocialMediaDto>(),
+            SocialMedias = new List<SocialMediaDto>(),
             Skills = new List<User_SkillDto>(),
             Experiences = new List<ExperienceDto>(),
             Educations = new List<EducationDto>(),
@@ -80,8 +79,7 @@ public class UserService : IUserService
 
         foreach (var socialMedia in user.SocialMedias)
         {
-            socialMedia.SocialMedia = await _context.FindAsync<SocialMedia>(socialMedia.SocialMediaId);
-            userDto.SocialMedias.Add(new User_SocialMediaDto(socialMedia));
+            userDto.SocialMedias.Add(new SocialMediaDto(socialMedia));
         }
         foreach (var userSkill in user.Skills)
         {
@@ -158,7 +156,6 @@ public class UserService : IUserService
             userToEdit.NativeDesc = user.NativeDesc;
             userToEdit.HasEnglishDesc = user.HasEnglishDesc;
             userToEdit.EnglishDesc = user.EnglishDesc;
-            userToEdit.Phone = user.Phone;
             userToEdit.LocationCountry = user.LocationCountry;
             userToEdit.LocationState = user.LocationState;
             userToEdit.NativeAboutMe = user.NativeAboutMe;

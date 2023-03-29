@@ -13,11 +13,11 @@ public class User_Skill
         this.Percentage = skill.Percentage;
     }
 
-
     public Guid Id { get; set; }
     public string UserId { get; set; }
     public Guid SkillId { get; set; }
     public int Percentage { get; set; }
+
     // Navigation Properties
     public User User { get; set; }
     public Skill Skill { get; set; }

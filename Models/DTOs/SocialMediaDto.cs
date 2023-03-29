@@ -6,10 +6,10 @@ public class SocialMediaDto
     {
         this.Id = socialMedia.Id;
         this.Name = socialMedia.Name;
-        this.IconClassName = socialMedia.IconClassName;
+        this.Url = socialMedia.Url;
     }
 
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public string IconClassName { get; set; }
+    public string Url { get; set; }
 }

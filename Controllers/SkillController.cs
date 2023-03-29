@@ -18,14 +18,14 @@ public class SkillController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        return Ok(_skillService.GetAll());
+        return Ok(await _skillService.GetAllAsync());
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] User_SkillDto skill, [FromHeader] string authorization)
+    public async Task<IActionResult> Create([FromBody] User_SkillDto skill, [FromHeader] string authorization)
     {
         string userId = JwtHelper.GetId(authorization);
         ServiceStateType state = await _skillService.CreateAsync(skill, userId);
@@ -35,7 +35,7 @@ public class SkillController : ControllerBase
 
     [Authorize]
     [HttpDelete("{skillId}")]
-    public async Task<IActionResult> DeleteAsync([FromRoute] Guid skillId)
+    public async Task<IActionResult> Delete([FromRoute] Guid skillId)
     {
         var state = await _skillService.DeleteAsync(skillId);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Deleted" });
