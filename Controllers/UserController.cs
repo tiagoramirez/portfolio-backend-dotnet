@@ -64,7 +64,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpDelete("{userId}")]
+    [HttpDelete]
     public async Task<IActionResult> Delete([FromHeader] string authorization)
     {
         ServiceStateType state = await _userService.DeleteUserAsync(authorization);

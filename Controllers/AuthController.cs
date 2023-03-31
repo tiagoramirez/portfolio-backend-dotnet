@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
         return await _authService.isRegisteredAsync(email, id);
     }
 
-    [HttpGet("Login")]
+    [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
         ServiceStateType state = await _authService.LoginAync(login);
