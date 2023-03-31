@@ -5,8 +5,8 @@ namespace portfolio.Services.Interfaces;
 
 public interface IEducationService
 {
-    Task<Guid?> CreateAsync(EducationDto education, string userId);
-    Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId);
-    Task<ServiceStateType> DeleteAsync(Guid educationId);
+    Task<Guid?> CreateAsync(EducationDto education, string authorization);
+    Task<ServiceStateType> UpdateAsync(EducationDto education, string authorization);
+    Task<ServiceStateType> DeleteAsync(Guid educationId, string authorization);
 
 }

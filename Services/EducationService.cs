@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
@@ -15,9 +14,9 @@ public class EducationService : IEducationService
         _context = context;
     }
 
-    public async Task<Guid?> CreateAsync(EducationDto education, string userId)
+    public async Task<Guid?> CreateAsync(EducationDto education, string authorization)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
+        string userId = JwtHelper.GetId(authorization);
 
         Education educationToDb = new Education(education, userId);
 
@@ -33,10 +32,12 @@ public class EducationService : IEducationService
         }
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid educationId)
+    public async Task<ServiceStateType> DeleteAsync(Guid educationId, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         Education education = await _context.Educations.FindAsync(educationId);
-        if (education == null) return ServiceStateType.EducationNotFound;
+        if (education == null || education.UserId != userId) return ServiceStateType.EducationNotFound;
 
         try
         {
@@ -50,10 +51,12 @@ public class EducationService : IEducationService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(EducationDto education, Guid educationId)
+    public async Task<ServiceStateType> UpdateAsync(EducationDto education, string authorization)
     {
-        Education educ = await _context.Educations.FindAsync(educationId);
-        if (educ == null) return ServiceStateType.ExperienceNotFound;
+        string userId = JwtHelper.GetId(authorization);
+
+        Education educ = await _context.Educations.FindAsync(education.Id);
+        if (educ == null || educ.UserId != userId) return ServiceStateType.EducationNotFound;
 
         educ.Type = education.Type;
         educ.Institute = education.Institute;

@@ -15,9 +15,11 @@ public class User_SkillDto
 
     public Guid Id { get; set; }
 
+
     [Required]
     [Range(0, 100, ErrorMessage = "Percentage must be between 0 and 100")]
     public int Percentage { get; set; }
+
 
     [Required]
     public SkillDto SkillInfo { get; set; }

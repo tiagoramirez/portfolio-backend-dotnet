@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace portfolio.Models.DTOs;
 
 public class SkillDto
@@ -12,6 +14,12 @@ public class SkillDto
     }
 
     public Guid Id { get; set; }
+
+
+    [Required]
     public string Name { get; set; }
+
+
+    [Required]
     public SkillType Type { get; set; }
 }

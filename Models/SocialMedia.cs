@@ -16,9 +16,14 @@ public class SocialMedia
 
     public Guid Id { get; set; }
     public string UserId { get; set; }
-    public string Name { get; set; }
+    public SocialMediaName Name { get; set; }
     public string Url { get; set; }
 
     // Navigation Properties
     public User User { get; set; }
+}
+
+public enum SocialMediaName
+{
+    FACEBOOK, GITHUB, INSTAGRAM, LINKEDIN, TWITTER, WEBPERSONAL, WHATSAPP, YOUTUBE
 }

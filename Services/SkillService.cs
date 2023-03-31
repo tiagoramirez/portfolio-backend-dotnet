@@ -16,26 +16,31 @@ public class SkillService : ISkillService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(User_SkillDto skill, string userId)
+    public async Task<Guid?> CreateAsync(User_SkillDto skill, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         User_Skill skillToDb = new User_Skill(skill, userId);
 
         try
         {
-            _context.User_Skills.Add(skillToDb);
+            await _context.User_Skills.AddAsync(skillToDb);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return skillToDb.Id;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         User_Skill skill = await _context.User_Skills.FindAsync(id);
-        if (skill == null) return ServiceStateType.SkillNotFound;
+        if (skill == null || skill.UserId != userId) return ServiceStateType.SkillNotFound;
+
         try
         {
             _context.User_Skills.Remove(skill);
@@ -48,7 +53,7 @@ public class SkillService : ISkillService
         }
     }
 
-    public async Task<IEnumerable<SkillDto>> GetAllAsync()
+    public async Task<IEnumerable<SkillDto>> GetAllSkillsAsync()
     {
         List<SkillDto> skills = new List<SkillDto>();
         foreach (Skill skill in await _context.Skills.ToListAsync())
@@ -58,10 +63,12 @@ public class SkillService : ISkillService
         return skills;
     }
 
-    public async Task<ServiceStateType> UpdateAsync(User_SkillDto skill, Guid skillId)
+    public async Task<ServiceStateType> UpdateAsync(User_SkillDto skill, string authorization)
     {
-        User_Skill skll = await _context.User_Skills.FindAsync(skillId);
-        if (skll == null) return ServiceStateType.SkillNotFound;
+        string userId = JwtHelper.GetId(authorization);
+
+        User_Skill skll = await _context.User_Skills.FindAsync(skill.Id);
+        if (skll == null || skll.UserId != userId) return ServiceStateType.SkillNotFound;
 
         skll.Percentage = skill.Percentage;
 

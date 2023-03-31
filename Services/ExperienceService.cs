@@ -15,9 +15,9 @@ public class ExperienceService : IExperienceService
         _context = context;
     }
 
-    public async Task<Guid?> CreateAsync(ExperienceDto experience, string userId)
+    public async Task<Guid?> CreateAsync(ExperienceDto experience, string authorization)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
+        string userId = JwtHelper.GetId(authorization);
 
         Experience experienceToDb = new Experience(experience, userId);
 
@@ -33,10 +33,12 @@ public class ExperienceService : IExperienceService
         }
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid experienceId)
+    public async Task<ServiceStateType> DeleteAsync(Guid experienceId, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         Experience experience = await _context.Experiences.FindAsync(experienceId);
-        if (experience == null) return ServiceStateType.ExperienceNotFound;
+        if (experience == null || experience.UserId != userId) return ServiceStateType.ExperienceNotFound;
 
         try
         {
@@ -50,10 +52,12 @@ public class ExperienceService : IExperienceService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(ExperienceDto experience, Guid experienceId)
+    public async Task<ServiceStateType> UpdateAsync(ExperienceDto experience, string authorization)
     {
-        Experience exp = await _context.Experiences.FindAsync(experienceId);
-        if (exp == null) return ServiceStateType.ExperienceNotFound;
+        string userId = JwtHelper.GetId(authorization);
+
+        Experience exp = await _context.Experiences.FindAsync(experience.Id);
+        if (exp == null || exp.UserId != userId) return ServiceStateType.ExperienceNotFound;
 
         exp.Position = experience.Position;
         exp.Company = experience.Company;

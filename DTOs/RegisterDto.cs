@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace portfolio.Auth.DTOs;
+namespace portfolio.Models.DTOs;
 
 public class RegisterDto
 {
     [Required]
-    [MaxLength(50, ErrorMessage = "Username must be less than 50 characters")]
-    public string Name { get; set; }
+    public string Id { get; set; }
 
 
     [Required]
@@ -21,5 +20,6 @@ public class RegisterDto
 
 
     [Required]
-    public string Id { get; set; }
+    [MaxLength(50, ErrorMessage = "Username must be less than 50 characters")]
+    public string Name { get; set; }
 }

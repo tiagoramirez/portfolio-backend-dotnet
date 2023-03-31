@@ -5,8 +5,8 @@ namespace portfolio.Services.Interfaces;
 
 public interface ISkillService
 {
-    Task<IEnumerable<SkillDto>> GetAllAsync();
-    Task<ServiceStateType> CreateAsync(User_SkillDto skill, string userId);
-    Task<ServiceStateType> UpdateAsync(User_SkillDto skill, Guid skillId);
-    Task<ServiceStateType> DeleteAsync(Guid id);
+    Task<IEnumerable<SkillDto>> GetAllSkillsAsync();
+    Task<Guid?> CreateAsync(User_SkillDto skill, string authorization);
+    Task<ServiceStateType> UpdateAsync(User_SkillDto skill, string authorization);
+    Task<ServiceStateType> DeleteAsync(Guid id, string authorization);
 }

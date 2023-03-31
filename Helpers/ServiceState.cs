@@ -30,6 +30,8 @@ public class ServiceState
                 return "Experience not found";
             case ServiceStateType.EducationNotFound:
                 return "Education not found";
+            case ServiceStateType.ProjectNotFound:
+                return "Project not found";
             case ServiceStateType.InvalidCredentials:
                 return "Invalid credentials";
             case ServiceStateType.PasswordsDoNotMatch:
@@ -57,6 +59,7 @@ public enum ServiceStateType
     SkillNotFound,
     ExperienceNotFound,
     EducationNotFound,
+    ProjectNotFound,
     InvalidCredentials,
     PasswordsDoNotMatch,
     IncorrectEmailIdCombination

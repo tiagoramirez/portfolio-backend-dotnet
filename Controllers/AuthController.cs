@@ -1,9 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using portfolio.Auth.DTOs;
-using portfolio.Auth.Services;
-using portfolio.Helpers;
-
-namespace portfolio.Auth.Controllers;
+namespace portfolio.Controllers;
 
 [ApiController]
 [Route("API/[controller]")]

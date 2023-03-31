@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using portfolio.Helpers;
 using portfolio.Models;
 using portfolio.Models.DTOs;
@@ -14,26 +15,31 @@ public class SocialMediaService : ISocialMediaService
         _context = context;
     }
 
-    public async Task<ServiceStateType> CreateAsync(SocialMediaDto socialMedia, string userId)
+    public async Task<Guid?> CreateAsync(SocialMediaDto socialMedia, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         SocialMedia socialMediaToDb = new SocialMedia(socialMedia, userId);
 
         try
         {
             await _context.Social_Medias.AddAsync(socialMediaToDb);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return socialMediaToDb.Id;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return null;
         }
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid id)
+    public async Task<ServiceStateType> DeleteAsync(Guid id, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         SocialMedia socialMedia = await _context.Social_Medias.FindAsync(id);
-        if (socialMedia == null) return ServiceStateType.SocialMediaNotFound;
+        if (socialMedia == null || socialMedia.UserId != userId) return ServiceStateType.SocialMediaNotFound;
+
         try
         {
             _context.Social_Medias.Remove(socialMedia);
@@ -46,10 +52,12 @@ public class SocialMediaService : ISocialMediaService
         }
     }
 
-    public async Task<ServiceStateType> UpdateAsync(SocialMediaDto socialMedia, Guid socialMediaId)
+    public async Task<ServiceStateType> UpdateAsync(SocialMediaDto socialMedia, string authorization)
     {
-        SocialMedia sm = await _context.Social_Medias.FindAsync(socialMediaId);
-        if (sm == null) return ServiceStateType.SocialMediaNotFound;
+        string userId = JwtHelper.GetId(authorization);
+
+        SocialMedia sm = await _context.Social_Medias.FindAsync(socialMedia.Id);
+        if (sm == null || sm.UserId != userId) return ServiceStateType.SocialMediaNotFound;
 
         sm.Name = socialMedia.Name;
         sm.Url = socialMedia.Url;

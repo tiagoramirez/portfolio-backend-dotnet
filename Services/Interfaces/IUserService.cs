@@ -5,13 +5,13 @@ namespace portfolio.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserInfo>> GetAllAsync();
-    Task<UserDto> GetByUsernameAsync(string username);
+    Task<IEnumerable<UserInfoDto>> GetAllUsersAsync(int page);
     Task<int> GetTotalUsersAsync();
+    Task<UserDto> GetUserByUsernameAsync(string username);
     Task<string> GetUsernameByIdEmailAsync(string id, string email);
-    Task<bool> IsUsernameAvailable(string username);
-    Task<bool> IsEmailAvailable(string email);
-    Task<ServiceStateType> UpdateUserAsync(string id, UserDto user);
-    Task<ServiceStateType> DeleteUserAsync(string id);
-    Task<ServiceStateType> ToggleEnglishModeAsync(string id);
+    Task<bool> IsUsernameAvailableAsync(string username);
+    Task<bool> IsEmailAvailableAsync(string email);
+    Task<ServiceStateType> UpdateUserAsync(UserDto user, string authorization);
+    Task<ServiceStateType> DeleteUserAsync(string authorization);
+    Task<ServiceStateType> ToggleEnglishModeAsync(string authorization);
 }

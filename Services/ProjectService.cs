@@ -15,9 +15,9 @@ public class ProjectService : IProjectService
         _context = context;
     }
 
-    public async Task<Guid?> CreateAsync(ProjectDto project, string userId)
+    public async Task<Guid?> CreateAsync(ProjectDto project, string authorization)
     {
-        if (!await _context.Users.AnyAsync(u => u.Id == userId)) return null;
+        string userId = JwtHelper.GetId(authorization);
 
         Project projectToDb = new(project, userId);
 
@@ -33,10 +33,12 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<ServiceStateType> DeleteAsync(Guid projectId)
+    public async Task<ServiceStateType> DeleteAsync(Guid projectId, string authorization)
     {
+        string userId = JwtHelper.GetId(authorization);
+
         Project project = await _context.Projects.FindAsync(projectId);
-        if (project == null) return ServiceStateType.ExperienceNotFound;
+        if (project == null || project.UserId != userId) return ServiceStateType.ProjectNotFound;
 
         try
         {
@@ -50,10 +52,12 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<ServiceStateType> EditAsync(ProjectDto project, Guid projectId)
+    public async Task<ServiceStateType> UpdateAsync(ProjectDto project, string authorization)
     {
-        Project proj = await _context.Projects.FindAsync(projectId);
-        if (proj == null) return ServiceStateType.ExperienceNotFound;
+        string userId = JwtHelper.GetId(authorization);
+
+        Project proj = await _context.Projects.FindAsync(project.Id);
+        if (proj == null || proj.UserId != userId) return ServiceStateType.ProjectNotFound;
 
         proj.Name = project.Name;
         proj.Url = project.Url;

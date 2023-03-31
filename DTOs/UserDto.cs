@@ -4,6 +4,30 @@ namespace portfolio.Models.DTOs;
 
 public class UserDto
 {
+    public UserDto() { }
+
+    public UserDto(User user)
+    {
+        this.Name = user.Name;
+        this.Email = user.Email;
+        this.Username = user.Username;
+        this.IsEnglishModeEnabled = user.IsEnglishModeEnabled;
+        this.NativeDesc = user.NativeDesc;
+        this.HasEnglishDesc = user.HasEnglishDesc;
+        this.EnglishDesc = user.EnglishDesc;
+        this.LocationCountry = user.LocationCountry;
+        this.LocationState = user.LocationState;
+        this.NativeAboutMe = user.NativeAboutMe;
+        this.HasEnglishAboutMe = user.HasEnglishAboutMe;
+        this.EnglishAboutMe = user.EnglishAboutMe;
+        SocialMedias = new List<SocialMediaDto>();  // Need to be loaded in service
+        Skills = new List<User_SkillDto>();         // Need to be loaded in service
+        Experiences = new List<ExperienceDto>();    // Need to be loaded in service
+        Educations = new List<EducationDto>();      // Need to be loaded in service
+        Projects = new List<ProjectDto>();          // Need to be loaded in service
+    }
+
+
     [Required]
     [MaxLength(50, ErrorMessage = "Name must be less than 50 characters")]
     public string Name { get; set; }

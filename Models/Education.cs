@@ -39,12 +39,5 @@ public class Education
 
 public enum EducationType
 {
-    // Secundaria
-    HighSchool,
-    // Universidad
-    College,
-    // Posgrado
-    GraduateSchool,
-    // Terciario
-    TertiaryDegree
+    HighSchool, College, GraduateSchool, TertiaryDegree
 }

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using portfolio.Helpers;
 using portfolio.Models.DTOs;
 using portfolio.Services.Interfaces;
 
@@ -21,25 +20,24 @@ public class EducationController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] EducationDto education, [FromHeader] string authorization)
     {
-        string userId = JwtHelper.GetId(authorization);
-        Guid? id = await _educationService.CreateAsync(education, userId);
+        Guid? id = await _educationService.CreateAsync(education, authorization);
         if (id != null) return Ok(new { msg = "Education Created", id });
         return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
-    [HttpDelete("{educationId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid educationId)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] EducationDto education, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _educationService.DeleteAsync(educationId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Deleted" });
+        ServiceStateType state = await _educationService.UpdateAsync(education, authorization);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpPut("{educationId}")]
-    public async Task<IActionResult> Edit([FromBody] EducationDto education, [FromRoute] Guid educationId)
+    [HttpDelete("{educationId}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid educationId, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _educationService.EditAsync(education, educationId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Edited" });
+        ServiceStateType state = await _educationService.DeleteAsync(educationId, authorization);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

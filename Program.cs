@@ -2,7 +2,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using portfolio;
-using portfolio.Auth.Services;
 using portfolio.Middlewares;
 using portfolio.Services;
 using portfolio.Services.Interfaces;

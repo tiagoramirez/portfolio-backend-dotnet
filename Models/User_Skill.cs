@@ -8,6 +8,7 @@ public class User_Skill
 
     public User_Skill(User_SkillDto skill, string userId)
     {
+        this.Id = new Guid();
         this.UserId = userId;
         this.SkillId = skill.SkillInfo.Id;
         this.Percentage = skill.Percentage;

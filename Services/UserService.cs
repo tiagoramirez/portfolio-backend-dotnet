@@ -6,12 +6,6 @@ using portfolio.Services.Interfaces;
 
 namespace portfolio.Services;
 
-public class UserInfo
-{
-    public string Name { get; set; }
-    public string Username { get; set; }
-}
-
 public class UserService : IUserService
 {
     PortfolioContext _context;
@@ -21,9 +15,11 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<ServiceStateType> DeleteUserAsync(string id)
+    public async Task<ServiceStateType> DeleteUserAsync(string authorization)
     {
-        User user = await _context.Users.FindAsync(id);
+        string userId = JwtHelper.GetId(authorization);
+
+        User user = await _context.Users.FindAsync(userId);
         if (user != null && user.Status)
         {
             user.Status = false;
@@ -40,12 +36,21 @@ public class UserService : IUserService
         return ServiceStateType.UserNotFound;
     }
 
-    public async Task<IEnumerable<UserInfo>> GetAllAsync()
+    public async Task<IEnumerable<UserInfoDto>> GetAllUsersAsync(int page)
     {
-        return await _context.Users.Where(u => u.Status).Select(u => new UserInfo { Name = u.Name, Username = u.Username }).ToListAsync();
+        int totalUsers = await GetTotalUsersAsync();
+        int start = page * 10;
+        int end = (page + 1) * 10;
+        List<UserInfoDto> allUsers = await _context.Users.Where(u => u.Status).Select(u => new UserInfoDto { Name = u.Name, Username = u.Username }).ToListAsync();
+        return allUsers.Skip(start).Take(end);
     }
 
-    public async Task<UserDto> GetByUsernameAsync(string username)
+    public async Task<int> GetTotalUsersAsync()
+    {
+        return await _context.Users.Where(u => u.Status).CountAsync();
+    }
+
+    public async Task<UserDto> GetUserByUsernameAsync(string username)
     {
         User user = _context.Users
                     .Include(sm => sm.SocialMedias)
@@ -56,26 +61,7 @@ public class UserService : IUserService
                     .FirstOrDefault(u => u.Username == username && u.Status);
         if (user == null) return null;
 
-        UserDto userDto = new UserDto()
-        {
-            Name = user.Name,
-            Email = user.Email,
-            Username = user.Username,
-            IsEnglishModeEnabled = user.IsEnglishModeEnabled,
-            NativeDesc = user.NativeDesc,
-            HasEnglishDesc = user.HasEnglishDesc,
-            EnglishDesc = user.EnglishDesc,
-            LocationCountry = user.LocationCountry,
-            LocationState = user.LocationState,
-            NativeAboutMe = user.NativeAboutMe,
-            HasEnglishAboutMe = user.HasEnglishAboutMe,
-            EnglishAboutMe = user.EnglishAboutMe,
-            SocialMedias = new List<SocialMediaDto>(),
-            Skills = new List<User_SkillDto>(),
-            Experiences = new List<ExperienceDto>(),
-            Educations = new List<EducationDto>(),
-            Projects = new List<ProjectDto>()
-        };
+        UserDto userDto = new UserDto(user);
 
         foreach (var socialMedia in user.SocialMedias)
         {
@@ -100,11 +86,7 @@ public class UserService : IUserService
         }
 
         return userDto;
-    }
 
-    public async Task<int> GetTotalUsersAsync()
-    {
-        return await _context.Users.Where(u => u.Status).CountAsync();
     }
 
     public async Task<string> GetUsernameByIdEmailAsync(string id, string email)
@@ -113,20 +95,21 @@ public class UserService : IUserService
         return user.Username;
     }
 
-    public async Task<bool> IsEmailAvailable(string email)
+    public async Task<bool> IsEmailAvailableAsync(string email)
     {
         return !(await _context.Users.AnyAsync(u => u.Email == email));
     }
 
-    public async Task<bool> IsUsernameAvailable(string username)
+    public async Task<bool> IsUsernameAvailableAsync(string username)
     {
-        bool usernameExists = await _context.Users.AnyAsync(u => u.Username == username);
-        return !usernameExists;
+        return !(await _context.Users.AnyAsync(u => u.Username == username));
     }
 
-    public async Task<ServiceStateType> ToggleEnglishModeAsync(string id)
+    public async Task<ServiceStateType> ToggleEnglishModeAsync(string authorization)
     {
-        User user = await _context.Users.FindAsync(id);
+        string userId = JwtHelper.GetId(authorization);
+
+        User user = await _context.Users.FindAsync(userId);
         if (user != null && user.Status)
         {
             user.IsEnglishModeEnabled = !user.IsEnglishModeEnabled;
@@ -141,16 +124,17 @@ public class UserService : IUserService
             }
         }
         return ServiceStateType.UserNotFound;
+
     }
 
-    public async Task<ServiceStateType> UpdateUserAsync(string id, UserDto user)
+    public async Task<ServiceStateType> UpdateUserAsync(UserDto user, string authorization)
     {
-        User userToEdit = await _context.Users.FindAsync(id);
+        string userId = JwtHelper.GetId(authorization);
+
+        User userToEdit = await _context.Users.FindAsync(userId);
         if (userToEdit != null && userToEdit.Status)
         {
-            // if (!await IsEmailAvailable(user.Email) && userToEdit.Email != user.Email) return ServiceStateType.EmailNotAvailable;
-            if (!await IsUsernameAvailable(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
-            // userToEdit.Email = user.Email;
+            if (!await IsUsernameAvailableAsync(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
             userToEdit.Name = user.Name;
             userToEdit.Username = user.Username;
             userToEdit.NativeDesc = user.NativeDesc;

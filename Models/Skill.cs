@@ -12,7 +12,5 @@ public class Skill
 
 public enum SkillType
 {
-    FrontEnd,
-    BackEnd,
-    DeveloperTool
+    FrontEnd, BackEnd, DeveloperTool
 }
