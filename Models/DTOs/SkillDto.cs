@@ -2,6 +2,8 @@ namespace portfolio.Models.DTOs;
 
 public class SkillDto
 {
+    public SkillDto() { }
+
     public SkillDto(Skill skill)
     {
         this.Id = skill.Id;

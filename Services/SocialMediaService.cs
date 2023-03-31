@@ -45,4 +45,23 @@ public class SocialMediaService : ISocialMediaService
             return ServiceStateType.InternalError;
         }
     }
+
+    public async Task<ServiceStateType> UpdateAsync(SocialMediaDto socialMedia, Guid socialMediaId)
+    {
+        SocialMedia sm = await _context.Social_Medias.FindAsync(socialMediaId);
+        if (sm == null) return ServiceStateType.SocialMediaNotFound;
+
+        sm.Name = socialMedia.Name;
+        sm.Url = socialMedia.Url;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+            return ServiceStateType.Ok;
+        }
+        catch (System.Exception)
+        {
+            return ServiceStateType.InternalError;
+        }
+    }
 }

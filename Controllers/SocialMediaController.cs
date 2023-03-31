@@ -31,6 +31,15 @@ public class SocialMediaController : ControllerBase
     }
 
     [Authorize]
+    [HttpPut("{socialMediaId}")]
+    public async Task<IActionResult> Update([FromBody] SocialMediaDto socialMedia, [FromRoute] Guid socialMediaId)
+    {
+        ServiceStateType state = await _socialMediaService.UpdateAsync(socialMedia, socialMediaId);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Social Media Updated" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+    }
+
+    [Authorize]
     [HttpDelete("{socialMediaId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId)
     {

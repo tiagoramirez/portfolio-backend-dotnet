@@ -9,7 +9,7 @@ public class User_Skill
     public User_Skill(User_SkillDto skill, string userId)
     {
         this.UserId = userId;
-        this.SkillId = skill.SkillId;
+        this.SkillId = skill.SkillInfo.Id;
         this.Percentage = skill.Percentage;
     }
 

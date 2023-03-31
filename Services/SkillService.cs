@@ -57,4 +57,22 @@ public class SkillService : ISkillService
         }
         return skills;
     }
+
+    public async Task<ServiceStateType> UpdateAsync(User_SkillDto skill, Guid skillId)
+    {
+        User_Skill skll = await _context.User_Skills.FindAsync(skillId);
+        if (skll == null) return ServiceStateType.SkillNotFound;
+
+        skll.Percentage = skill.Percentage;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+            return ServiceStateType.Ok;
+        }
+        catch (System.Exception)
+        {
+            return ServiceStateType.InternalError;
+        }
+    }
 }

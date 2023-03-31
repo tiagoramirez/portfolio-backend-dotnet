@@ -34,6 +34,15 @@ public class SkillController : ControllerBase
     }
 
     [Authorize]
+    [HttpPut("{skillId}")]
+    public async Task<IActionResult> Update([FromBody] User_SkillDto skill, [FromRoute] Guid skillId)
+    {
+        ServiceStateType state = await _skillService.UpdateAsync(skill, skillId);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Updated" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+    }
+
+    [Authorize]
     [HttpDelete("{skillId}")]
     public async Task<IActionResult> Delete([FromRoute] Guid skillId)
     {
