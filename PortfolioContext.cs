@@ -161,15 +161,15 @@ public class PortfolioContext : DbContext
             userSkill.HasData(userSkills);
         });
 
-        List<SocialMedia> userSocialMedias = new List<SocialMedia>();
-        userSocialMedias.Add(new SocialMedia
+        List<SocialMedia> socialMedias = new List<SocialMedia>();
+        socialMedias.Add(new SocialMedia
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
             Name = "Github",
             Url = "https://www.github.com/tiagoramirez/"
         });
-        userSocialMedias.Add(new SocialMedia
+        socialMedias.Add(new SocialMedia
         {
             Id = Guid.NewGuid(),
             UserId = users[0].Id,
@@ -185,7 +185,7 @@ public class PortfolioContext : DbContext
             userSocialMedia.Property(table => table.Id).ValueGeneratedOnAdd();
             userSocialMedia.Property(table => table.Name).IsRequired().HasMaxLength(20);
             userSocialMedia.Property(table => table.Url).IsRequired().HasMaxLength(255);
-            userSocialMedia.HasData(userSocialMedias);
+            userSocialMedia.HasData(socialMedias);
         });
 
         List<Education> educations = new List<Education>();
