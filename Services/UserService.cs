@@ -102,7 +102,8 @@ public class UserService : IUserService
 
     public async Task<bool> IsUsernameAvailableAsync(string username)
     {
-        return !(await _context.Users.AnyAsync(u => u.Username == username));
+        List<string> usernamesNotAvailable = new List<string> { "page", "count", "available", "username" };
+        return !usernamesNotAvailable.Contains(username) && !(await _context.Users.AnyAsync(u => u.Username == username));
     }
 
     public async Task<ServiceStateType> ToggleEnglishModeAsync(string authorization)

@@ -1,5 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
+using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
+
 namespace portfolio.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("API/[controller]")]
 public class SocialMediaController : ControllerBase
@@ -11,38 +18,29 @@ public class SocialMediaController : ControllerBase
         _socialMediaService = socialMediaService;
     }
 
-    [Authorize]
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] SocialMediaDto socialMedia, [FromHeader] string authorization)
     {
-        string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _socialMediaService.CreateAsync(socialMedia, userId);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "Social Media Created" });
-        }
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+        Guid? id = await _socialMediaService.CreateAsync(socialMedia, authorization);
+        if (id != null) return Ok(new { msg = "Social Media Created", id });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+
     }
 
-    [Authorize]
-    [HttpPut("{socialMediaId}")]
-    public async Task<IActionResult> Update([FromBody] SocialMediaDto socialMedia, [FromRoute] Guid socialMediaId)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] SocialMediaDto socialMedia, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _socialMediaService.UpdateAsync(socialMedia, socialMediaId);
+        ServiceStateType state = await _socialMediaService.UpdateAsync(socialMedia, authorization);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Social Media Updated" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [Authorize]
     [HttpDelete("{socialMediaId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId)
+    public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _socialMediaService.DeleteAsync(socialMediaId);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "Social Media Deleted" });
-        }
+        ServiceStateType state = await _socialMediaService.DeleteAsync(socialMediaId, authorization);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Social Media Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
-
 }

@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
+using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
+
 namespace portfolio.Controllers;
 
 [ApiController]
@@ -22,14 +27,14 @@ public class AuthController : ControllerBase
     [HttpGet("Registered")]
     public async Task<bool> IsRegistered([FromQuery] string email, [FromQuery] string id)
     {
-        return await _authService.CheckRegistered(email, id);
+        return await _authService.isRegisteredAsync(email, id);
     }
 
     [HttpGet("Login")]
-    public async Task<IActionResult> Login([FromQuery] string id, [FromQuery] string email, [FromQuery] string username)
+    public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
-        ServiceStateType state = await _authService.CheckLogin(id, username, email);
-        if (state == ServiceStateType.Ok) return Ok(_authService.GenerateToken(id, username));
+        ServiceStateType state = await _authService.LoginAync(login);
+        if (state == ServiceStateType.Ok) return Ok(_authService.GenerateToken(login.Id, login.Username));
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

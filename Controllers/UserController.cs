@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
+using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
+
 namespace portfolio.Controllers;
 
 [ApiController]
@@ -11,30 +17,36 @@ public class UserController : ControllerBase
         _userService = service;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> UsersInfo([FromQuery] int count, [FromQuery] string email, [FromQuery] string id, [FromQuery] string available)
+    [HttpGet("page")]
+    public async Task<IActionResult> GetUsersByPage([FromQuery] int number)
     {
-        if (count == 1)
-        {
-            return Ok(await _userService.GetTotalUsersAsync());
-        }
-        if (email != null && id != null)
-        {
-            string username = await _userService.GetUsernameByIdEmailAsync(id, email);
-            if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
-            return Ok(username);
-        }
-        if (available != null)
-        {
-            return Ok(await _userService.IsUsernameAvailable(available));
-        }
-        return Ok(await _userService.GetAllAsync());
+        return Ok(await _userService.GetAllUsersAsync(number));
+    }
+
+    [HttpGet("count")]
+    public async Task<IActionResult> GetTotalUsers()
+    {
+        return Ok(await _userService.GetTotalUsersAsync());
+    }
+
+    [HttpGet("available")]
+    public async Task<IActionResult> UsernameAvailable([FromQuery] string username)
+    {
+        return Ok(await _userService.IsUsernameAvailableAsync(username));
+    }
+
+    [HttpGet("username")]
+    public async Task<IActionResult> GetUsername([FromQuery] string email, [FromQuery] string id)
+    {
+        string username = await _userService.GetUsernameByIdEmailAsync(id, email);
+        if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
+        return Ok(username);
     }
 
     [HttpGet("{username}")]
-    public async Task<IActionResult> GetUserInfo(string username)
+    public async Task<IActionResult> GetUserByUsername([FromRoute] string username)
     {
-        UserDto user = await _userService.GetByUsernameAsync(username);
+        UserDto user = await _userService.GetUserByUsernameAsync(username);
         if (user == null)
         {
             return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
@@ -44,28 +56,19 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPut]
-    public async Task<IActionResult> UpdateUser([FromHeader] string authorization, [FromBody] UserDto user)
+    public async Task<IActionResult> UpdateUser([FromBody] UserDto user, [FromHeader] string authorization)
     {
-        string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _userService.UpdateUserAsync(userId, user);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "User Updated" });
-        }
+        ServiceStateType state = await _userService.UpdateUserAsync(user, authorization);
+        if (state == ServiceStateType.Ok) { return Ok(new { msg = "User Updated" }); }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
     [Authorize]
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> Delete([FromRoute] string userId, [FromHeader] string authorization)
+    public async Task<IActionResult> Delete([FromHeader] string authorization)
     {
-        string userId2 = JwtHelper.GetId(authorization);
-        if (userId2 != userId) return BadRequest("Invalid user. Try again later...");
-        ServiceStateType state = await _userService.DeleteUserAsync(userId);
-        if (state == ServiceStateType.Ok)
-        {
-            return Ok(new { msg = "User Deleted" });
-        }
+        ServiceStateType state = await _userService.DeleteUserAsync(authorization);
+        if (state == ServiceStateType.Ok) { return Ok(new { msg = "User Deleted" }); }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

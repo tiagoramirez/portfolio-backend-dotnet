@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
+using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
+
 namespace portfolio.Controllers;
 
 [Authorize]
@@ -15,25 +21,25 @@ public class ProjectController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
-        string userId = JwtHelper.GetId(authorization);
-        Guid? id = await _projectService.CreateAsync(project, userId);
+        Guid? id = await _projectService.CreateAsync(project, authorization);
         if (id != null) return Ok(new { msg = "Project Created", id });
         return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
-    [HttpDelete("{projectId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid projectId)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _projectService.DeleteAsync(projectId);
+        ServiceStateType state = await _projectService.UpdateAsync(project, authorization);
+        if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Edited" });
+        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+    }
+
+    [HttpDelete("{projectId}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid projectId, [FromHeader] string authorization)
+    {
+        ServiceStateType state = await _projectService.DeleteAsync(projectId, authorization);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
-    [HttpPut("{projectId}")]
-    public async Task<IActionResult> Edit([FromBody] ProjectDto project, [FromRoute] Guid projectId)
-    {
-        ServiceStateType state = await _projectService.EditAsync(project, projectId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Edited" });
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
-    }
 }

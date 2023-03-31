@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using portfolio.Helpers;
+using portfolio.Models.DTOs;
+using portfolio.Services.Interfaces;
+
 namespace portfolio.Controllers;
 
 [ApiController]
@@ -14,33 +20,32 @@ public class SkillController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return Ok(await _skillService.GetAllAsync());
+        return Ok(await _skillService.GetAllSkillsAsync());
     }
 
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] User_SkillDto skill, [FromHeader] string authorization)
     {
-        string userId = JwtHelper.GetId(authorization);
-        ServiceStateType state = await _skillService.CreateAsync(skill, userId);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Created" });
-        return BadRequest(new { msg = ServiceState.GetMessage(state) });
+        Guid? id = await _skillService.CreateAsync(skill, authorization);
+        if (id != null) return Ok(new { msg = "Skill Created", id });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
     }
 
     [Authorize]
-    [HttpPut("{skillId}")]
-    public async Task<IActionResult> Update([FromBody] User_SkillDto skill, [FromRoute] Guid skillId)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] User_SkillDto skill, [FromHeader] string authorization)
     {
-        ServiceStateType state = await _skillService.UpdateAsync(skill, skillId);
+        ServiceStateType state = await _skillService.UpdateAsync(skill, authorization);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Updated" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
     [Authorize]
     [HttpDelete("{skillId}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid skillId)
+    public async Task<IActionResult> Delete([FromRoute] Guid skillId, [FromHeader] string authorization)
     {
-        var state = await _skillService.DeleteAsync(skillId);
+        var state = await _skillService.DeleteAsync(skillId, authorization);
         if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
