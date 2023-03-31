@@ -2,6 +2,8 @@ namespace portfolio.Models.DTOs;
 
 public class SocialMediaDto
 {
+    public SocialMediaDto() { }
+
     public SocialMediaDto(SocialMedia socialMedia)
     {
         this.Id = socialMedia.Id;
