@@ -127,7 +127,7 @@ namespace portfolio.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<int>(type: "int", maxLength: 20, nullable: false),
                     Url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
@@ -170,70 +170,70 @@ namespace portfolio.Migrations
                 columns: new[] { "Id", "Name", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("014633c5-2767-4736-85fb-1fe8bbab3931"), ".NET CORE 6", 1 },
-                    { new Guid("0749acb2-87e8-460c-81ee-ae37676f7b0f"), "Java Spring", 1 },
-                    { new Guid("094ba69d-edee-4fa2-bbd4-8ddc3ebbcde0"), "Vite", 0 },
-                    { new Guid("1f813416-62f8-4151-a627-4e3809d06992"), "Migrations", 1 },
-                    { new Guid("25337d23-87e0-4b04-985c-8d0d17be8093"), "Entity Framework", 1 },
-                    { new Guid("26e3c863-f2e1-4dc4-9718-b3dae0a7dd04"), "React", 0 },
-                    { new Guid("28d8f96e-5a00-4413-8501-7d66eeea97f3"), "Git", 2 },
-                    { new Guid("2f1e14cc-1f52-4b3e-b01b-6cdc1a878f21"), "HTML", 0 },
-                    { new Guid("3ac74277-64c2-461e-9097-1cd0d592ea75"), ".NET API", 1 },
-                    { new Guid("3e8a0e07-bbdb-4a1a-b866-132c22db4cd7"), "REST API", 2 },
-                    { new Guid("457012cc-1ee3-4941-8fab-dac9fcdbae1c"), "Scrum", 2 },
-                    { new Guid("487fba6c-0c35-4fa5-af18-53fb0cb922c6"), "Bootstrap", 0 },
-                    { new Guid("4fc0941e-d64f-496a-8557-32db7fb4504c"), "Middlewares", 1 },
-                    { new Guid("53e59760-58ab-402a-a261-1d9d2ad5e709"), "Redux Toolkit", 0 },
-                    { new Guid("618d696e-3de2-455d-963b-77152fa2fa86"), "Angular", 0 },
-                    { new Guid("61d3a2d5-bd4f-4906-bead-9b61b5437e8d"), "Testing library", 0 },
-                    { new Guid("717c0440-c700-4b12-a431-53c5dca4d96a"), "Vitest", 0 },
-                    { new Guid("755b6b22-a2d4-4533-bce5-5247ce58985e"), "Node", 2 },
-                    { new Guid("8b525a78-81fe-4416-8408-97ecf86654f6"), "ERD / DER", 2 },
-                    { new Guid("8d80f814-f57c-4786-b139-17616a929ba2"), "JWT", 2 },
-                    { new Guid("9823aebc-db4b-4bc1-946e-2c93e89af71b"), "SQL", 1 },
-                    { new Guid("b8b937df-e02e-436d-977c-243f7fcc97fc"), "CSS", 0 },
-                    { new Guid("bb05f08f-cc32-4cf3-9440-49923d2336d0"), "TypeScript", 0 },
-                    { new Guid("c46c4d39-dc74-4fdf-bfab-48cb4aadaa46"), "UML", 2 },
-                    { new Guid("ccf97f36-a6e1-44c3-8e4c-3414071a28d9"), "Linux", 2 },
-                    { new Guid("ce45c4eb-9f2b-4bf4-a260-cabf77a66197"), "JavaScript", 0 },
-                    { new Guid("d0938a3f-2bd4-473b-bb10-270531665cd1"), "C#", 1 },
-                    { new Guid("d5cedb6c-bdc7-4769-ab44-b75e800cfdf3"), "React Router", 0 },
-                    { new Guid("d806b2b4-4727-4f6c-9a69-cd90eac1a419"), "Fluent API", 1 },
-                    { new Guid("dea83442-6947-4606-af62-c9feea00dc28"), "Python", 1 },
-                    { new Guid("ea323063-81e0-4130-b07d-0b0a19a97c01"), "MS SQL Server", 1 },
-                    { new Guid("f35f33ac-b759-49b9-9d53-8b63378b6b9d"), "Java", 1 },
-                    { new Guid("f3d75026-0855-41da-b18a-cd207341fe76"), "MySql", 1 },
-                    { new Guid("fa6eff2f-e2cc-42c2-8318-171800dd3540"), "TailwindCss", 0 },
-                    { new Guid("fc3ddd76-225c-496b-852a-18056bba8401"), ".NET WPF", 1 }
+                    { new Guid("03badd18-142e-4ee1-8767-cfae38f1e8ea"), "Redux Toolkit", 0 },
+                    { new Guid("06d85e3f-7305-44d2-9315-c1f99afb2b9c"), "Angular", 0 },
+                    { new Guid("08167ec6-d30c-40a6-92d7-eb06113cf940"), "SQL", 1 },
+                    { new Guid("09931a46-4f03-41ad-8494-a265f3c8754b"), ".NET WPF", 1 },
+                    { new Guid("09e8b0dd-57e7-4054-8ffe-5b5a8af74ae4"), "React Router", 0 },
+                    { new Guid("0a8e5f19-29e3-4f7b-b15e-79e0ef1e9e7b"), "Java", 1 },
+                    { new Guid("0eef2041-ee33-4b3a-b93c-10fd257b527b"), "Scrum", 2 },
+                    { new Guid("1f7dcb2c-0979-488c-b739-6913e86b5c99"), "MySql", 1 },
+                    { new Guid("2bd96cc9-4cf9-459c-bea0-4eebbe2153ee"), "TypeScript", 0 },
+                    { new Guid("2ca561c9-ef16-499b-bfe2-09b7e86792f2"), ".NET CORE 6", 1 },
+                    { new Guid("33b99740-936e-40df-8e9a-aec0f686b702"), "Vite", 0 },
+                    { new Guid("3b020f36-d959-4304-8be9-a0ad92105335"), "C#", 1 },
+                    { new Guid("3e51e2b6-4f44-4341-91cb-c3150f3dfb12"), "CSS", 0 },
+                    { new Guid("42f90172-c0e5-4a55-9ab1-ce63e5bc8803"), "Git", 2 },
+                    { new Guid("4870b24a-8e82-47ee-93af-c88d3cd01238"), "REST API", 2 },
+                    { new Guid("4d87ee36-7c36-4343-b135-e7852f2ff76e"), "TailwindCss", 0 },
+                    { new Guid("57e18b6c-8f53-448f-ae72-1770e7d7a70a"), "Vitest", 0 },
+                    { new Guid("62c8f993-8688-46cb-8ebb-7c4964af4d72"), "Node", 2 },
+                    { new Guid("6d01c24c-2643-4b50-9afd-451248f665ca"), "HTML", 0 },
+                    { new Guid("731ebb23-0cee-4f4a-a53f-dbe94823b993"), "Middlewares", 1 },
+                    { new Guid("9539e24c-eb3b-4e4c-a13e-c517ea36e7be"), "JWT", 2 },
+                    { new Guid("965d9fd5-0ffa-4150-8188-d9fe21117f8b"), "Fluent API", 1 },
+                    { new Guid("a4743361-bdf0-4df2-9f65-4dee215bb433"), "Bootstrap", 0 },
+                    { new Guid("abf491de-913d-46d4-a30a-b3a55eebc952"), "React", 0 },
+                    { new Guid("ad4e69fe-9d22-4738-bb92-24e11f1d870e"), "ERD / DER", 2 },
+                    { new Guid("b233ec82-3ffb-45f6-8fb3-338d583f5ac7"), "Linux", 2 },
+                    { new Guid("cc3b831f-097a-4be0-8ccb-d1913fcb3961"), "Testing library", 0 },
+                    { new Guid("d73abf96-3c66-45ff-a651-304ef12147bc"), ".NET API", 1 },
+                    { new Guid("e6928cbd-a13f-4041-a4bb-1b729ced8238"), "Migrations", 1 },
+                    { new Guid("e87dba1f-4ae1-4831-8e84-76af479379c8"), "Entity Framework", 1 },
+                    { new Guid("f16d09ba-acb0-4f19-ada1-d10d84a77fbd"), "Java Spring", 1 },
+                    { new Guid("f4a01dab-8aa4-4780-bd6e-4638b3ff7e19"), "MS SQL Server", 1 },
+                    { new Guid("f771aa1b-8ee9-44e4-b71e-e4436d819997"), "UML", 2 },
+                    { new Guid("fa1dd71f-4546-491d-919b-dd6deb895e0f"), "JavaScript", 0 },
+                    { new Guid("fca0e724-edb4-4f26-90f1-9b9aabf916b2"), "Python", 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "Created", "Email", "EnglishAboutMe", "EnglishDesc", "HasEnglishAboutMe", "HasEnglishDesc", "IsEnglishModeEnabled", "LocationCountry", "LocationState", "Name", "NativeAboutMe", "NativeDesc", "Status", "Username" },
-                values: new object[] { "p7EW1FzwW5hgFi4YTV1mmdHTAnm1", new DateTime(2023, 3, 29, 1, 31, 47, 188, DateTimeKind.Local).AddTicks(3036), "tiagoramirez2001@gmail.com", "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node", "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)", true, true, true, "Argentina", "C.A.B.A.", "Tiago Alberto Ramirez Marchisio", "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node", "FullStack Web Dev. con +1 año de exp. || React + Typescript + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)", true, "tiagoramirez" });
+                values: new object[] { "p7EW1FzwW5hgFi4YTV1mmdHTAnm1", new DateTime(2023, 4, 1, 0, 10, 9, 967, DateTimeKind.Local).AddTicks(5713), "tiagoramirez2001@gmail.com", "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node", "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)", true, true, true, "Argentina", "C.A.B.A.", "Tiago Alberto Ramirez Marchisio", "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node", "FullStack Web Dev. con +1 año de exp. || React + Typescript + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)", true, "tiagoramirez" });
 
             migrationBuilder.InsertData(
                 table: "Education",
                 columns: new[] { "Id", "End", "EnglishDesc", "HasEnglishDesc", "Institute", "IsActual", "NativeDesc", "Start", "TitleName", "Type", "UserId" },
-                values: new object[] { new Guid("d79fdf42-42d9-49e0-81ab-0330d0ddbf9c"), null, "Currently at 3rd year with an average of 9/10", true, "Universidad Tecnologica Nacional", true, "Me encuentro en 3er año con un promedio de 9/10", new DateTime(2020, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ingenieria en Sistemas de Informacion", 1, "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
+                values: new object[] { new Guid("bf047994-d546-48b1-9d0a-b6034aa50898"), null, "Currently at 3rd year with an average of 9/10", true, "Universidad Tecnologica Nacional", true, "Me encuentro en 3er año con un promedio de 9/10", new DateTime(2020, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ingenieria en Sistemas de Informacion", 1, "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
 
             migrationBuilder.InsertData(
                 table: "Experience",
                 columns: new[] { "Id", "Company", "End", "EnglishDesc", "HasEnglishDesc", "IsActual", "NativeDesc", "Position", "Start", "Type", "UserId" },
-                values: new object[] { new Guid("b3bf98c1-1f5d-406c-a8ed-4083ea564af0"), "Accusys", null, "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS", true, true, "Manejo y optimización de querys, tablas, stored procedures y vistas en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS", "Analista Programador Junior", new DateTime(2022, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
+                values: new object[] { new Guid("a135e353-1f4f-45a7-b6b3-808ce8d2d7ef"), "Accusys", null, "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS", true, true, "Manejo y optimización de querys, tablas, stored procedures y vistas en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS", "Analista Programador Junior", new DateTime(2022, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
 
             migrationBuilder.InsertData(
                 table: "Project",
                 columns: new[] { "Id", "EnglishDesc", "HasEnglishDesc", "Name", "NativeDesc", "Url", "UserId" },
-                values: new object[] { new Guid("618bdbcf-7304-492f-a347-b989a6904099"), "Personal portfolio made with REACT + Typescript + Tailwindcss + .NET 6 + SQL Server", true, "Portfolio", "Portfolio personal realizado con REACT + Typescript + Tailwindcss + .NET 6 + SQL Server", "https://tiagoramirez-portfolio.netlify.app/tiagoramirez", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
+                values: new object[] { new Guid("4d8c0738-424a-470b-a02d-bfe091558831"), "Personal portfolio made with REACT + Typescript + Tailwindcss + .NET 6 + SQL Server", true, "Portfolio", "Portfolio personal realizado con REACT + Typescript + Tailwindcss + .NET 6 + SQL Server", "https://tiagoramirez-portfolio.netlify.app/tiagoramirez", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" });
 
             migrationBuilder.InsertData(
                 table: "SocialMedia",
                 columns: new[] { "Id", "Name", "Url", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("00eeeead-1e0c-4e90-bfe9-bf81409f8387"), "LinkedIn", "https://www.linkedin.com/in/tiagoramirezmar/", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("78146e6c-8ee4-476a-bd71-268e2a10ef26"), "Github", "https://www.github.com/tiagoramirez/", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" }
+                    { new Guid("7be37952-f510-490c-83c0-7c2281259330"), 3, "https://www.linkedin.com/in/tiagoramirezmar/", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("d9e84842-7feb-4a54-acce-ab559a3b924c"), 1, "https://www.github.com/tiagoramirez/", "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" }
                 });
 
             migrationBuilder.InsertData(
@@ -241,39 +241,39 @@ namespace portfolio.Migrations
                 columns: new[] { "Id", "Percentage", "SkillId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("0688b498-14d1-48d3-acbf-d193ffbc63b0"), 90, new Guid("3ac74277-64c2-461e-9097-1cd0d592ea75"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("11f285a6-9a59-4cc8-895e-f2ed25bf8c58"), 90, new Guid("014633c5-2767-4736-85fb-1fe8bbab3931"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("1b2f1138-43cf-4a3c-86b3-72eb32fe788d"), 100, new Guid("bb05f08f-cc32-4cf3-9440-49923d2336d0"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("262f8834-f7ca-4fe8-b699-f069fef575f8"), 80, new Guid("b8b937df-e02e-436d-977c-243f7fcc97fc"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("2f9f6947-c007-4267-b0f1-703aec821665"), 100, new Guid("d0938a3f-2bd4-473b-bb10-270531665cd1"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("31f4c8e6-3a95-4b5e-869c-c025c62d2551"), 90, new Guid("28d8f96e-5a00-4413-8501-7d66eeea97f3"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("37060ad4-1b61-45d9-a313-c4eb5292cfa5"), 95, new Guid("d5cedb6c-bdc7-4769-ab44-b75e800cfdf3"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("3e6468ff-3e3e-44f8-9ea5-53d136867e3d"), 70, new Guid("0749acb2-87e8-460c-81ee-ae37676f7b0f"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("4b83855c-fb6b-44f4-8bdb-cd218ae0a8c2"), 100, new Guid("c46c4d39-dc74-4fdf-bfab-48cb4aadaa46"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("527255c1-91fe-4159-aade-eb57190d2368"), 70, new Guid("f3d75026-0855-41da-b18a-cd207341fe76"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("54a9b699-9a86-4f42-b2a9-0b100b135a3d"), 90, new Guid("3e8a0e07-bbdb-4a1a-b866-132c22db4cd7"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("6380fd1d-4eec-49f5-833c-dd07a5877bd7"), 90, new Guid("457012cc-1ee3-4941-8fab-dac9fcdbae1c"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("6432879a-6583-4cc2-8c9d-8820741a17d6"), 90, new Guid("4fc0941e-d64f-496a-8557-32db7fb4504c"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("6e17776a-3b4b-4ba6-ae1f-33b7b4989e45"), 90, new Guid("f35f33ac-b759-49b9-9d53-8b63378b6b9d"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("6fbbae4d-4935-4680-9af0-3d10831ebbc7"), 100, new Guid("8b525a78-81fe-4416-8408-97ecf86654f6"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("83d87ef6-9c3d-40ee-861b-ea50fc8f2498"), 80, new Guid("717c0440-c700-4b12-a431-53c5dca4d96a"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("93671bb2-456f-4cb7-bfb3-08d4335314b7"), 80, new Guid("61d3a2d5-bd4f-4906-bead-9b61b5437e8d"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("a2ae240d-8e4c-4699-bb9b-42e9cdc92956"), 95, new Guid("d806b2b4-4727-4f6c-9a69-cd90eac1a419"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("a547e991-f657-423a-9c65-d9dff034ef7b"), 100, new Guid("1f813416-62f8-4151-a627-4e3809d06992"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("a64dc248-e1c7-414b-9a44-a9a98447f8a0"), 85, new Guid("755b6b22-a2d4-4533-bce5-5247ce58985e"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("ae8ba168-8b3a-4e0b-b8b2-b38042bba166"), 95, new Guid("26e3c863-f2e1-4dc4-9718-b3dae0a7dd04"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("b01e5bda-1b0c-4c96-9616-dd7ce6008f5d"), 75, new Guid("fc3ddd76-225c-496b-852a-18056bba8401"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("b12850c9-e5c1-40c9-80f9-43df14ab316b"), 95, new Guid("53e59760-58ab-402a-a261-1d9d2ad5e709"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("b9c53b89-9a6d-41c4-b448-4b529f35af33"), 80, new Guid("ccf97f36-a6e1-44c3-8e4c-3414071a28d9"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("bd52b781-40c6-48ef-a453-25dae8c800c5"), 100, new Guid("ea323063-81e0-4130-b07d-0b0a19a97c01"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("bded44ff-58bb-4144-87c3-c1d4dec0d9ec"), 100, new Guid("9823aebc-db4b-4bc1-946e-2c93e89af71b"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("c3f148dd-05f7-4850-9c94-f102a7c11559"), 80, new Guid("094ba69d-edee-4fa2-bbd4-8ddc3ebbcde0"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("c4217a9c-0937-4aad-857a-93abaa17dad1"), 95, new Guid("fa6eff2f-e2cc-42c2-8318-171800dd3540"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("c7d09100-ecd9-4e43-977f-c1f4395fd18b"), 90, new Guid("ce45c4eb-9f2b-4bf4-a260-cabf77a66197"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("c8d5c425-7ffb-465f-9dcf-4145fd1f93d7"), 90, new Guid("2f1e14cc-1f52-4b3e-b01b-6cdc1a878f21"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("c917b886-dcac-45f8-879e-6ae33b5df6b5"), 90, new Guid("25337d23-87e0-4b04-985c-8d0d17be8093"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("e023a21c-c1a7-46a0-92bf-7594cdfb1683"), 90, new Guid("8d80f814-f57c-4786-b139-17616a929ba2"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
-                    { new Guid("fcc1f7ca-c146-42d1-b44c-8b8582e148b0"), 70, new Guid("618d696e-3de2-455d-963b-77152fa2fa86"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" }
+                    { new Guid("01e9bf64-efc7-4792-95ad-6d16a81eed08"), 90, new Guid("e87dba1f-4ae1-4831-8e84-76af479379c8"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("0de3503b-4ce0-4417-91e4-d05ae7b8c10b"), 95, new Guid("4d87ee36-7c36-4343-b135-e7852f2ff76e"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("1dad3e9a-2a79-4a10-b545-86060b9c488f"), 90, new Guid("9539e24c-eb3b-4e4c-a13e-c517ea36e7be"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("1f95b03c-dc42-4ec5-9074-c9fe746a930e"), 95, new Guid("03badd18-142e-4ee1-8767-cfae38f1e8ea"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("2340f117-ca92-4666-a456-cad721efe7de"), 100, new Guid("ad4e69fe-9d22-4738-bb92-24e11f1d870e"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("268aecf3-8e4c-402d-9c9f-a377daefed3d"), 85, new Guid("62c8f993-8688-46cb-8ebb-7c4964af4d72"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("3522b888-3554-4ff8-8909-85de2dbb8103"), 70, new Guid("1f7dcb2c-0979-488c-b739-6913e86b5c99"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("384dbda5-8436-4eec-83e8-2257a81635de"), 75, new Guid("09931a46-4f03-41ad-8494-a265f3c8754b"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("3dcf9455-3496-4137-81f9-7de6e3afeb00"), 100, new Guid("2bd96cc9-4cf9-459c-bea0-4eebbe2153ee"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("4bcbfbce-7291-40a8-8a44-107e59017b77"), 100, new Guid("08167ec6-d30c-40a6-92d7-eb06113cf940"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("4c19e963-29ae-4c41-9bd4-4a2b6313889b"), 95, new Guid("965d9fd5-0ffa-4150-8188-d9fe21117f8b"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("4e326a34-ac14-4299-b692-7b4ff6a3bb3a"), 90, new Guid("6d01c24c-2643-4b50-9afd-451248f665ca"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("56d2091c-3146-432b-b2b7-c37e0308cf94"), 90, new Guid("fa1dd71f-4546-491d-919b-dd6deb895e0f"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("57040d5f-a4be-46ad-b508-6751075fdd0e"), 90, new Guid("731ebb23-0cee-4f4a-a53f-dbe94823b993"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("6be3fc2c-e8ed-4d79-9115-813ed34b0610"), 100, new Guid("f4a01dab-8aa4-4780-bd6e-4638b3ff7e19"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("71507e1d-e02e-4a30-bbbf-8783247fa096"), 70, new Guid("06d85e3f-7305-44d2-9315-c1f99afb2b9c"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("803a9fe4-711a-418e-a6e0-cbba220f69b1"), 90, new Guid("d73abf96-3c66-45ff-a651-304ef12147bc"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("870d2802-2d47-4b56-8d03-b046fd8343e0"), 90, new Guid("4870b24a-8e82-47ee-93af-c88d3cd01238"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("8f314b99-1e2d-463e-92ac-2ff18dcccac7"), 80, new Guid("3e51e2b6-4f44-4341-91cb-c3150f3dfb12"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("94651e06-a108-48a2-94a8-4aa3dd6c4c97"), 95, new Guid("09e8b0dd-57e7-4054-8ffe-5b5a8af74ae4"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("9526b3de-26b2-4a83-b5c5-24fb15586447"), 80, new Guid("b233ec82-3ffb-45f6-8fb3-338d583f5ac7"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("983a1527-9a4a-4c53-ab7d-1f4c3f944c7a"), 100, new Guid("f771aa1b-8ee9-44e4-b71e-e4436d819997"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("9cc335c8-a6ce-4f46-9466-7b52772b6e92"), 95, new Guid("abf491de-913d-46d4-a30a-b3a55eebc952"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("a6b91e72-528b-4870-8d30-7434774fd1c0"), 70, new Guid("f16d09ba-acb0-4f19-ada1-d10d84a77fbd"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("aae7e4cb-21b4-4995-afc5-3f8079a87d2c"), 80, new Guid("cc3b831f-097a-4be0-8ccb-d1913fcb3961"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("b97dd71e-6b01-4d70-8ce2-9cb173141003"), 90, new Guid("0eef2041-ee33-4b3a-b93c-10fd257b527b"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("bfcaadb4-e5f0-46f2-a9d8-4e4355b332fa"), 100, new Guid("3b020f36-d959-4304-8be9-a0ad92105335"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("c9c64c70-5524-4c84-b585-675f20973c40"), 80, new Guid("57e18b6c-8f53-448f-ae72-1770e7d7a70a"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("cf1d3fb2-ea5f-442b-8a73-d0e6bad0a08c"), 80, new Guid("33b99740-936e-40df-8e9a-aec0f686b702"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("d1d3c91b-53bb-4c8c-827e-49d288fd377d"), 90, new Guid("2ca561c9-ef16-499b-bfe2-09b7e86792f2"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("d20f0593-602c-4a6f-98b8-347c0a3c9e7d"), 90, new Guid("0a8e5f19-29e3-4f7b-b15e-79e0ef1e9e7b"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("e67f1e10-7507-4401-a618-bf0ab857b932"), 90, new Guid("42f90172-c0e5-4a55-9ab1-ce63e5bc8803"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" },
+                    { new Guid("eef647e5-9e26-4266-8b2d-65437f7dc73e"), 100, new Guid("e6928cbd-a13f-4041-a4bb-1b729ced8238"), "p7EW1FzwW5hgFi4YTV1mmdHTAnm1" }
                 });
 
             migrationBuilder.CreateIndex(

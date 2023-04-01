@@ -74,7 +74,7 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d79fdf42-42d9-49e0-81ab-0330d0ddbf9c"),
+                            Id = new Guid("bf047994-d546-48b1-9d0a-b6034aa50898"),
                             EnglishDesc = "Currently at 3rd year with an average of 9/10",
                             HasEnglishDesc = true,
                             Institute = "Universidad Tecnologica Nacional",
@@ -139,7 +139,7 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b3bf98c1-1f5d-406c-a8ed-4083ea564af0"),
+                            Id = new Guid("a135e353-1f4f-45a7-b6b3-808ce8d2d7ef"),
                             Company = "Accusys",
                             EnglishDesc = "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS",
                             HasEnglishDesc = true,
@@ -191,7 +191,7 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("618bdbcf-7304-492f-a347-b989a6904099"),
+                            Id = new Guid("4d8c0738-424a-470b-a02d-bfe091558831"),
                             EnglishDesc = "Personal portfolio made with REACT + Typescript + Tailwindcss + .NET 6 + SQL Server",
                             HasEnglishDesc = true,
                             Name = "Portfolio",
@@ -222,211 +222,211 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0938a3f-2bd4-473b-bb10-270531665cd1"),
+                            Id = new Guid("3b020f36-d959-4304-8be9-a0ad92105335"),
                             Name = "C#",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("3ac74277-64c2-461e-9097-1cd0d592ea75"),
+                            Id = new Guid("d73abf96-3c66-45ff-a651-304ef12147bc"),
                             Name = ".NET API",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("014633c5-2767-4736-85fb-1fe8bbab3931"),
+                            Id = new Guid("2ca561c9-ef16-499b-bfe2-09b7e86792f2"),
                             Name = ".NET CORE 6",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("fc3ddd76-225c-496b-852a-18056bba8401"),
+                            Id = new Guid("09931a46-4f03-41ad-8494-a265f3c8754b"),
                             Name = ".NET WPF",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("25337d23-87e0-4b04-985c-8d0d17be8093"),
+                            Id = new Guid("e87dba1f-4ae1-4831-8e84-76af479379c8"),
                             Name = "Entity Framework",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("d806b2b4-4727-4f6c-9a69-cd90eac1a419"),
+                            Id = new Guid("965d9fd5-0ffa-4150-8188-d9fe21117f8b"),
                             Name = "Fluent API",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("1f813416-62f8-4151-a627-4e3809d06992"),
+                            Id = new Guid("e6928cbd-a13f-4041-a4bb-1b729ced8238"),
                             Name = "Migrations",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("4fc0941e-d64f-496a-8557-32db7fb4504c"),
+                            Id = new Guid("731ebb23-0cee-4f4a-a53f-dbe94823b993"),
                             Name = "Middlewares",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("dea83442-6947-4606-af62-c9feea00dc28"),
+                            Id = new Guid("fca0e724-edb4-4f26-90f1-9b9aabf916b2"),
                             Name = "Python",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("f35f33ac-b759-49b9-9d53-8b63378b6b9d"),
+                            Id = new Guid("0a8e5f19-29e3-4f7b-b15e-79e0ef1e9e7b"),
                             Name = "Java",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("0749acb2-87e8-460c-81ee-ae37676f7b0f"),
+                            Id = new Guid("f16d09ba-acb0-4f19-ada1-d10d84a77fbd"),
                             Name = "Java Spring",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("9823aebc-db4b-4bc1-946e-2c93e89af71b"),
+                            Id = new Guid("08167ec6-d30c-40a6-92d7-eb06113cf940"),
                             Name = "SQL",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("ea323063-81e0-4130-b07d-0b0a19a97c01"),
+                            Id = new Guid("f4a01dab-8aa4-4780-bd6e-4638b3ff7e19"),
                             Name = "MS SQL Server",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("f3d75026-0855-41da-b18a-cd207341fe76"),
+                            Id = new Guid("1f7dcb2c-0979-488c-b739-6913e86b5c99"),
                             Name = "MySql",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("2f1e14cc-1f52-4b3e-b01b-6cdc1a878f21"),
+                            Id = new Guid("6d01c24c-2643-4b50-9afd-451248f665ca"),
                             Name = "HTML",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("b8b937df-e02e-436d-977c-243f7fcc97fc"),
+                            Id = new Guid("3e51e2b6-4f44-4341-91cb-c3150f3dfb12"),
                             Name = "CSS",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("487fba6c-0c35-4fa5-af18-53fb0cb922c6"),
+                            Id = new Guid("a4743361-bdf0-4df2-9f65-4dee215bb433"),
                             Name = "Bootstrap",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("ce45c4eb-9f2b-4bf4-a260-cabf77a66197"),
+                            Id = new Guid("fa1dd71f-4546-491d-919b-dd6deb895e0f"),
                             Name = "JavaScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("bb05f08f-cc32-4cf3-9440-49923d2336d0"),
+                            Id = new Guid("2bd96cc9-4cf9-459c-bea0-4eebbe2153ee"),
                             Name = "TypeScript",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("618d696e-3de2-455d-963b-77152fa2fa86"),
+                            Id = new Guid("06d85e3f-7305-44d2-9315-c1f99afb2b9c"),
                             Name = "Angular",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("26e3c863-f2e1-4dc4-9718-b3dae0a7dd04"),
+                            Id = new Guid("abf491de-913d-46d4-a30a-b3a55eebc952"),
                             Name = "React",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("53e59760-58ab-402a-a261-1d9d2ad5e709"),
+                            Id = new Guid("03badd18-142e-4ee1-8767-cfae38f1e8ea"),
                             Name = "Redux Toolkit",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("d5cedb6c-bdc7-4769-ab44-b75e800cfdf3"),
+                            Id = new Guid("09e8b0dd-57e7-4054-8ffe-5b5a8af74ae4"),
                             Name = "React Router",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("094ba69d-edee-4fa2-bbd4-8ddc3ebbcde0"),
+                            Id = new Guid("33b99740-936e-40df-8e9a-aec0f686b702"),
                             Name = "Vite",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("717c0440-c700-4b12-a431-53c5dca4d96a"),
+                            Id = new Guid("57e18b6c-8f53-448f-ae72-1770e7d7a70a"),
                             Name = "Vitest",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("61d3a2d5-bd4f-4906-bead-9b61b5437e8d"),
+                            Id = new Guid("cc3b831f-097a-4be0-8ccb-d1913fcb3961"),
                             Name = "Testing library",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("fa6eff2f-e2cc-42c2-8318-171800dd3540"),
+                            Id = new Guid("4d87ee36-7c36-4343-b135-e7852f2ff76e"),
                             Name = "TailwindCss",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("28d8f96e-5a00-4413-8501-7d66eeea97f3"),
+                            Id = new Guid("42f90172-c0e5-4a55-9ab1-ce63e5bc8803"),
                             Name = "Git",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("457012cc-1ee3-4941-8fab-dac9fcdbae1c"),
+                            Id = new Guid("0eef2041-ee33-4b3a-b93c-10fd257b527b"),
                             Name = "Scrum",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("8b525a78-81fe-4416-8408-97ecf86654f6"),
+                            Id = new Guid("ad4e69fe-9d22-4738-bb92-24e11f1d870e"),
                             Name = "ERD / DER",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("c46c4d39-dc74-4fdf-bfab-48cb4aadaa46"),
+                            Id = new Guid("f771aa1b-8ee9-44e4-b71e-e4436d819997"),
                             Name = "UML",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("8d80f814-f57c-4786-b139-17616a929ba2"),
+                            Id = new Guid("9539e24c-eb3b-4e4c-a13e-c517ea36e7be"),
                             Name = "JWT",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("ccf97f36-a6e1-44c3-8e4c-3414071a28d9"),
+                            Id = new Guid("b233ec82-3ffb-45f6-8fb3-338d583f5ac7"),
                             Name = "Linux",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("3e8a0e07-bbdb-4a1a-b866-132c22db4cd7"),
+                            Id = new Guid("4870b24a-8e82-47ee-93af-c88d3cd01238"),
                             Name = "REST API",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("755b6b22-a2d4-4533-bce5-5247ce58985e"),
+                            Id = new Guid("62c8f993-8688-46cb-8ebb-7c4964af4d72"),
                             Name = "Node",
                             Type = 2
                         });
@@ -438,10 +438,9 @@ namespace portfolio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<int>("Name")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -460,15 +459,15 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("78146e6c-8ee4-476a-bd71-268e2a10ef26"),
-                            Name = "Github",
+                            Id = new Guid("d9e84842-7feb-4a54-acce-ab559a3b924c"),
+                            Name = 1,
                             Url = "https://www.github.com/tiagoramirez/",
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("00eeeead-1e0c-4e90-bfe9-bf81409f8387"),
-                            Name = "LinkedIn",
+                            Id = new Guid("7be37952-f510-490c-83c0-7c2281259330"),
+                            Name = 3,
                             Url = "https://www.linkedin.com/in/tiagoramirezmar/",
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         });
@@ -477,7 +476,6 @@ namespace portfolio.Migrations
             modelBuilder.Entity("portfolio.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Created")
@@ -544,7 +542,7 @@ namespace portfolio.Migrations
                         new
                         {
                             Id = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1",
-                            Created = new DateTime(2023, 3, 29, 1, 31, 47, 188, DateTimeKind.Local).AddTicks(3036),
+                            Created = new DateTime(2023, 4, 1, 0, 10, 9, 967, DateTimeKind.Local).AddTicks(5713),
                             Email = "tiagoramirez2001@gmail.com",
                             EnglishAboutMe = "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node",
                             EnglishDesc = "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
@@ -587,233 +585,233 @@ namespace portfolio.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f9f6947-c007-4267-b0f1-703aec821665"),
+                            Id = new Guid("bfcaadb4-e5f0-46f2-a9d8-4e4355b332fa"),
                             Percentage = 100,
-                            SkillId = new Guid("d0938a3f-2bd4-473b-bb10-270531665cd1"),
+                            SkillId = new Guid("3b020f36-d959-4304-8be9-a0ad92105335"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("0688b498-14d1-48d3-acbf-d193ffbc63b0"),
+                            Id = new Guid("803a9fe4-711a-418e-a6e0-cbba220f69b1"),
                             Percentage = 90,
-                            SkillId = new Guid("3ac74277-64c2-461e-9097-1cd0d592ea75"),
+                            SkillId = new Guid("d73abf96-3c66-45ff-a651-304ef12147bc"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("11f285a6-9a59-4cc8-895e-f2ed25bf8c58"),
+                            Id = new Guid("d1d3c91b-53bb-4c8c-827e-49d288fd377d"),
                             Percentage = 90,
-                            SkillId = new Guid("014633c5-2767-4736-85fb-1fe8bbab3931"),
+                            SkillId = new Guid("2ca561c9-ef16-499b-bfe2-09b7e86792f2"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("b01e5bda-1b0c-4c96-9616-dd7ce6008f5d"),
+                            Id = new Guid("384dbda5-8436-4eec-83e8-2257a81635de"),
                             Percentage = 75,
-                            SkillId = new Guid("fc3ddd76-225c-496b-852a-18056bba8401"),
+                            SkillId = new Guid("09931a46-4f03-41ad-8494-a265f3c8754b"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("c917b886-dcac-45f8-879e-6ae33b5df6b5"),
+                            Id = new Guid("01e9bf64-efc7-4792-95ad-6d16a81eed08"),
                             Percentage = 90,
-                            SkillId = new Guid("25337d23-87e0-4b04-985c-8d0d17be8093"),
+                            SkillId = new Guid("e87dba1f-4ae1-4831-8e84-76af479379c8"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("a2ae240d-8e4c-4699-bb9b-42e9cdc92956"),
+                            Id = new Guid("4c19e963-29ae-4c41-9bd4-4a2b6313889b"),
                             Percentage = 95,
-                            SkillId = new Guid("d806b2b4-4727-4f6c-9a69-cd90eac1a419"),
+                            SkillId = new Guid("965d9fd5-0ffa-4150-8188-d9fe21117f8b"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("a547e991-f657-423a-9c65-d9dff034ef7b"),
+                            Id = new Guid("eef647e5-9e26-4266-8b2d-65437f7dc73e"),
                             Percentage = 100,
-                            SkillId = new Guid("1f813416-62f8-4151-a627-4e3809d06992"),
+                            SkillId = new Guid("e6928cbd-a13f-4041-a4bb-1b729ced8238"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("6432879a-6583-4cc2-8c9d-8820741a17d6"),
+                            Id = new Guid("57040d5f-a4be-46ad-b508-6751075fdd0e"),
                             Percentage = 90,
-                            SkillId = new Guid("4fc0941e-d64f-496a-8557-32db7fb4504c"),
+                            SkillId = new Guid("731ebb23-0cee-4f4a-a53f-dbe94823b993"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("6e17776a-3b4b-4ba6-ae1f-33b7b4989e45"),
+                            Id = new Guid("d20f0593-602c-4a6f-98b8-347c0a3c9e7d"),
                             Percentage = 90,
-                            SkillId = new Guid("f35f33ac-b759-49b9-9d53-8b63378b6b9d"),
+                            SkillId = new Guid("0a8e5f19-29e3-4f7b-b15e-79e0ef1e9e7b"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("3e6468ff-3e3e-44f8-9ea5-53d136867e3d"),
+                            Id = new Guid("a6b91e72-528b-4870-8d30-7434774fd1c0"),
                             Percentage = 70,
-                            SkillId = new Guid("0749acb2-87e8-460c-81ee-ae37676f7b0f"),
+                            SkillId = new Guid("f16d09ba-acb0-4f19-ada1-d10d84a77fbd"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("bded44ff-58bb-4144-87c3-c1d4dec0d9ec"),
+                            Id = new Guid("4bcbfbce-7291-40a8-8a44-107e59017b77"),
                             Percentage = 100,
-                            SkillId = new Guid("9823aebc-db4b-4bc1-946e-2c93e89af71b"),
+                            SkillId = new Guid("08167ec6-d30c-40a6-92d7-eb06113cf940"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("bd52b781-40c6-48ef-a453-25dae8c800c5"),
+                            Id = new Guid("6be3fc2c-e8ed-4d79-9115-813ed34b0610"),
                             Percentage = 100,
-                            SkillId = new Guid("ea323063-81e0-4130-b07d-0b0a19a97c01"),
+                            SkillId = new Guid("f4a01dab-8aa4-4780-bd6e-4638b3ff7e19"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("527255c1-91fe-4159-aade-eb57190d2368"),
+                            Id = new Guid("3522b888-3554-4ff8-8909-85de2dbb8103"),
                             Percentage = 70,
-                            SkillId = new Guid("f3d75026-0855-41da-b18a-cd207341fe76"),
+                            SkillId = new Guid("1f7dcb2c-0979-488c-b739-6913e86b5c99"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("c8d5c425-7ffb-465f-9dcf-4145fd1f93d7"),
+                            Id = new Guid("4e326a34-ac14-4299-b692-7b4ff6a3bb3a"),
                             Percentage = 90,
-                            SkillId = new Guid("2f1e14cc-1f52-4b3e-b01b-6cdc1a878f21"),
+                            SkillId = new Guid("6d01c24c-2643-4b50-9afd-451248f665ca"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("262f8834-f7ca-4fe8-b699-f069fef575f8"),
+                            Id = new Guid("8f314b99-1e2d-463e-92ac-2ff18dcccac7"),
                             Percentage = 80,
-                            SkillId = new Guid("b8b937df-e02e-436d-977c-243f7fcc97fc"),
+                            SkillId = new Guid("3e51e2b6-4f44-4341-91cb-c3150f3dfb12"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("c7d09100-ecd9-4e43-977f-c1f4395fd18b"),
+                            Id = new Guid("56d2091c-3146-432b-b2b7-c37e0308cf94"),
                             Percentage = 90,
-                            SkillId = new Guid("ce45c4eb-9f2b-4bf4-a260-cabf77a66197"),
+                            SkillId = new Guid("fa1dd71f-4546-491d-919b-dd6deb895e0f"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("1b2f1138-43cf-4a3c-86b3-72eb32fe788d"),
+                            Id = new Guid("3dcf9455-3496-4137-81f9-7de6e3afeb00"),
                             Percentage = 100,
-                            SkillId = new Guid("bb05f08f-cc32-4cf3-9440-49923d2336d0"),
+                            SkillId = new Guid("2bd96cc9-4cf9-459c-bea0-4eebbe2153ee"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("fcc1f7ca-c146-42d1-b44c-8b8582e148b0"),
+                            Id = new Guid("71507e1d-e02e-4a30-bbbf-8783247fa096"),
                             Percentage = 70,
-                            SkillId = new Guid("618d696e-3de2-455d-963b-77152fa2fa86"),
+                            SkillId = new Guid("06d85e3f-7305-44d2-9315-c1f99afb2b9c"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("ae8ba168-8b3a-4e0b-b8b2-b38042bba166"),
+                            Id = new Guid("9cc335c8-a6ce-4f46-9466-7b52772b6e92"),
                             Percentage = 95,
-                            SkillId = new Guid("26e3c863-f2e1-4dc4-9718-b3dae0a7dd04"),
+                            SkillId = new Guid("abf491de-913d-46d4-a30a-b3a55eebc952"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("b12850c9-e5c1-40c9-80f9-43df14ab316b"),
+                            Id = new Guid("1f95b03c-dc42-4ec5-9074-c9fe746a930e"),
                             Percentage = 95,
-                            SkillId = new Guid("53e59760-58ab-402a-a261-1d9d2ad5e709"),
+                            SkillId = new Guid("03badd18-142e-4ee1-8767-cfae38f1e8ea"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("37060ad4-1b61-45d9-a313-c4eb5292cfa5"),
+                            Id = new Guid("94651e06-a108-48a2-94a8-4aa3dd6c4c97"),
                             Percentage = 95,
-                            SkillId = new Guid("d5cedb6c-bdc7-4769-ab44-b75e800cfdf3"),
+                            SkillId = new Guid("09e8b0dd-57e7-4054-8ffe-5b5a8af74ae4"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("c3f148dd-05f7-4850-9c94-f102a7c11559"),
+                            Id = new Guid("cf1d3fb2-ea5f-442b-8a73-d0e6bad0a08c"),
                             Percentage = 80,
-                            SkillId = new Guid("094ba69d-edee-4fa2-bbd4-8ddc3ebbcde0"),
+                            SkillId = new Guid("33b99740-936e-40df-8e9a-aec0f686b702"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("83d87ef6-9c3d-40ee-861b-ea50fc8f2498"),
+                            Id = new Guid("c9c64c70-5524-4c84-b585-675f20973c40"),
                             Percentage = 80,
-                            SkillId = new Guid("717c0440-c700-4b12-a431-53c5dca4d96a"),
+                            SkillId = new Guid("57e18b6c-8f53-448f-ae72-1770e7d7a70a"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("93671bb2-456f-4cb7-bfb3-08d4335314b7"),
+                            Id = new Guid("aae7e4cb-21b4-4995-afc5-3f8079a87d2c"),
                             Percentage = 80,
-                            SkillId = new Guid("61d3a2d5-bd4f-4906-bead-9b61b5437e8d"),
+                            SkillId = new Guid("cc3b831f-097a-4be0-8ccb-d1913fcb3961"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("c4217a9c-0937-4aad-857a-93abaa17dad1"),
+                            Id = new Guid("0de3503b-4ce0-4417-91e4-d05ae7b8c10b"),
                             Percentage = 95,
-                            SkillId = new Guid("fa6eff2f-e2cc-42c2-8318-171800dd3540"),
+                            SkillId = new Guid("4d87ee36-7c36-4343-b135-e7852f2ff76e"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("31f4c8e6-3a95-4b5e-869c-c025c62d2551"),
+                            Id = new Guid("e67f1e10-7507-4401-a618-bf0ab857b932"),
                             Percentage = 90,
-                            SkillId = new Guid("28d8f96e-5a00-4413-8501-7d66eeea97f3"),
+                            SkillId = new Guid("42f90172-c0e5-4a55-9ab1-ce63e5bc8803"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("6380fd1d-4eec-49f5-833c-dd07a5877bd7"),
+                            Id = new Guid("b97dd71e-6b01-4d70-8ce2-9cb173141003"),
                             Percentage = 90,
-                            SkillId = new Guid("457012cc-1ee3-4941-8fab-dac9fcdbae1c"),
+                            SkillId = new Guid("0eef2041-ee33-4b3a-b93c-10fd257b527b"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("6fbbae4d-4935-4680-9af0-3d10831ebbc7"),
+                            Id = new Guid("2340f117-ca92-4666-a456-cad721efe7de"),
                             Percentage = 100,
-                            SkillId = new Guid("8b525a78-81fe-4416-8408-97ecf86654f6"),
+                            SkillId = new Guid("ad4e69fe-9d22-4738-bb92-24e11f1d870e"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("4b83855c-fb6b-44f4-8bdb-cd218ae0a8c2"),
+                            Id = new Guid("983a1527-9a4a-4c53-ab7d-1f4c3f944c7a"),
                             Percentage = 100,
-                            SkillId = new Guid("c46c4d39-dc74-4fdf-bfab-48cb4aadaa46"),
+                            SkillId = new Guid("f771aa1b-8ee9-44e4-b71e-e4436d819997"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("e023a21c-c1a7-46a0-92bf-7594cdfb1683"),
+                            Id = new Guid("1dad3e9a-2a79-4a10-b545-86060b9c488f"),
                             Percentage = 90,
-                            SkillId = new Guid("8d80f814-f57c-4786-b139-17616a929ba2"),
+                            SkillId = new Guid("9539e24c-eb3b-4e4c-a13e-c517ea36e7be"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("b9c53b89-9a6d-41c4-b448-4b529f35af33"),
+                            Id = new Guid("9526b3de-26b2-4a83-b5c5-24fb15586447"),
                             Percentage = 80,
-                            SkillId = new Guid("ccf97f36-a6e1-44c3-8e4c-3414071a28d9"),
+                            SkillId = new Guid("b233ec82-3ffb-45f6-8fb3-338d583f5ac7"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("54a9b699-9a86-4f42-b2a9-0b100b135a3d"),
+                            Id = new Guid("870d2802-2d47-4b56-8d03-b046fd8343e0"),
                             Percentage = 90,
-                            SkillId = new Guid("3e8a0e07-bbdb-4a1a-b866-132c22db4cd7"),
+                            SkillId = new Guid("4870b24a-8e82-47ee-93af-c88d3cd01238"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         },
                         new
                         {
-                            Id = new Guid("a64dc248-e1c7-414b-9a44-a9a98447f8a0"),
+                            Id = new Guid("268aecf3-8e4c-402d-9c9f-a377daefed3d"),
                             Percentage = 85,
-                            SkillId = new Guid("755b6b22-a2d4-4533-bce5-5247ce58985e"),
+                            SkillId = new Guid("62c8f993-8688-46cb-8ebb-7c4964af4d72"),
                             UserId = "p7EW1FzwW5hgFi4YTV1mmdHTAnm1"
                         });
                 });
