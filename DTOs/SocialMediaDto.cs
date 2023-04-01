@@ -21,6 +21,6 @@ public class SocialMediaDto
 
 
     [Required]
-    [RegularExpression(@"/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/", ErrorMessage = "Link not valid or does not contain https://")]
+    [RegularExpression(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)", ErrorMessage = "Link not valid or does not contain https://")]
     public string Url { get; set; }
 }
