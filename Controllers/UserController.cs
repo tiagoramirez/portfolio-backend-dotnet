@@ -39,7 +39,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetUsername([FromQuery] string email, [FromQuery] string id)
     {
         string username = await _userService.GetUsernameByIdEmailAsync(id, email);
-        if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.IncorrectEmailIdCombination) });
+        if (username == null) return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.INCORRECT_EMAIL_ID_COMBINATION) });
         return Ok(username);
     }
 
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
         UserDto user = await _userService.GetUserByUsernameAsync(username);
         if (user == null)
         {
-            return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.UserNotFound) });
+            return NotFound(new { msg = ServiceState.GetMessage(ServiceStateType.USER_NOT_FOUND) });
         }
         return Ok(user);
     }
@@ -59,7 +59,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> UpdateUser([FromBody] UserDto user, [FromHeader] string authorization)
     {
         ServiceStateType state = await _userService.UpdateUserAsync(user, authorization);
-        if (state == ServiceStateType.Ok) { return Ok(new { msg = "User Updated" }); }
+        if (state == ServiceStateType.OK) { return Ok(new { msg = "User Updated" }); }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -68,7 +68,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Delete([FromHeader] string authorization)
     {
         ServiceStateType state = await _userService.DeleteUserAsync(authorization);
-        if (state == ServiceStateType.Ok) { return Ok(new { msg = "User Deleted" }); }
+        if (state == ServiceStateType.OK) { return Ok(new { msg = "User Deleted" }); }
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

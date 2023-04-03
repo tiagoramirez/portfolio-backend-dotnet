@@ -50,14 +50,14 @@ public class AuthService : IAuthService
     {
         if (await _context.Users.AnyAsync(u => u.Username == login.Username && u.Id == login.Id && u.Email == login.Email))
         {
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
-        return ServiceStateType.InvalidCredentials;
+        return ServiceStateType.INVALID_CREDENTIALS;
     }
 
     public async Task<ServiceStateType> RegisterAsync(RegisterDto register)
     {
-        if (!await _userService.IsUsernameAvailableAsync(register.Username)) return ServiceStateType.UsernameNotAvailable;
+        if (!await _userService.IsUsernameAvailableAsync(register.Username)) return ServiceStateType.USERNAME_NOT_AVAILABLE;
 
         User user = new User
         {
@@ -81,11 +81,11 @@ public class AuthService : IAuthService
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

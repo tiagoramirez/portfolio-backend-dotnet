@@ -38,17 +38,17 @@ public class ProjectService : IProjectService
         string userId = JwtHelper.GetId(authorization);
 
         Project project = await _context.Projects.FindAsync(projectId);
-        if (project == null || project.UserId != userId) return ServiceStateType.ProjectNotFound;
+        if (project == null || project.UserId != userId) return ServiceStateType.PROJECT_NOT_FOUND;
 
         try
         {
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 
@@ -57,7 +57,7 @@ public class ProjectService : IProjectService
         string userId = JwtHelper.GetId(authorization);
 
         Project proj = await _context.Projects.FindAsync(project.Id);
-        if (proj == null || proj.UserId != userId) return ServiceStateType.ProjectNotFound;
+        if (proj == null || proj.UserId != userId) return ServiceStateType.PROJECT_NOT_FOUND;
 
         proj.Name = project.Name;
         proj.Url = project.Url;
@@ -68,11 +68,11 @@ public class ProjectService : IProjectService
         try
         {
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

@@ -37,17 +37,17 @@ public class EducationService : IEducationService
         string userId = JwtHelper.GetId(authorization);
 
         Education education = await _context.Educations.FindAsync(educationId);
-        if (education == null || education.UserId != userId) return ServiceStateType.EducationNotFound;
+        if (education == null || education.UserId != userId) return ServiceStateType.EDUCATION_NOT_FOUND;
 
         try
         {
             _context.Educations.Remove(education);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 
@@ -56,7 +56,7 @@ public class EducationService : IEducationService
         string userId = JwtHelper.GetId(authorization);
 
         Education educ = await _context.Educations.FindAsync(education.Id);
-        if (educ == null || educ.UserId != userId) return ServiceStateType.EducationNotFound;
+        if (educ == null || educ.UserId != userId) return ServiceStateType.EDUCATION_NOT_FOUND;
 
         educ.Type = education.Type;
         educ.Institute = education.Institute;
@@ -71,11 +71,11 @@ public class EducationService : IEducationService
         try
         {
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

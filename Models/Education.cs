@@ -39,5 +39,5 @@ public class Education
 
 public enum EducationType
 {
-    HighSchool, College, GraduateSchool, TertiaryDegree
+    HIGH_SCHOOL, COLLEGE, GRADUATE_SCHOOL, TERTIARY_DEGREE, COURSE
 }

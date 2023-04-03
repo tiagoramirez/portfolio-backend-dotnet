@@ -23,14 +23,14 @@ public class ExperienceController : ControllerBase
     {
         Guid? id = await _experienceService.CreateAsync(experience, authorization);
         if (id != null) return Ok(new { msg = "Experience Created", id });
-        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.INTERNAL_ERROR) });
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] ExperienceDto experience, [FromHeader] string authorization)
     {
         ServiceStateType state = await _experienceService.UpdateAsync(experience, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Edited" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Experience Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -38,7 +38,7 @@ public class ExperienceController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid experienceId, [FromHeader] string authorization)
     {
         ServiceStateType state = await _experienceService.DeleteAsync(experienceId, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Experience Deleted" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Experience Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

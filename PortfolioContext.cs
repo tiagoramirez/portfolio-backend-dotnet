@@ -18,43 +18,44 @@ public class PortfolioContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         List<Skill> skills = new List<Skill>();
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "C#", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET API", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET CORE 6", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET WPF", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Entity Framework", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Fluent API", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Migrations", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Middlewares", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Python", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java Spring", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "SQL", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MS SQL Server", Type = SkillType.BackEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MySql", Type = SkillType.BackEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "C#", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET API", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET CORE 6", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = ".NET WPF", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Entity Framework", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Fluent API", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Migrations", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Middlewares", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Python", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Java Spring", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "SQL", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MS SQL Server", Type = SkillType.BACKEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "MySql", Type = SkillType.BACKEND });
 
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "HTML", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "CSS", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Bootstrap", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Angular", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Redux Toolkit", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React Router", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vite", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vitest", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Testing library", Type = SkillType.FrontEnd });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TailwindCss", Type = SkillType.FrontEnd });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "HTML", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "CSS", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Bootstrap", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JavaScript", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TypeScript", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Angular", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Redux Toolkit", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "React Router", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vite", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Vitest", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Testing library", Type = SkillType.FRONTEND });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "TailwindCss", Type = SkillType.FRONTEND });
 
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Git", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Scrum", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "ERD / DER", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "UML", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JWT", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Linux", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "REST API", Type = SkillType.DeveloperTool });
-        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Node", Type = SkillType.DeveloperTool });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Git", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Scrum", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Entity Relationship Diagram", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "UML", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "JWT", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Linux", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "REST API", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "Node", Type = SkillType.DEVELOPER_TOOL });
+        skills.Add(new Skill { Id = Guid.NewGuid(), Name = "POO", Type = SkillType.DEVELOPER_TOOL });
 
         modelBuilder.Entity<Skill>(skill =>
         {
@@ -77,14 +78,14 @@ public class PortfolioContext : DbContext
             Status = true,
             Created = DateTime.Now,
             IsEnglishModeEnabled = true,
-            NativeDesc = "FullStack Web Dev. con +1 año de exp. || React + Typescript + .NET 6 + SQL Server + Node || Ingeniería en Sistemas de Información - UTN (Argentina)",
+            NativeDesc = "FullStack Dev. || React + Typescript + .NET 6 + SQL Server + Node.js || Ing. en Sistemas de Información - UTN 🇦🇷",
             HasEnglishDesc = true,
-            EnglishDesc = "FullStack Web Dev. with +1yr exp. || React + Typescript + .NET 6 + SQL Server + Node || Student in Systems Engineering - UTN (Argentina)",
+            EnglishDesc = "FullStack Dev. || React + Typescript + .NET 6 + SQL Server + Node.js || Student in Systems Engineering - UTN 🇦🇷",
             LocationCountry = "Argentina",
             LocationState = "C.A.B.A.",
-            NativeAboutMe = "Fullstack Web Dev. con 1 año de experiencia en el área de TI. Mi stack principal: React + Typescript + .NET 6 API + SQL Server + Node",
+            NativeAboutMe = "Soy Fullstack Developer con 1 año de experiencia en el área de TI.\n\nMi stack principal: React.js + Typescript + Node.js + .NET 6 API + SQL Server",
             HasEnglishAboutMe = true,
-            EnglishAboutMe = "Fullstack Web Dev. with 1 year of experience in the IT area. My main stack: React + Typescript + .NET 6 API + SQL Server + Node"
+            EnglishAboutMe = "I'm Fullstack Developer with 1 year of experience in the IT area.\n\nMy main stack: React.js + Typescript + Node.js + .NET 6 API + SQL Server"
         });
 
         modelBuilder.Entity<User>(user =>
@@ -107,9 +108,9 @@ public class PortfolioContext : DbContext
             user.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
             user.Property(table => table.LocationCountry).IsRequired(false).HasMaxLength(50);
             user.Property(table => table.LocationState).IsRequired(false).HasMaxLength(50);
-            user.Property(table => table.NativeAboutMe).IsRequired().HasMaxLength(255);
+            user.Property(table => table.NativeAboutMe).IsRequired().HasMaxLength(500);
             user.Property(table => table.HasEnglishAboutMe).IsRequired();
-            user.Property(table => table.EnglishAboutMe).IsRequired(false).HasMaxLength(255);
+            user.Property(table => table.EnglishAboutMe).IsRequired(false).HasMaxLength(500);
             user.HasData(users);
         });
 
@@ -149,6 +150,7 @@ public class PortfolioContext : DbContext
         userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[32].Id, Percentage = 80 });
         userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[33].Id, Percentage = 90 });
         userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[34].Id, Percentage = 85 });
+        userSkills.Add(new User_Skill { Id = Guid.NewGuid(), UserId = users[0].Id, SkillId = skills[35].Id, Percentage = 100 });
 
         modelBuilder.Entity<User_Skill>(userSkill =>
         {
@@ -196,12 +198,82 @@ public class PortfolioContext : DbContext
             Institute = "Universidad Tecnologica Nacional",
             TitleName = "Ingenieria en Sistemas de Informacion",
             IsActual = true,
-            Type = EducationType.College,
+            Type = EducationType.COLLEGE,
             Start = new DateTime(2020, 4, 1),
             End = null,
-            NativeDesc = "Me encuentro en 3er año con un promedio de 9/10",
+            NativeDesc = "Me encuentro en 3er año con un promedio de 9/10.",
             HasEnglishDesc = true,
-            EnglishDesc = "Currently at 3rd year with an average of 9/10"
+            EnglishDesc = "Currently at 3rd year with an average of 9/10."
+        });
+        educations.Add(new Education
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Institute = "Argentina Programa - INTI",
+            TitleName = "Argentina Programa #YoProgramo",
+            IsActual = false,
+            Type = EducationType.COURSE,
+            Start = new DateTime(2022, 2, 1),
+            End = new DateTime(2022, 10, 1),
+            NativeDesc = "Temas:\n- Introducción a Desarrollo Web y Aplicaciones\n- Desarrollo Front End Estático (HTML, CSS, BOOTSTRAP, JavaScript y TypeScript)\n- Desarrollo Front End Dinámico (Angular)\n- Desarrollo Back End (MySQL+ Java Spring)\n- Diagrama Entidad Relación\n- JWT\n- DevOps",
+            HasEnglishDesc = true,
+            EnglishDesc = "Topics:\n- Web Development and Applications (Introduction)\n- Static Front End Development (HTML, CSS, BOOTSTRAP, JavaScript y TypeScript)\n- Dynamic Front End Development (Angular)\n- BACKEND Development (MySQL + Java Spring)\n- Entity Relationship Diagram\n- JWT\n- DevOps"
+        });
+        educations.Add(new Education
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Institute = "Universidad Tecnologica Nacional FRBA",
+            TitleName = "Desarrollador .NET",
+            IsActual = false,
+            Type = EducationType.COURSE,
+            Start = new DateTime(2021, 10, 1),
+            End = new DateTime(2021, 12, 1),
+            NativeDesc = "Aprendimos: C#, POO, UML, .NET Framework, Entity Framework, Sql Server.\nProyecto final: https://github.com/tiagoramirez/tpFinalCursoDotNetNeorisUTN",
+            HasEnglishDesc = true,
+            EnglishDesc = "We learned: C#, OOP, UML, .NET Framework, Entity Framework, Sql Server.\nFinal Project: https://github.com/tiagoramirez/tpFinalCursoDotNetNeorisUTN"
+        });
+        educations.Add(new Education
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Institute = "Platzi",
+            TitleName = ".NET API's",
+            IsActual = false,
+            Type = EducationType.COURSE,
+            Start = new DateTime(2022, 10, 1),
+            End = new DateTime(2022, 10, 1),
+            NativeDesc = "REST API, Middlewares, C#, .NET 6, POO, Entity Framework, Sql Server.",
+            HasEnglishDesc = true,
+            EnglishDesc = "REST API, Middlewares, C#, .NET 6, POO, Entity Framework, Sql Server."
+        });
+        educations.Add(new Education
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Institute = "Platzi",
+            TitleName = "Entity Framework",
+            IsActual = false,
+            Type = EducationType.COURSE,
+            Start = new DateTime(2022, 10, 1),
+            End = new DateTime(2022, 10, 1),
+            NativeDesc = "C#, .NET 6, POO, Entity Framework, Fluent API, Sql Server.",
+            HasEnglishDesc = true,
+            EnglishDesc = "C#, .NET 6, POO, Entity Framework, Fluent API, Sql Server."
+        });
+        educations.Add(new Education
+        {
+            Id = Guid.NewGuid(),
+            UserId = users[0].Id,
+            Institute = "Instituto Nuestra Sra del Huerto - Cambridge",
+            TitleName = "English",
+            IsActual = false,
+            Type = EducationType.TERTIARY_DEGREE,
+            Start = new DateTime(2011, 03, 1),
+            End = new DateTime(2021, 12, 1),
+            NativeDesc = "Clases de ingles. Al final rendimos el examen First Certificate in English (Instituto Cambridge). Mi nivel fue: B2.",
+            HasEnglishDesc = true,
+            EnglishDesc = "English classes. At the end we took the First Certificate in English exam (Cambridge Institute). My level was: B2."
         });
 
         modelBuilder.Entity<Education>(educ =>
@@ -216,9 +288,9 @@ public class PortfolioContext : DbContext
             educ.Property(table => table.IsActual).IsRequired();
             educ.Property(table => table.Start).IsRequired();
             educ.Property(table => table.End).IsRequired(false);
-            educ.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            educ.Property(table => table.NativeDesc).IsRequired().HasMaxLength(1000);
             educ.Property(table => table.HasEnglishDesc).IsRequired();
-            educ.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
+            educ.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(1000);
             educ.HasData(educations);
         });
 
@@ -229,13 +301,13 @@ public class PortfolioContext : DbContext
             UserId = users[0].Id,
             Position = "Analista Programador Junior",
             Company = "Accusys",
-            Type = ExperienceType.FullTime,
+            Type = ExperienceType.FULLTIME,
             IsActual = true,
             Start = new DateTime(2022, 4, 5),
             End = null,
-            NativeDesc = "Manejo y optimización de querys, tablas, stored procedures y vistas en bases de datos MS SQL Server. Trabajo con tecnologías tales como WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS",
+            NativeDesc = "Mantenimiento de un sistema para el Control del Efectivo Bancario.\nManejo y optimización de querys, tablas, stored procedures y vistas en bases de datos MS SQL Server.\nTecnologías: WPF, ASP Clásico, VBS, HTML, Javascript, Java y IIS.",
             HasEnglishDesc = true,
-            EnglishDesc = "Management and optimization of queries, tables, stored procedures and views in MS SQL Server databases. I work with technologies such as WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS"
+            EnglishDesc = "Maintenance of an Bank Cash Control system.\nManagement and optimization of queries, tables, stored procedures and views in MS SQL Server databases.\nTechnologies: WPF, Classic ASP, VBS, HTML, Javascript, Java and IIS."
         });
 
         modelBuilder.Entity<Experience>(exp =>
@@ -250,9 +322,9 @@ public class PortfolioContext : DbContext
             exp.Property(table => table.IsActual).IsRequired();
             exp.Property(table => table.Start).IsRequired();
             exp.Property(table => table.End).IsRequired(false);
-            exp.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            exp.Property(table => table.NativeDesc).IsRequired().HasMaxLength(1000);
             exp.Property(table => table.HasEnglishDesc).IsRequired();
-            exp.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
+            exp.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(1000);
             exp.HasData(experiences);
         });
 
@@ -276,9 +348,9 @@ public class PortfolioContext : DbContext
             proj.Property(table => table.Id);
             proj.Property(table => table.Name).IsRequired().HasMaxLength(50);
             proj.Property(table => table.Url).IsRequired(false).HasMaxLength(255);
-            proj.Property(table => table.NativeDesc).IsRequired().HasMaxLength(255);
+            proj.Property(table => table.NativeDesc).IsRequired().HasMaxLength(1000);
             proj.Property(table => table.HasEnglishDesc).IsRequired();
-            proj.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(255);
+            proj.Property(table => table.EnglishDesc).IsRequired(false).HasMaxLength(1000);
             proj.HasData(projects);
         });
     }

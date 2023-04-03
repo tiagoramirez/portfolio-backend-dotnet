@@ -38,17 +38,17 @@ public class ExperienceService : IExperienceService
         string userId = JwtHelper.GetId(authorization);
 
         Experience experience = await _context.Experiences.FindAsync(experienceId);
-        if (experience == null || experience.UserId != userId) return ServiceStateType.ExperienceNotFound;
+        if (experience == null || experience.UserId != userId) return ServiceStateType.EXPERIENCE_NOT_FOUND;
 
         try
         {
             _context.Experiences.Remove(experience);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 
@@ -57,7 +57,7 @@ public class ExperienceService : IExperienceService
         string userId = JwtHelper.GetId(authorization);
 
         Experience exp = await _context.Experiences.FindAsync(experience.Id);
-        if (exp == null || exp.UserId != userId) return ServiceStateType.ExperienceNotFound;
+        if (exp == null || exp.UserId != userId) return ServiceStateType.EXPERIENCE_NOT_FOUND;
 
         exp.Position = experience.Position;
         exp.Company = experience.Company;
@@ -72,11 +72,11 @@ public class ExperienceService : IExperienceService
         try
         {
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

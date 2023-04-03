@@ -30,7 +30,7 @@ public class ProjectDto
 
 
     [Required]
-    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    [MaxLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
     public string NativeDesc { get; set; }
 
 
@@ -38,6 +38,6 @@ public class ProjectDto
     public bool HasEnglishDesc { get; set; }
 
 
-    [MaxLength(255, ErrorMessage = "Description cannot exceed 255 characters")]
+    [MaxLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
     public string EnglishDesc { get; set; }
 }

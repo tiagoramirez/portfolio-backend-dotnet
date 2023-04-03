@@ -39,5 +39,5 @@ public class Experience
 
 public enum ExperienceType
 {
-    FullTime, PartTime, Freelance, Volunteer
+    FULLTIME, PARTTIME, FREELANCE, VOLUNTEER
 }

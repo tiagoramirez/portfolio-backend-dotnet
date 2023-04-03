@@ -38,17 +38,17 @@ public class SocialMediaService : ISocialMediaService
         string userId = JwtHelper.GetId(authorization);
 
         SocialMedia socialMedia = await _context.Social_Medias.FindAsync(id);
-        if (socialMedia == null || socialMedia.UserId != userId) return ServiceStateType.SocialMediaNotFound;
+        if (socialMedia == null || socialMedia.UserId != userId) return ServiceStateType.SOCIAL_MEDIA_NOT_FOUND;
 
         try
         {
             _context.Social_Medias.Remove(socialMedia);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 
@@ -57,7 +57,7 @@ public class SocialMediaService : ISocialMediaService
         string userId = JwtHelper.GetId(authorization);
 
         SocialMedia sm = await _context.Social_Medias.FindAsync(socialMedia.Id);
-        if (sm == null || sm.UserId != userId) return ServiceStateType.SocialMediaNotFound;
+        if (sm == null || sm.UserId != userId) return ServiceStateType.SOCIAL_MEDIA_NOT_FOUND;
 
         sm.Name = socialMedia.Name;
         sm.Url = socialMedia.Url;
@@ -65,11 +65,11 @@ public class SocialMediaService : ISocialMediaService
         try
         {
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

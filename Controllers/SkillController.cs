@@ -29,7 +29,7 @@ public class SkillController : ControllerBase
     {
         Guid? id = await _skillService.CreateAsync(skill, authorization);
         if (id != null) return Ok(new { msg = "Skill Created", id });
-        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.INTERNAL_ERROR) });
     }
 
     [Authorize]
@@ -37,7 +37,7 @@ public class SkillController : ControllerBase
     public async Task<IActionResult> Update([FromBody] User_SkillDto skill, [FromHeader] string authorization)
     {
         ServiceStateType state = await _skillService.UpdateAsync(skill, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Updated" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Skill Updated" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -46,7 +46,7 @@ public class SkillController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid skillId, [FromHeader] string authorization)
     {
         var state = await _skillService.DeleteAsync(skillId, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Skill Deleted" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Skill Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

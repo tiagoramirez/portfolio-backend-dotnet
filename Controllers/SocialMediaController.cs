@@ -24,7 +24,7 @@ public class SocialMediaController : ControllerBase
     {
         Guid? id = await _socialMediaService.CreateAsync(socialMedia, authorization);
         if (id != null) return Ok(new { msg = "Social Media Created", id });
-        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.INTERNAL_ERROR) });
 
     }
 
@@ -32,7 +32,7 @@ public class SocialMediaController : ControllerBase
     public async Task<IActionResult> Update([FromBody] SocialMediaDto socialMedia, [FromHeader] string authorization)
     {
         ServiceStateType state = await _socialMediaService.UpdateAsync(socialMedia, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Social Media Updated" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Social Media Updated" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -40,7 +40,7 @@ public class SocialMediaController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid socialMediaId, [FromHeader] string authorization)
     {
         ServiceStateType state = await _socialMediaService.DeleteAsync(socialMediaId, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Social Media Deleted" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Social Media Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

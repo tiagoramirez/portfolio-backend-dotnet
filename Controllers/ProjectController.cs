@@ -23,14 +23,14 @@ public class ProjectController : ControllerBase
     {
         Guid? id = await _projectService.CreateAsync(project, authorization);
         if (id != null) return Ok(new { msg = "Project Created", id });
-        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.INTERNAL_ERROR) });
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] ProjectDto project, [FromHeader] string authorization)
     {
         ServiceStateType state = await _projectService.UpdateAsync(project, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Edited" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Project Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -38,7 +38,7 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid projectId, [FromHeader] string authorization)
     {
         ServiceStateType state = await _projectService.DeleteAsync(projectId, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Project Deleted" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Project Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 

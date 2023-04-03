@@ -68,7 +68,7 @@ public class UserDto
     public string LocationState { get; set; }
 
 
-    [MaxLength(255, ErrorMessage = "About Me cannot exceed 255 characters")]
+    [MaxLength(500, ErrorMessage = "About Me cannot exceed 500 characters")]
     public string NativeAboutMe { get; set; }
 
 
@@ -76,7 +76,7 @@ public class UserDto
     public bool HasEnglishAboutMe { get; set; }
 
 
-    [MaxLength(255, ErrorMessage = "About Me cannot exceed 255 characters")]
+    [MaxLength(500, ErrorMessage = "About Me cannot exceed 500 characters")]
     public string EnglishAboutMe { get; set; }
 
     // Navigation Properties

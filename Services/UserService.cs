@@ -26,14 +26,14 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
+                return ServiceStateType.OK;
             }
             catch (System.Exception)
             {
-                return ServiceStateType.InternalError;
+                return ServiceStateType.INTERNAL_ERROR;
             }
         }
-        return ServiceStateType.UserNotFound;
+        return ServiceStateType.USER_NOT_FOUND;
     }
 
     public async Task<IEnumerable<UserInfoDto>> GetAllUsersAsync(int page)
@@ -117,14 +117,14 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
+                return ServiceStateType.OK;
             }
             catch (System.Exception)
             {
-                return ServiceStateType.InternalError;
+                return ServiceStateType.INTERNAL_ERROR;
             }
         }
-        return ServiceStateType.UserNotFound;
+        return ServiceStateType.USER_NOT_FOUND;
 
     }
 
@@ -135,7 +135,7 @@ public class UserService : IUserService
         User userToEdit = await _context.Users.FindAsync(userId);
         if (userToEdit != null && userToEdit.Status)
         {
-            if (!await IsUsernameAvailableAsync(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.UsernameNotAvailable;
+            if (!await IsUsernameAvailableAsync(user.Username) && userToEdit.Username != user.Username) return ServiceStateType.USERNAME_NOT_AVAILABLE;
             userToEdit.Name = user.Name;
             userToEdit.Username = user.Username;
             userToEdit.NativeDesc = user.NativeDesc;
@@ -149,13 +149,13 @@ public class UserService : IUserService
             try
             {
                 await _context.SaveChangesAsync();
-                return ServiceStateType.Ok;
+                return ServiceStateType.OK;
             }
             catch (System.Exception)
             {
-                return ServiceStateType.UserNotFound;
+                return ServiceStateType.USER_NOT_FOUND;
             }
         }
-        return ServiceStateType.UserNotFound;
+        return ServiceStateType.USER_NOT_FOUND;
     }
 }

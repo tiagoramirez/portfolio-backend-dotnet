@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterDto register)
     {
         ServiceStateType state = await _authService.RegisterAsync(register);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "User registered in Backend" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "User registered in Backend" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
         ServiceStateType state = await _authService.LoginAync(login);
-        if (state == ServiceStateType.Ok) return Ok(_authService.GenerateToken(login.Id, login.Username));
+        if (state == ServiceStateType.OK) return Ok(_authService.GenerateToken(login.Id, login.Username));
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }

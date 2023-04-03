@@ -39,17 +39,17 @@ public class SkillService : ISkillService
         string userId = JwtHelper.GetId(authorization);
 
         User_Skill skill = await _context.User_Skills.FindAsync(id);
-        if (skill == null || skill.UserId != userId) return ServiceStateType.SkillNotFound;
+        if (skill == null || skill.UserId != userId) return ServiceStateType.SKILL_NOT_FOUND;
 
         try
         {
             _context.User_Skills.Remove(skill);
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 
@@ -68,18 +68,18 @@ public class SkillService : ISkillService
         string userId = JwtHelper.GetId(authorization);
 
         User_Skill skll = await _context.User_Skills.FindAsync(skill.Id);
-        if (skll == null || skll.UserId != userId) return ServiceStateType.SkillNotFound;
+        if (skll == null || skll.UserId != userId) return ServiceStateType.SKILL_NOT_FOUND;
 
         skll.Percentage = skill.Percentage;
 
         try
         {
             await _context.SaveChangesAsync();
-            return ServiceStateType.Ok;
+            return ServiceStateType.OK;
         }
         catch (System.Exception)
         {
-            return ServiceStateType.InternalError;
+            return ServiceStateType.INTERNAL_ERROR;
         }
     }
 }

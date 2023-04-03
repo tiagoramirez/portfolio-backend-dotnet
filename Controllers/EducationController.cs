@@ -23,14 +23,14 @@ public class EducationController : ControllerBase
     {
         Guid? id = await _educationService.CreateAsync(education, authorization);
         if (id != null) return Ok(new { msg = "Education Created", id });
-        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.InternalError) });
+        return BadRequest(new { msg = ServiceState.GetMessage(ServiceStateType.INTERNAL_ERROR) });
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] EducationDto education, [FromHeader] string authorization)
     {
         ServiceStateType state = await _educationService.UpdateAsync(education, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Edited" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Education Edited" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 
@@ -38,7 +38,7 @@ public class EducationController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid educationId, [FromHeader] string authorization)
     {
         ServiceStateType state = await _educationService.DeleteAsync(educationId, authorization);
-        if (state == ServiceStateType.Ok) return Ok(new { msg = "Education Deleted" });
+        if (state == ServiceStateType.OK) return Ok(new { msg = "Education Deleted" });
         return BadRequest(new { msg = ServiceState.GetMessage(state) });
     }
 }
